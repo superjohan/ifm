@@ -1,0 +1,16 @@
+syntax: glob
+
+build
+
+.*
+*.mode1v3
+*.pbxuser
+*.pyc
+*.swp
+*.sqlite3
+*.xml.*
+feed_archive
+
+syntax: regexp
+
+^MKCKit
