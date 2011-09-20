@@ -57,7 +57,6 @@
 		90D0D58E115CA03F007C9F6F /* newch2playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58A115CA03F007C9F6F /* newch2playing.png */; };
 		90D0D58F115CA03F007C9F6F /* newch3playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58B115CA03F007C9F6F /* newch3playing.png */; };
 		90D0D590115CA03F007C9F6F /* newch4playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58C115CA03F007C9F6F /* newch4playing.png */; };
-		90D6F5111287FCAE0060ED15 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D6F5101287FCAE0060ED15 /* Default.png */; };
 		90EDC422112AA08000D1395C /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EDC421112AA08000D1395C /* stop.png */; };
 /* End PBXBuildFile section */
 
@@ -289,6 +288,9 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0410;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "IFM" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -353,7 +355,6 @@
 				906174BF11CB5E8A00CDF89B /* newch4playing@2x.png in Resources */,
 				906174C011CB5E8A00CDF89B /* newlogo@2x.png in Resources */,
 				908BDDAF11CCC8B600210717 /* Default@2x.png in Resources */,
-				90D6F5111287FCAE0060ED15 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,8 +388,9 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = IFM;
 				SDKROOT = iphoneos;
 			};
@@ -401,7 +403,9 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = IFM;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -416,8 +420,8 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PREBINDING = NO;
 				SDKROOT = iphoneos;
 			};
 			name = "App Store";
@@ -430,8 +434,9 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = IFM;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1F04B7FE-946B-4606-AE3E-A639B5BAEABC";
 				SDKROOT = iphoneos;
@@ -448,7 +453,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
@@ -462,8 +467,8 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
