@@ -11,6 +11,8 @@ build
 *.xml.*
 feed_archive
 
+IFM.xcodeproj/project.xcworkspace/xcuserdata
+IFM.xcodeproj/xcuserdata
 syntax: regexp
 
 ^MKCKit
