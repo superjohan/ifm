@@ -74,7 +74,7 @@ __VA_ARGS__ \
 	[self resetEverything];
 			
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM Player version %@ — Developed by Ab Parasol Oy — Visit our site at http://parasol.fi — Hello to IFMX, jML!, Dekadence, RNO, Supergroup, Matt Current, Fit, Unique, Traction, Damones, Accession, Up Rough", version];
+	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM Player version %@ — Developed by Aero Deko — Visit our site at http://aerodeko.com", version];
 	
 	nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 434, 320, 24)];
 	[nowPlayingLabel setText:introText];
@@ -241,7 +241,7 @@ __VA_ARGS__ \
 
 - (void)synchronousLoadNowPlayingData
 {
-	NSString *urlString = [[NSString alloc] initWithFormat:@"http://intergalacticfm.com/data/playing%d.html", channelPlaying];
+	NSString *urlString = [[NSString alloc] initWithFormat:@"http://intergalactic.fm/data/playing%d.html", channelPlaying];
     NSURL *url = [NSURL URLWithString:urlString];
 	NSData *data = [NSData dataWithContentsOfURL:url];
 	
@@ -283,7 +283,7 @@ __VA_ARGS__ \
 	[self destroyStreamer];
 	[self resetEverything];
 		
-	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://radio.intergalacticfm.com/1aac.m3u"] 
+	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://radio.intergalactic.fm/1aac.m3u"] 
 											 encoding:NSUTF8StringEncoding
 												error:nil];
 	channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] objectAtIndex:0];
@@ -302,7 +302,7 @@ __VA_ARGS__ \
 	[self destroyStreamer];
 	[self resetEverything];
 	
-	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://radio.intergalacticfm.com/2aac.m3u"] 
+	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://radio.intergalactic.fm/2aac.m3u"] 
 											 encoding:NSUTF8StringEncoding
 												error:nil];
 	channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] objectAtIndex:0];
@@ -321,7 +321,7 @@ __VA_ARGS__ \
 	[self destroyStreamer];
 	[self resetEverything];
 
-	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://radio.intergalacticfm.com/3aac.m3u"] 
+	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://radio.intergalactic.fm/3aac.m3u"] 
 											 encoding:NSUTF8StringEncoding
 												error:nil];
 	channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] objectAtIndex:0];
@@ -340,7 +340,7 @@ __VA_ARGS__ \
 	[self destroyStreamer];
 	[self resetEverything];
 
-	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://radio.intergalacticfm.com/4aac.m3u"] 
+	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://radio.intergalactic.fm/4aac.m3u"] 
 											 encoding:NSUTF8StringEncoding
 												error:nil];
 	channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] objectAtIndex:0];
