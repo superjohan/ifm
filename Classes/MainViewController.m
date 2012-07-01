@@ -48,6 +48,8 @@ __VA_ARGS__ \
 
 - (IBAction)showInfo
 {    	
+	[TestFlight passCheckpoint:@"Info button touched"];
+	
 	FlipsideViewController *controller = [[FlipsideViewController alloc] initWithNibName:@"FlipsideView" bundle:nil];
 	controller.delegate = self;
 	
@@ -279,6 +281,8 @@ __VA_ARGS__ \
 
 - (IBAction)channel1ButtonPressed:(id)sender
 {
+	[TestFlight passCheckpoint:@"Channel 1 button touched"];
+	
 	[streamer stop];
 	[self destroyStreamer];
 	[self resetEverything];
@@ -298,6 +302,8 @@ __VA_ARGS__ \
 
 - (IBAction)channel2ButtonPressed:(id)sender
 {
+	[TestFlight passCheckpoint:@"Channel 2 button touched"];
+	
 	[streamer stop];
 	[self destroyStreamer];
 	[self resetEverything];
@@ -317,6 +323,8 @@ __VA_ARGS__ \
 
 - (IBAction)channel3ButtonPressed:(id)sender
 {
+	[TestFlight passCheckpoint:@"Channel 3 button touched"];
+	
 	[streamer stop];
 	[self destroyStreamer];
 	[self resetEverything];
@@ -336,6 +344,8 @@ __VA_ARGS__ \
 
 - (IBAction)channel4ButtonPressed:(id)sender
 {
+	[TestFlight passCheckpoint:@"Channel 4 button touched"];
+	
 	[streamer stop];
 	[self destroyStreamer];
 	[self resetEverything];
@@ -355,6 +365,8 @@ __VA_ARGS__ \
 
 - (IBAction)stopButtonPressed:(id)sender
 {
+	[TestFlight passCheckpoint:@"Stop button touched"];
+
 	[streamer stop];
 	[self destroyStreamer];
 	[self performSelectorOnMainThread:@selector(resetEverything) withObject:nil waitUntilDone:YES];
@@ -394,6 +406,8 @@ __VA_ARGS__ \
 {
 	if(event.type == UIEventTypeRemoteControl)
 	{
+		[TestFlight passCheckpoint:@"Remote control event received"];
+		
 		switch (event.subtype)
 		{
             case UIEventSubtypeRemoteControlPlay:

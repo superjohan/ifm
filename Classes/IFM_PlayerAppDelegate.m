@@ -16,8 +16,11 @@
 @synthesize mainViewController;
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-    
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{    
+	[TestFlight takeOff:@"f0fecfba73bb54d020763779a78a67cb_MjAxMjgyMDExLTExLTIwIDA3OjMyOjE5LjM4NzYxMg"];
+	[TestFlight setOptions:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:@"logToConsole"]];
+	
 	MainViewController *aController = [[MainViewController alloc] initWithNibName:@"MainView" bundle:nil];
 	self.mainViewController = aController;
 	[aController release];

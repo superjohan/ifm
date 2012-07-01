@@ -17,6 +17,8 @@
 		288765590DF743DE002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765580DF743DE002DB57D /* CoreGraphics.framework */; };
 		289233AE0DB2D0DB0083E9F9 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289233A90DB2D0DB0083E9F9 /* MainViewController.m */; };
 		289233B00DB2D0DB0083E9F9 /* FlipsideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289233AD0DB2D0DB0083E9F9 /* FlipsideViewController.m */; };
+		902BB62E15A0CD7200DB1C33 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 902BB62C15A0CD7200DB1C33 /* libTestFlight.a */; };
+		902BB63115A0CD9A00DB1C33 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 902BB63015A0CD9A00DB1C33 /* libz.dylib */; };
 		903B8A95114E28F80076A1C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903B8A94114E28F70076A1C2 /* QuartzCore.framework */; };
 		906174B611CB5E8A00CDF89B /* channel1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 906174AB11CB5E8A00CDF89B /* channel1@2x.png */; };
 		906174B711CB5E8A00CDF89B /* channel2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 906174AC11CB5E8A00CDF89B /* channel2@2x.png */; };
@@ -77,6 +79,9 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* IFM_Player_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFM_Player_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* IFM_Player-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "IFM_Player-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		902BB62C15A0CD7200DB1C33 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		902BB62D15A0CD7200DB1C33 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		902BB63015A0CD9A00DB1C33 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		903B8A94114E28F70076A1C2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		906174AB11CB5E8A00CDF89B /* channel1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "channel1@2x.png"; sourceTree = "<group>"; };
 		906174AC11CB5E8A00CDF89B /* channel2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "channel2@2x.png"; sourceTree = "<group>"; };
@@ -127,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				902BB63115A0CD9A00DB1C33 /* libz.dylib in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765590DF743DE002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -134,6 +140,7 @@
 				90884ACD11294DD700707F33 /* CFNetwork.framework in Frameworks */,
 				90884ACF11294DD700707F33 /* MediaPlayer.framework in Frameworks */,
 				903B8A95114E28F80076A1C2 /* QuartzCore.framework in Frameworks */,
+				902BB62E15A0CD7200DB1C33 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +186,9 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				902BB63015A0CD9A00DB1C33 /* libz.dylib */,
+				902BB62C15A0CD7200DB1C33 /* libTestFlight.a */,
+				902BB62D15A0CD7200DB1C33 /* TestFlight.h */,
 				289233A00DB2D0730083E9F9 /* Main View */,
 				281C6CD70DB2D82200F60ACC /* Flipside View */,
 				080E96DDFE201D6D7F000001 /* Application Delegate */,
@@ -391,6 +401,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = IFM;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -409,6 +423,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = IFM;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -442,6 +460,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = IFM;
 				PROVISIONING_PROFILE = "E7ECD5DF-9D7A-48FC-B164-B2EE9D147B9D";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E7ECD5DF-9D7A-48FC-B164-B2EE9D147B9D";
