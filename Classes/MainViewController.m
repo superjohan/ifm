@@ -121,77 +121,42 @@
 	}
 }
 
+- (void)ae_setChannelToWaiting:(NSInteger)channel
+{
+	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]];
+	UIButton *playButton = [self valueForKey:[NSString stringWithFormat:@"channel%dButton", channel]];
+	UIButton *stopButton = [self valueForKey:[NSString stringWithFormat:@"channel%dStopButton", channel]];
+	
+	[spinner startAnimating];
+	spinner.hidden = NO;
+	playButton.enabled = NO;
+	stopButton.hidden = YES;
+	stopButton.enabled = NO;
+}
+
+- (void)ae_setChannelToPlaying:(NSInteger)channel
+{
+	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]];
+	UIButton *stopButton = [self valueForKey:[NSString stringWithFormat:@"channel%dStopButton", channel]];
+	
+	spinner.hidden = YES;
+	stopButton.hidden = NO;
+	stopButton.enabled = YES;
+}
+
 - (void)playbackStateChanged:(NSNotification *)aNotification
 {
 	if ([self.streamer isWaiting])
 	{
-		// show spinner and hide stop button when waiting for stream to play (eg. loading or interrupted)
-		switch (self.channelPlaying) {
-			case 1:
-				[self.channel1Spinner setHidden:NO];
-				[self.channel1Spinner startAnimating];
-				[self.channel1Button setEnabled:NO];
-				[self.channel1StopButton setHidden:YES];
-				[self.channel1StopButton setEnabled:NO];
-				break;
-			case 2:
-				[self.channel2Spinner setHidden:NO];
-				[self.channel2Spinner startAnimating];
-				[self.channel2Button setEnabled:NO];
-				[self.channel2StopButton setHidden:YES];
-				[self.channel2StopButton setEnabled:NO];
-				break;
-			case 3:
-				[self.channel3Spinner setHidden:NO];
-				[self.channel3Spinner startAnimating];
-				[self.channel3Button setEnabled:NO];
-				[self.channel3StopButton setHidden:YES];
-				[self.channel3StopButton setEnabled:NO];
-				break;
-			case 4:
-				[self.channel4Spinner setHidden:NO];
-				[self.channel4Spinner startAnimating];
-				[self.channel4Button setEnabled:NO];
-				[self.channel4StopButton setHidden:YES];
-				[self.channel4StopButton setEnabled:NO];
-				break;
-			default:
-				break;
-		}
+		[self ae_setChannelToWaiting:self.channelPlaying];
 	}
 	else if ([self.streamer isPlaying])
 	{
 		[self updateNowPlaying];
-
-		// hide spinner and show stop button
-		switch (self.channelPlaying) {
-			case 1:
-				[self.channel1Spinner setHidden:YES];
-				[self.channel1StopButton setHidden:NO];
-				[self.channel1StopButton setEnabled:YES];
-				break;
-			case 2:
-				[self.channel2Spinner setHidden:YES];
-				[self.channel2StopButton setHidden:NO];
-				[self.channel2StopButton setEnabled:YES];
-				break;
-			case 3:
-				[self.channel3Spinner setHidden:YES];
-				[self.channel3StopButton setHidden:NO];
-				[self.channel3StopButton setEnabled:YES];
-				break;
-			case 4:
-				[self.channel4Spinner setHidden:YES];
-				[self.channel4StopButton setHidden:NO];
-				[self.channel4StopButton setEnabled:YES];
-				break;
-			default:
-				break;
-		}
+		[self ae_setChannelToPlaying:self.channelPlaying];
 	}
 	else if ([self.streamer isIdle])
 	{
-		// streamer stops
 		[self resetEverything];
 		[self destroyStreamer];
 	}
@@ -312,7 +277,7 @@
 
 	[self.streamer stop];
 	[self destroyStreamer];
-	[self performSelectorOnMainThread:@selector(resetEverything) withObject:nil waitUntilDone:YES];
+	[self resetEverything];
 	self.savedChannelPlaying = 0;
 }
 
@@ -321,25 +286,13 @@
 	self.channelPlaying = 0;
 	self.playing = NO;
 	
-	[self.channel1Spinner setHidden:YES];
-	[self.channel2Spinner setHidden:YES];
-	[self.channel3Spinner setHidden:YES];
-	[self.channel4Spinner setHidden:YES];
-	
-	[self.channel1Button setEnabled:YES];
-	[self.channel2Button setEnabled:YES];
-	[self.channel3Button setEnabled:YES];
-	[self.channel4Button setEnabled:YES];
-	
-	[self.channel1StopButton setEnabled:NO];
-	[self.channel2StopButton setEnabled:NO];
-	[self.channel3StopButton setEnabled:NO];
-	[self.channel4StopButton setEnabled:NO];
-	
-	[self.channel1StopButton setHidden:YES];
-	[self.channel2StopButton setHidden:YES];
-	[self.channel3StopButton setHidden:YES];
-	[self.channel4StopButton setHidden:YES];
+	for (NSInteger channel = 1;  channel < 5; channel++)
+	{
+		[[self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]] setHidden:YES];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%dButton", channel]] setEnabled:YES];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%dStopButton", channel]] setEnabled:NO];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%dStopButton", channel]] setHidden:YES];
+	}
 	
 	self.nowPlayingLabel.text = @"";
 }
