@@ -10,26 +10,13 @@
 
 @protocol FlipsideViewControllerDelegate;
 
-
-@interface FlipsideViewController : UIViewController <UIWebViewDelegate> {
-	id <FlipsideViewControllerDelegate> delegate;
-	IBOutlet UIWebView *webView;
-	IBOutlet UIBarButtonItem *backButton;
-	IBOutlet UIBarButtonItem *forwardButton;
-	IBOutlet UIActivityIndicatorView *loadingSpinner;
-}
-
-@property (nonatomic, retain) UIWebView *webView;
-
-@property (nonatomic, assign) id <FlipsideViewControllerDelegate> delegate;
-- (IBAction)done;
-- (IBAction)goBack:(id)sender;
-- (IBAction)goForward:(id)sender;
-
+@interface FlipsideViewController : UIViewController <UIWebViewDelegate>
+@property (nonatomic, assign) id<FlipsideViewControllerDelegate> delegate;
 @end
 
-
 @protocol FlipsideViewControllerDelegate
+
 - (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller;
+
 @end
 

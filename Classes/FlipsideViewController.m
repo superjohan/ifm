@@ -8,65 +8,67 @@
 
 #import "FlipsideViewController.h"
 
+@interface FlipsideViewController ()
+@property (nonatomic, retain) IBOutlet UIWebView *webView;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *backButton;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *forwardButton;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *loadingSpinner;
+@end
 
 @implementation FlipsideViewController
 
-@synthesize delegate;
-@synthesize webView;
-
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
 	
-	[webView setDelegate:self];
-	NSString *urlAddress = @"http://intergalacticfm.com/";
-	NSURL *url = [NSURL URLWithString:urlAddress];
-	NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-	[webView loadRequest:requestObj];
+	self.webView.delegate = self;
+	[self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://intergalactic.fm"]]];
 }
 
-
-- (IBAction)done {
+- (IBAction)done
+{
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	[webView stopLoading];
+	[self.webView stopLoading];
 	[self.delegate flipsideViewControllerDidFinish:self];	
 }
 
-
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
 }
 
-
-- (void)viewDidUnload {
+- (void)viewDidUnload
+{
 	self.webView = nil;
 }
 
-
-- (IBAction)goBack:(id)sender {
-	[webView goBack];
+- (IBAction)goBack:(id)sender
+{
+	[self.webView goBack];
 }
 
-
-- (IBAction)goForward:(id)sender {
-	[webView goForward];
+- (IBAction)goForward:(id)sender
+{
+	[self.webView goForward];
 }
 
-
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-	[loadingSpinner setHidden:NO];
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+	self.loadingSpinner.hidden = NO;
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-	[loadingSpinner setHidden:YES];
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+	self.loadingSpinner.hidden = YES;
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
-
-- (void)dealloc {
-    [super dealloc];
-	[webView release];
+- (void)dealloc
+{
+	self.webView = nil;
+	
+	[super dealloc];
 }
 
 
