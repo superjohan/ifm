@@ -93,8 +93,8 @@
 	self.scrollText.duration = (640 + self.nowPlayingLabel.frame.size.width) / 60;
 	self.scrollText.repeatCount = 10000;
 	self.scrollText.autoreverses = NO;
-	self.scrollText.fromValue = [NSNumber numberWithFloat:320 + (self.nowPlayingLabel.frame.size.width / 2)];
-	self.scrollText.toValue = [NSNumber numberWithFloat:0 - (self.nowPlayingLabel.frame.size.width / 2)];
+	self.scrollText.fromValue = @(320 + (self.nowPlayingLabel.frame.size.width / 2));
+	self.scrollText.toValue = @(0 - (self.nowPlayingLabel.frame.size.width / 2));
 	[self.nowPlayingLabel.layer addAnimation:self.scrollText forKey:@"scrollTextKey"];
 	self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(updateNowPlaying) userInfo:nil repeats:YES];
 	
@@ -228,8 +228,8 @@
 	self.scrollText.duration = (640 + self.nowPlayingLabel.frame.size.width) / 60;
 	self.scrollText.repeatCount = 10000;
 	self.scrollText.autoreverses = NO;
-	self.scrollText.fromValue = [NSNumber numberWithFloat:320 + (self.nowPlayingLabel.frame.size.width / 2)];
-	self.scrollText.toValue = [NSNumber numberWithFloat:0 - (self.nowPlayingLabel.frame.size.width / 2)];
+	self.scrollText.fromValue = @(320 + (self.nowPlayingLabel.frame.size.width / 2));
+	self.scrollText.toValue = @(0 - (self.nowPlayingLabel.frame.size.width / 2));
 	[self.nowPlayingLabel.layer addAnimation:self.scrollText forKey:@"scrollTextKey"];
 }
 

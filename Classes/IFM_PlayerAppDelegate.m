@@ -17,7 +17,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
 	[TestFlight takeOff:@"f0fecfba73bb54d020763779a78a67cb_MjAxMjgyMDExLTExLTIwIDA3OjMyOjE5LjM4NzYxMg"];
-	[TestFlight setOptions:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:@"logToConsole"]];
+	[TestFlight setOptions:@{@"logToConsole": @(NO)}];
 	
 	self.mainViewController = [[[MainViewController alloc] initWithNibName:@"MainView" bundle:nil] autorelease];
     self.mainViewController.view.frame = [UIScreen mainScreen].applicationFrame;
