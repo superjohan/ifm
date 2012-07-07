@@ -58,13 +58,10 @@
 {    	
 	[TestFlight passCheckpoint:@"Info button touched"];
 	
-	FlipsideViewController *controller = [[FlipsideViewController alloc] initWithNibName:@"FlipsideView" bundle:nil];
+	FlipsideViewController *controller = [[[FlipsideViewController alloc] initWithNibName:@"FlipsideView" bundle:nil] autorelease];
 	controller.delegate = self;
-	
 	controller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
 	[self presentModalViewController:controller animated:YES];
-	
-	[controller release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,10 +82,10 @@
 	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM Player version %@ — Developed by Aero Deko — Visit our site at http://aerodeko.com", version];
 	
 	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 434, 320, 24)];
-	[self.nowPlayingLabel setText:introText];
-	[self.nowPlayingLabel setFont:[UIFont boldSystemFontOfSize:18]];
-	[self.nowPlayingLabel setBackgroundColor:[UIColor clearColor]];
-	[self.nowPlayingLabel setTextColor:[UIColor lightGrayColor]];
+	self.nowPlayingLabel.text = introText;
+	self.nowPlayingLabel.font = [UIFont boldSystemFontOfSize:18];
+	self.nowPlayingLabel.backgroundColor = [UIColor clearColor];
+	self.nowPlayingLabel.textColor = [UIColor lightGrayColor];
 	[self.nowPlayingLabel sizeToFit];
 	[self.view addSubview:self.nowPlayingLabel];
 	
@@ -98,7 +95,7 @@
 	self.scrollText.autoreverses = NO;
 	self.scrollText.fromValue = [NSNumber numberWithFloat:320 + (self.nowPlayingLabel.frame.size.width / 2)];
 	self.scrollText.toValue = [NSNumber numberWithFloat:0 - (self.nowPlayingLabel.frame.size.width / 2)];
-	[[self.nowPlayingLabel layer] addAnimation:self.scrollText forKey:@"scrollTextKey"];
+	[self.nowPlayingLabel.layer addAnimation:self.scrollText forKey:@"scrollTextKey"];
 	self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(updateNowPlaying) userInfo:nil repeats:YES];
 	
 	self.busyLoading = NO;
@@ -254,21 +251,21 @@
 
 - (void)updateNowPlayingLabel:(NSString *)track
 {
-	[self.nowPlayingLabel setText:track];
+	self.nowPlayingLabel.text = track;
 	[self.nowPlayingLabel sizeToFit];
 	[self resetAnimation];
 }
 
 - (void)resetAnimation
 {
-	[[self.nowPlayingLabel layer] removeAllAnimations];
+	[self.nowPlayingLabel.layer removeAllAnimations];
 	self.scrollText = [CABasicAnimation animationWithKeyPath:@"position.x"];
 	self.scrollText.duration = (640 + self.nowPlayingLabel.frame.size.width) / 60;
 	self.scrollText.repeatCount = 10000;
 	self.scrollText.autoreverses = NO;
 	self.scrollText.fromValue = [NSNumber numberWithFloat:320 + (self.nowPlayingLabel.frame.size.width / 2)];
 	self.scrollText.toValue = [NSNumber numberWithFloat:0 - (self.nowPlayingLabel.frame.size.width / 2)];
-	[[self.nowPlayingLabel layer] addAnimation:self.scrollText forKey:@"scrollTextKey"];
+	[self.nowPlayingLabel.layer addAnimation:self.scrollText forKey:@"scrollTextKey"];
 }
 
 - (void)ae_playChannel:(NSInteger)channel
