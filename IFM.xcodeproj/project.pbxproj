@@ -41,7 +41,6 @@
 		90884AE41129540400707F33 /* channel2.png in Resources */ = {isa = PBXBuildFile; fileRef = 90884ADC1129540400707F33 /* channel2.png */; };
 		90884AE61129540400707F33 /* channel3.png in Resources */ = {isa = PBXBuildFile; fileRef = 90884ADE1129540400707F33 /* channel3.png */; };
 		90884AE81129540400707F33 /* channel4.png in Resources */ = {isa = PBXBuildFile; fileRef = 90884AE01129540400707F33 /* channel4.png */; };
-		90884AF2112954D200707F33 /* AudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 90884AF1112954D200707F33 /* AudioStreamer.m */; };
 		90884B7311295FF900707F33 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 90884B7211295FF900707F33 /* background.png */; };
 		90884B75112960ED00707F33 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 90884B74112960ED00707F33 /* logo.png */; };
 		90884B8611296CDB00707F33 /* playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90884B8511296CDB00707F33 /* playing.png */; };
@@ -60,6 +59,7 @@
 		90D0D58F115CA03F007C9F6F /* newch3playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58B115CA03F007C9F6F /* newch3playing.png */; };
 		90D0D590115CA03F007C9F6F /* newch4playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58C115CA03F007C9F6F /* newch4playing.png */; };
 		90EDC422112AA08000D1395C /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EDC421112AA08000D1395C /* stop.png */; };
+		DBC9B02815A8489C00F1B239 /* AudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC9B02715A8489C00F1B239 /* AudioStreamer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,8 +104,6 @@
 		90884ADC1129540400707F33 /* channel2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = channel2.png; sourceTree = "<group>"; };
 		90884ADE1129540400707F33 /* channel3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = channel3.png; sourceTree = "<group>"; };
 		90884AE01129540400707F33 /* channel4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = channel4.png; sourceTree = "<group>"; };
-		90884AF0112954D200707F33 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioStreamer.h; sourceTree = "<group>"; };
-		90884AF1112954D200707F33 /* AudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioStreamer.m; sourceTree = "<group>"; };
 		90884B7211295FF900707F33 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		90884B74112960ED00707F33 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		90884B8511296CDB00707F33 /* playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playing.png; sourceTree = "<group>"; };
@@ -125,6 +123,8 @@
 		90D0D58C115CA03F007C9F6F /* newch4playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newch4playing.png; sourceTree = "<group>"; };
 		90D6F5101287FCAE0060ED15 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		90EDC421112AA08000D1395C /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = "<group>"; };
+		DBC9B02615A8489C00F1B239 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioStreamer.h; path = AudioStreamer/Classes/AudioStreamer.h; sourceTree = "<group>"; };
+		DBC9B02715A8489C00F1B239 /* AudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioStreamer.m; path = AudioStreamer/Classes/AudioStreamer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +186,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				DBC9B02915A848A300F1B239 /* AudioStreamer */,
 				289233A00DB2D0730083E9F9 /* Main View */,
 				281C6CD70DB2D82200F60ACC /* Flipside View */,
 				080E96DDFE201D6D7F000001 /* Application Delegate */,
@@ -202,8 +203,6 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				90884AF0112954D200707F33 /* AudioStreamer.h */,
-				90884AF1112954D200707F33 /* AudioStreamer.m */,
 				32CA4F630368D1EE00C91783 /* IFM_Player_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
@@ -279,6 +278,15 @@
 				902BB62D15A0CD7200DB1C33 /* TestFlight.h */,
 			);
 			name = TestFlight;
+			sourceTree = "<group>";
+		};
+		DBC9B02915A848A300F1B239 /* AudioStreamer */ = {
+			isa = PBXGroup;
+			children = (
+				DBC9B02615A8489C00F1B239 /* AudioStreamer.h */,
+				DBC9B02715A8489C00F1B239 /* AudioStreamer.m */,
+			);
+			name = AudioStreamer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -387,7 +395,7 @@
 				1D3623260D0F684500981E51 /* IFM_PlayerAppDelegate.m in Sources */,
 				289233AE0DB2D0DB0083E9F9 /* MainViewController.m in Sources */,
 				289233B00DB2D0DB0083E9F9 /* FlipsideViewController.m in Sources */,
-				90884AF2112954D200707F33 /* AudioStreamer.m in Sources */,
+				DBC9B02815A8489C00F1B239 /* AudioStreamer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
