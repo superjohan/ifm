@@ -11,43 +11,7 @@
 
 @class AudioStreamer;
 
-@interface MainViewController : UIViewController <FlipsideViewControllerDelegate> {
-	
-	IBOutlet UIButton *channel1Button;
-	IBOutlet UIButton *channel2Button;
-	IBOutlet UIButton *channel3Button;
-	IBOutlet UIButton *channel4Button;
-
-	IBOutlet UIButton *channel1StopButton;
-	IBOutlet UIButton *channel2StopButton;
-	IBOutlet UIButton *channel3StopButton;
-	IBOutlet UIButton *channel4StopButton;
-		
-	IBOutlet UIActivityIndicatorView *channel1Spinner;
-	IBOutlet UIActivityIndicatorView *channel2Spinner;
-	IBOutlet UIActivityIndicatorView *channel3Spinner;
-	IBOutlet UIActivityIndicatorView *channel4Spinner;
-
-	UILabel *nowPlayingLabel;
-	
-	AudioStreamer *streamer;
-	
-	NSString *channelSelection;
-	NSString *nowPlayingString;
-	
-	NSInteger channelPlaying;
-	NSInteger savedChannelPlaying;
-	
-	NSOperationQueue *operationQueue;
-
-	CABasicAnimation *scrollText;
-	
-	NSTimer *nowPlayingTimer;
-	
-	BOOL busyLoading;
-	BOOL playing;
-
-}
+@interface MainViewController : UIViewController <FlipsideViewControllerDelegate>
 
 - (IBAction)showInfo;
 - (IBAction)channel1ButtonPressed:(id)sender;

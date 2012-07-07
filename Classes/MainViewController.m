@@ -11,14 +11,40 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <CFNetwork/CFNetwork.h>
 
+@interface MainViewController ()
+@property (nonatomic, retain) IBOutlet UIButton *channel1Button;
+@property (nonatomic, retain) IBOutlet UIButton *channel2Button;
+@property (nonatomic, retain) IBOutlet UIButton *channel3Button;
+@property (nonatomic, retain) IBOutlet UIButton *channel4Button;
+@property (nonatomic, retain) IBOutlet UIButton *channel1StopButton;
+@property (nonatomic, retain) IBOutlet UIButton *channel2StopButton;
+@property (nonatomic, retain) IBOutlet UIButton *channel3StopButton;
+@property (nonatomic, retain) IBOutlet UIButton *channel4StopButton;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *channel1Spinner;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *channel2Spinner;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *channel3Spinner;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *channel4Spinner;
+@property (nonatomic, retain) UILabel *nowPlayingLabel;
+@property (nonatomic, retain) AudioStreamer *streamer;
+@property (nonatomic, retain) NSString *channelSelection;
+@property (nonatomic, retain) NSString *nowPlayingString;
+@property (nonatomic, assign) NSInteger channelPlaying;
+@property (nonatomic, assign) NSInteger savedChannelPlaying;
+@property (nonatomic, retain) NSOperationQueue *operationQueue;
+@property (nonatomic, retain) CABasicAnimation *scrollText;
+@property (nonatomic, retain) NSTimer *nowPlayingTimer;
+@property (nonatomic, assign) BOOL busyLoading;
+@property (nonatomic, assign) BOOL playing;
+@end
+
 @implementation MainViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) 
 	{
-		operationQueue = [[NSOperationQueue alloc] init];
-        [operationQueue setMaxConcurrentOperationCount:2];
+		self.operationQueue = [[NSOperationQueue alloc] init];
+        [self.operationQueue setMaxConcurrentOperationCount:2];
     }
     return self;
 }
@@ -58,27 +84,27 @@
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM Player version %@ — Developed by Aero Deko — Visit our site at http://aerodeko.com", version];
 	
-	nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 434, 320, 24)];
-	[nowPlayingLabel setText:introText];
-	[nowPlayingLabel setFont:[UIFont boldSystemFontOfSize:18]];
-	[nowPlayingLabel setBackgroundColor:[UIColor clearColor]];
-	[nowPlayingLabel setTextColor:[UIColor lightGrayColor]];
-	[nowPlayingLabel sizeToFit];
-	[self.view addSubview:nowPlayingLabel];
+	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 434, 320, 24)];
+	[self.nowPlayingLabel setText:introText];
+	[self.nowPlayingLabel setFont:[UIFont boldSystemFontOfSize:18]];
+	[self.nowPlayingLabel setBackgroundColor:[UIColor clearColor]];
+	[self.nowPlayingLabel setTextColor:[UIColor lightGrayColor]];
+	[self.nowPlayingLabel sizeToFit];
+	[self.view addSubview:self.nowPlayingLabel];
 	
-	scrollText = [CABasicAnimation animationWithKeyPath:@"position.x"];
-	scrollText.duration = (640 + nowPlayingLabel.frame.size.width) / 60;
-	scrollText.repeatCount = 10000;
-	scrollText.autoreverses = NO;
-	scrollText.fromValue = [NSNumber numberWithFloat:320 + (nowPlayingLabel.frame.size.width / 2)];
-	scrollText.toValue = [NSNumber numberWithFloat:0 - (nowPlayingLabel.frame.size.width / 2)];
-	[[nowPlayingLabel layer] addAnimation:scrollText forKey:@"scrollTextKey"];
-	nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(updateNowPlaying) userInfo:nil repeats:YES];
+	self.scrollText = [CABasicAnimation animationWithKeyPath:@"position.x"];
+	self.scrollText.duration = (640 + self.nowPlayingLabel.frame.size.width) / 60;
+	self.scrollText.repeatCount = 10000;
+	self.scrollText.autoreverses = NO;
+	self.scrollText.fromValue = [NSNumber numberWithFloat:320 + (self.nowPlayingLabel.frame.size.width / 2)];
+	self.scrollText.toValue = [NSNumber numberWithFloat:0 - (self.nowPlayingLabel.frame.size.width / 2)];
+	[[self.nowPlayingLabel layer] addAnimation:self.scrollText forKey:@"scrollTextKey"];
+	self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(updateNowPlaying) userInfo:nil repeats:YES];
 	
-	busyLoading = NO;
-	playing = NO;
+	self.busyLoading = NO;
+	self.playing = NO;
 	
-	savedChannelPlaying = 0;
+	self.savedChannelPlaying = 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -88,85 +114,85 @@
 
 - (void)destroyStreamer
 {
-	if (streamer)
+	if (self.streamer)
 	{
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:ASStatusChangedNotification object:streamer];
+		[[NSNotificationCenter defaultCenter] removeObserver:self name:ASStatusChangedNotification object:self.streamer];
 		
-		[streamer stop];
-		[streamer release];
-		streamer = nil;
+		[self.streamer stop];
+		[self.streamer release];
+		self.streamer = nil;
 	}
 }
 
 - (void)playbackStateChanged:(NSNotification *)aNotification
 {
-	if ([streamer isWaiting])
+	if ([self.streamer isWaiting])
 	{
 		// show spinner and hide stop button when waiting for stream to play (eg. loading or interrupted)
-		switch (channelPlaying) {
+		switch (self.channelPlaying) {
 			case 1:
-				[channel1Spinner setHidden:NO];
-				[channel1Spinner startAnimating];
-				[channel1Button setEnabled:NO];
-				[channel1StopButton setHidden:YES];
-				[channel1StopButton setEnabled:NO];
+				[self.channel1Spinner setHidden:NO];
+				[self.channel1Spinner startAnimating];
+				[self.channel1Button setEnabled:NO];
+				[self.channel1StopButton setHidden:YES];
+				[self.channel1StopButton setEnabled:NO];
 				break;
 			case 2:
-				[channel2Spinner setHidden:NO];
-				[channel2Spinner startAnimating];
-				[channel2Button setEnabled:NO];
-				[channel2StopButton setHidden:YES];
-				[channel2StopButton setEnabled:NO];
+				[self.channel2Spinner setHidden:NO];
+				[self.channel2Spinner startAnimating];
+				[self.channel2Button setEnabled:NO];
+				[self.channel2StopButton setHidden:YES];
+				[self.channel2StopButton setEnabled:NO];
 				break;
 			case 3:
-				[channel3Spinner setHidden:NO];
-				[channel3Spinner startAnimating];
-				[channel3Button setEnabled:NO];
-				[channel3StopButton setHidden:YES];
-				[channel3StopButton setEnabled:NO];
+				[self.channel3Spinner setHidden:NO];
+				[self.channel3Spinner startAnimating];
+				[self.channel3Button setEnabled:NO];
+				[self.channel3StopButton setHidden:YES];
+				[self.channel3StopButton setEnabled:NO];
 				break;
 			case 4:
-				[channel4Spinner setHidden:NO];
-				[channel4Spinner startAnimating];
-				[channel4Button setEnabled:NO];
-				[channel4StopButton setHidden:YES];
-				[channel4StopButton setEnabled:NO];
+				[self.channel4Spinner setHidden:NO];
+				[self.channel4Spinner startAnimating];
+				[self.channel4Button setEnabled:NO];
+				[self.channel4StopButton setHidden:YES];
+				[self.channel4StopButton setEnabled:NO];
 				break;
 			default:
 				break;
 		}
 	}
-	else if ([streamer isPlaying])
+	else if ([self.streamer isPlaying])
 	{
 		[self updateNowPlaying];
 
 		// hide spinner and show stop button
-		switch (channelPlaying) {
+		switch (self.channelPlaying) {
 			case 1:
-				[channel1Spinner setHidden:YES];
-				[channel1StopButton setHidden:NO];
-				[channel1StopButton setEnabled:YES];
+				[self.channel1Spinner setHidden:YES];
+				[self.channel1StopButton setHidden:NO];
+				[self.channel1StopButton setEnabled:YES];
 				break;
 			case 2:
-				[channel2Spinner setHidden:YES];
-				[channel2StopButton setHidden:NO];
-				[channel2StopButton setEnabled:YES];
+				[self.channel2Spinner setHidden:YES];
+				[self.channel2StopButton setHidden:NO];
+				[self.channel2StopButton setEnabled:YES];
 				break;
 			case 3:
-				[channel3Spinner setHidden:YES];
-				[channel3StopButton setHidden:NO];
-				[channel3StopButton setEnabled:YES];
+				[self.channel3Spinner setHidden:YES];
+				[self.channel3StopButton setHidden:NO];
+				[self.channel3StopButton setEnabled:YES];
 				break;
 			case 4:
-				[channel4Spinner setHidden:YES];
-				[channel4StopButton setHidden:NO];
-				[channel4StopButton setEnabled:YES];
+				[self.channel4Spinner setHidden:YES];
+				[self.channel4StopButton setHidden:NO];
+				[self.channel4StopButton setEnabled:YES];
 				break;
 			default:
 				break;
 		}
 	}
-	else if ([streamer isIdle])
+	else if ([self.streamer isIdle])
 	{
 		// streamer stops
 		[self resetEverything];
@@ -179,7 +205,7 @@
 	[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
 	[self becomeFirstResponder];
 	
-	if (streamer)
+	if (self.streamer)
 	{
 		return;
 	}
@@ -187,90 +213,80 @@
 	[self destroyStreamer];
 	
 	NSString *escapedValue =
-	[(NSString *)CFURLCreateStringByAddingPercentEscapes(
-														 nil,
-														 (CFStringRef)channelSelection,
-														 NULL,
-														 NULL,
-														 kCFStringEncodingUTF8)
-	 autorelease];
+	[(NSString *)CFURLCreateStringByAddingPercentEscapes(nil, (CFStringRef)self.channelSelection, NULL, NULL, kCFStringEncodingUTF8) autorelease];
 	
 	NSURL *url = [NSURL URLWithString:escapedValue];
-	streamer = [[AudioStreamer alloc] initWithURL:url];
+	self.streamer = [[AudioStreamer alloc] initWithURL:url];
 	
-	[[NSNotificationCenter defaultCenter]
-	 addObserver:self
-	 selector:@selector(playbackStateChanged:)
-	 name:ASStatusChangedNotification
-	 object:streamer];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackStateChanged:) name:ASStatusChangedNotification object:self.streamer];
 }
 
 - (void)updateNowPlaying
 {
-	if(channelPlaying != 0 && busyLoading == NO)
+	if(self.channelPlaying != 0 && self.busyLoading == NO)
 	{
-		busyLoading = YES;
+		self.busyLoading = YES;
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(synchronousLoadNowPlayingData) object:nil];
-		[operationQueue addOperation:operation];
+		[self.operationQueue addOperation:operation];
 		[operation release];
 	}
 }
 
 - (void)synchronousLoadNowPlayingData
 {
-	NSString *urlString = [[NSString alloc] initWithFormat:@"http://intergalactic.fm/data/playing%d.html", channelPlaying];
+	NSString *urlString = [[NSString alloc] initWithFormat:@"http://intergalactic.fm/data/playing%d.html", self.channelPlaying];
     NSURL *url = [NSURL URLWithString:urlString];
 	NSData *data = [NSData dataWithContentsOfURL:url];
 	
-	nowPlayingString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-	nowPlayingString = [nowPlayingString stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+	self.nowPlayingString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	self.nowPlayingString = [self.nowPlayingString stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
 
-	NSArray* lines = [nowPlayingString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];	
+	NSArray* lines = [self.nowPlayingString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 		
-	if(![[lines objectAtIndex:2] isEqualToString:[nowPlayingLabel text]]) 
+	if(![[lines objectAtIndex:2] isEqualToString:[self.nowPlayingLabel text]])
 	{		
 		[self performSelectorOnMainThread:@selector(updateNowPlayingLabel:) withObject:[lines objectAtIndex:2] waitUntilDone:YES];
 	}	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	busyLoading = NO;
+	self.busyLoading = NO;
 }
 
 - (void)updateNowPlayingLabel:(NSString *)track
 {
-	[nowPlayingLabel setText:track];
-	[nowPlayingLabel sizeToFit];
+	[self.nowPlayingLabel setText:track];
+	[self.nowPlayingLabel sizeToFit];
 	[self resetAnimation];
 }
 
 - (void)resetAnimation
 {
-	[[nowPlayingLabel layer] removeAllAnimations];
-	scrollText = [CABasicAnimation animationWithKeyPath:@"position.x"];
-	scrollText.duration = (640 + nowPlayingLabel.frame.size.width) / 60;
-	scrollText.repeatCount = 10000;
-	scrollText.autoreverses = NO;
-	scrollText.fromValue = [NSNumber numberWithFloat:320 + (nowPlayingLabel.frame.size.width / 2)];
-	scrollText.toValue = [NSNumber numberWithFloat:0 - (nowPlayingLabel.frame.size.width / 2)];
-	[[nowPlayingLabel layer] addAnimation:scrollText forKey:@"scrollTextKey"];		
+	[[self.nowPlayingLabel layer] removeAllAnimations];
+	self.scrollText = [CABasicAnimation animationWithKeyPath:@"position.x"];
+	self.scrollText.duration = (640 + self.nowPlayingLabel.frame.size.width) / 60;
+	self.scrollText.repeatCount = 10000;
+	self.scrollText.autoreverses = NO;
+	self.scrollText.fromValue = [NSNumber numberWithFloat:320 + (self.nowPlayingLabel.frame.size.width / 2)];
+	self.scrollText.toValue = [NSNumber numberWithFloat:0 - (self.nowPlayingLabel.frame.size.width / 2)];
+	[[self.nowPlayingLabel layer] addAnimation:self.scrollText forKey:@"scrollTextKey"];
 }
 
 - (void)ae_playChannel:(NSInteger)channel
 {
 	[TestFlight passCheckpoint:[NSString stringWithFormat:@"Channel %d button touched", channel]];
 	
-	[streamer stop];
+	[self.streamer stop];
 	[self destroyStreamer];
 	[self resetEverything];
 	
 	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://radio.intergalactic.fm/%daac.m3u", channel]]encoding:NSUTF8StringEncoding error:nil];
-	channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] objectAtIndex:0];
-	channelPlaying = channel;
-	savedChannelPlaying = channel;
+	self.channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] objectAtIndex:0];
+	self.channelPlaying = channel;
+	self.savedChannelPlaying = channel;
 	
 	[self createStreamer];
-	[streamer start];
-	playing = YES;
+	[self.streamer start];
+	self.playing = YES;
 }
 
 - (IBAction)channel1ButtonPressed:(id)sender
@@ -297,38 +313,38 @@
 {
 	[TestFlight passCheckpoint:@"Stop button touched"];
 
-	[streamer stop];
+	[self.streamer stop];
 	[self destroyStreamer];
 	[self performSelectorOnMainThread:@selector(resetEverything) withObject:nil waitUntilDone:YES];
-	savedChannelPlaying = 0;
+	self.savedChannelPlaying = 0;
 }
 
 - (void)resetEverything
 {
-	channelPlaying = 0;
-	playing = NO;
+	self.channelPlaying = 0;
+	self.playing = NO;
 	
-	[channel1Spinner setHidden:YES];
-	[channel2Spinner setHidden:YES];
-	[channel3Spinner setHidden:YES];
-	[channel4Spinner setHidden:YES];
+	[self.channel1Spinner setHidden:YES];
+	[self.channel2Spinner setHidden:YES];
+	[self.channel3Spinner setHidden:YES];
+	[self.channel4Spinner setHidden:YES];
 	
-	[channel1Button setEnabled:YES];
-	[channel2Button setEnabled:YES];
-	[channel3Button setEnabled:YES];
-	[channel4Button setEnabled:YES];
+	[self.channel1Button setEnabled:YES];
+	[self.channel2Button setEnabled:YES];
+	[self.channel3Button setEnabled:YES];
+	[self.channel4Button setEnabled:YES];
 	
-	[channel1StopButton setEnabled:NO];
-	[channel2StopButton setEnabled:NO];
-	[channel3StopButton setEnabled:NO];
-	[channel4StopButton setEnabled:NO];
+	[self.channel1StopButton setEnabled:NO];
+	[self.channel2StopButton setEnabled:NO];
+	[self.channel3StopButton setEnabled:NO];
+	[self.channel4StopButton setEnabled:NO];
 	
-	[channel1StopButton setHidden:YES];
-	[channel2StopButton setHidden:YES];
-	[channel3StopButton setHidden:YES];
-	[channel4StopButton setHidden:YES];
+	[self.channel1StopButton setHidden:YES];
+	[self.channel2StopButton setHidden:YES];
+	[self.channel3StopButton setHidden:YES];
+	[self.channel4StopButton setHidden:YES];
 	
-	nowPlayingLabel.text = @"";
+	self.nowPlayingLabel.text = @"";
 }
 
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event
@@ -342,25 +358,25 @@
             case UIEventSubtypeRemoteControlPlay:
                 break;
             case UIEventSubtypeRemoteControlPause:
-				[streamer stop];
+				[self.streamer stop];
 				[self destroyStreamer];
 				[self resetEverything];
                 break;                
             case UIEventSubtypeRemoteControlStop:
-				[streamer stop];
+				[self.streamer stop];
 				[self destroyStreamer];
 				[self resetEverything];
                 break;                
             case UIEventSubtypeRemoteControlTogglePlayPause:
 			{
-				if(playing)
+				if(self.playing)
 				{
-					playing = NO;
-					[streamer stop];
+					self.playing = NO;
+					[self.streamer stop];
 					[self destroyStreamer];
 					[self resetEverything];
 				}
-				else if(playing == NO && savedChannelPlaying != 0)
+				else if(self.playing == NO && self.savedChannelPlaying != 0)
 				{
 					[self playSavedChannel];
 				}
@@ -368,32 +384,32 @@
 			}
             case UIEventSubtypeRemoteControlNextTrack:
 			{        
-				[streamer stop];
+				[self.streamer stop];
 				[self destroyStreamer];
 				[self resetEverything];
-				if(savedChannelPlaying < 4)
+				if(self.savedChannelPlaying < 4)
 				{
-					savedChannelPlaying++;
+					self.savedChannelPlaying++;
 				}
 				else 
 				{
-					savedChannelPlaying = 1;
+					self.savedChannelPlaying = 1;
 				}
 				[self playSavedChannel];
 				break;
 			}
             case UIEventSubtypeRemoteControlPreviousTrack:
 			{        
-				[streamer stop];
+				[self.streamer stop];
 				[self destroyStreamer];
 				[self resetEverything];
-				if(savedChannelPlaying == 1)
+				if(self.savedChannelPlaying == 1)
 				{
-					savedChannelPlaying = 4;
+					self.savedChannelPlaying = 4;
 				}
 				else 
 				{
-					savedChannelPlaying--;
+					self.savedChannelPlaying--;
 				}
 				[self playSavedChannel];
 				break;
@@ -406,8 +422,8 @@
 
 - (void)playSavedChannel
 {
-	playing = YES;
-	switch (savedChannelPlaying)
+	self.playing = YES;
+	switch (self.savedChannelPlaying)
 	{
 		case 1:
 			[self channel1ButtonPressed:nil];
