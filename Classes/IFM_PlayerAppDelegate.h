@@ -10,10 +10,7 @@
 
 @class MainViewController;
 
-@interface IFM_PlayerAppDelegate : NSObject <UIApplicationDelegate> {
-    UIWindow *window;
-    MainViewController *mainViewController;
-}
+@interface IFM_PlayerAppDelegate : NSObject <UIApplicationDelegate>
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) MainViewController *mainViewController;

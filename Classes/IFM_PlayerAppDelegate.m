@@ -11,36 +11,32 @@
 
 @implementation IFM_PlayerAppDelegate
 
-
 @synthesize window;
 @synthesize mainViewController;
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
 	[TestFlight takeOff:@"f0fecfba73bb54d020763779a78a67cb_MjAxMjgyMDExLTExLTIwIDA3OjMyOjE5LjM4NzYxMg"];
 	[TestFlight setOptions:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:@"logToConsole"]];
 	
-	MainViewController *aController = [[MainViewController alloc] initWithNibName:@"MainView" bundle:nil];
-	self.mainViewController = aController;
-	[aController release];
-	
-    mainViewController.view.frame = [UIScreen mainScreen].applicationFrame;
-	[window addSubview:[mainViewController view]];
-    [window makeKeyAndVisible];
+	self.mainViewController = [[[MainViewController alloc] initWithNibName:@"MainView" bundle:nil] autorelease];
+    self.mainViewController.view.frame = [UIScreen mainScreen].applicationFrame;
+	[self.window addSubview:self.mainViewController.view];
+    [self.window makeKeyAndVisible];
 	
 	return YES;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-	[mainViewController resetAnimation];
+	[self.mainViewController resetAnimation];
 }
 
-
-- (void)dealloc {
-    [mainViewController release];
-    [window release];
+- (void)dealloc
+{
+	self.mainViewController = nil;
+	self.window = nil;
+	
     [super dealloc];
 }
 
