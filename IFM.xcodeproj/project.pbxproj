@@ -186,9 +186,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				902BB63015A0CD9A00DB1C33 /* libz.dylib */,
-				902BB62C15A0CD7200DB1C33 /* libTestFlight.a */,
-				902BB62D15A0CD7200DB1C33 /* TestFlight.h */,
 				289233A00DB2D0730083E9F9 /* Main View */,
 				281C6CD70DB2D82200F60ACC /* Flipside View */,
 				080E96DDFE201D6D7F000001 /* Application Delegate */,
@@ -262,6 +259,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				902BB63015A0CD9A00DB1C33 /* libz.dylib */,
+				DBC9B02415A8437D00F1B239 /* TestFlight */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765580DF743DE002DB57D /* CoreGraphics.framework */,
@@ -271,6 +270,15 @@
 				903B8A94114E28F70076A1C2 /* QuartzCore.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DBC9B02415A8437D00F1B239 /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				902BB62C15A0CD7200DB1C33 /* libTestFlight.a */,
+				902BB62D15A0CD7200DB1C33 /* TestFlight.h */,
+			);
+			name = TestFlight;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
