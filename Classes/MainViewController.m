@@ -11,22 +11,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <CFNetwork/CFNetwork.h>
 
-#ifndef kCFCoreFoundationVersionNumber_iPhoneOS_4_0
-#define kCFCoreFoundationVersionNumber_iPhoneOS_4_0 550.32
-#endif
-
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
-#define IF_IOS4_OR_GREATER(...) \
-if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iPhoneOS_4_0) \
-{ \
-__VA_ARGS__ \
-}
-#else
-#define IF_IOS4_OR_GREATER(...)
-#endif
-
 @implementation MainViewController
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil 
 {
@@ -197,11 +182,8 @@ __VA_ARGS__ \
 
 - (void)createStreamer
 {
-	IF_IOS4_OR_GREATER
-	(
-		[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-		[self becomeFirstResponder];
-	);
+	[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+	[self becomeFirstResponder];
 	
 	if (streamer)
 	{
