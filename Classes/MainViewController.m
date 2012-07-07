@@ -52,6 +52,12 @@
 	}
 }
 
+- (void)ae_stopStreamer
+{
+	[self ae_destroyStreamer];
+	[self ae_resetEverything];
+}
+
 - (void)ae_setChannelToWaiting:(NSInteger)channel
 {
 	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]];
@@ -78,19 +84,14 @@
 - (void)ae_playbackStateChanged:(NSNotification *)aNotification
 {
 	if ([self.streamer isWaiting])
-	{
 		[self ae_setChannelToWaiting:self.channelPlaying];
-	}
 	else if ([self.streamer isPlaying])
 	{
 		[self ae_updateNowPlaying];
 		[self ae_setChannelToPlaying:self.channelPlaying];
 	}
 	else if ([self.streamer isIdle])
-	{
-		[self ae_resetEverything];
-		[self ae_destroyStreamer];
-	}
+		[self ae_stopStreamer];
 }
 
 - (void)ae_createStreamer
@@ -101,13 +102,11 @@
 	if (self.streamer)
 		return;
 	
-	[self ae_destroyStreamer];
-	
 	NSString *escapedValue = [self.channelSelection stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	NSURL *url = [NSURL URLWithString:escapedValue];
 	self.streamer = [[AudioStreamer alloc] initWithURL:url];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackStateChanged:) name:ASStatusChangedNotification object:self.streamer];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ae_playbackStateChanged:) name:ASStatusChangedNotification object:self.streamer];
 }
 
 - (void)ae_updateNowPlaying
@@ -150,9 +149,7 @@
 {
 	[TestFlight passCheckpoint:[NSString stringWithFormat:@"Channel %d button touched", channel]];
 	
-	[self.streamer stop];
-	[self ae_destroyStreamer];
-	[self ae_resetEverything];
+	[self ae_stopStreamer];
 	
 	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://radio.intergalactic.fm/%daac.m3u", channel]]encoding:NSUTF8StringEncoding error:nil];
 	self.channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] objectAtIndex:0];
@@ -221,9 +218,8 @@
 {
 	[TestFlight passCheckpoint:@"Stop button touched"];
 	
-	[self.streamer stop];
-	[self ae_destroyStreamer];
-	[self ae_resetEverything];
+	[self ae_stopStreamer];
+	
 	self.savedChannelPlaying = 0;
 }
 
@@ -303,27 +299,18 @@
 			}
             case UIEventSubtypeRemoteControlPause:
 			{
-				[self.streamer stop];
-				[self ae_destroyStreamer];
-				[self ae_resetEverything];
+				[self ae_stopStreamer];
                 break;
             }
 			case UIEventSubtypeRemoteControlStop:
 			{
-				[self.streamer stop];
-				[self ae_destroyStreamer];
-				[self ae_resetEverything];
+				[self ae_stopStreamer];
                 break;
 			}
             case UIEventSubtypeRemoteControlTogglePlayPause:
 			{
 				if (self.playing)
-				{
-					self.playing = NO;
-					[self.streamer stop];
-					[self ae_destroyStreamer];
-					[self ae_resetEverything];
-				}
+					[self ae_stopStreamer];
 				else if ( ! self.playing && self.savedChannelPlaying != 0)
 					[self ae_playSavedChannel];
 				
@@ -331,9 +318,7 @@
 			}
             case UIEventSubtypeRemoteControlNextTrack:
 			{
-				[self.streamer stop];
-				[self ae_destroyStreamer];
-				[self ae_resetEverything];
+				[self ae_stopStreamer];
 				
 				if (self.savedChannelPlaying < 4)
 					self.savedChannelPlaying++;
@@ -345,9 +330,7 @@
 			}
             case UIEventSubtypeRemoteControlPreviousTrack:
 			{
-				[self.streamer stop];
-				[self ae_destroyStreamer];
-				[self ae_resetEverything];
+				[self ae_stopStreamer];
 				
 				if (self.savedChannelPlaying == 1)
 					self.savedChannelPlaying = 4;
