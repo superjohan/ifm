@@ -115,7 +115,7 @@
 	{
 		self.busyLoading = YES;
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(synchronousLoadNowPlayingData) object:nil];
+		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(ae_synchronousLoadNowPlayingData) object:nil];
 		[self.operationQueue addOperation:operation];
 	}
 }
@@ -132,7 +132,7 @@
 	NSArray* lines = [self.nowPlayingString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 	
 	if ( ! [[lines objectAtIndex:2] isEqualToString:[self.nowPlayingLabel text]])
-		[self performSelectorOnMainThread:@selector(updateNowPlayingLabel:) withObject:[lines objectAtIndex:2] waitUntilDone:YES];
+		[self performSelectorOnMainThread:@selector(ae_updateNowPlayingLabel:) withObject:[lines objectAtIndex:2] waitUntilDone:YES];
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	self.busyLoading = NO;
@@ -277,7 +277,7 @@
 	self.scrollText.fromValue = @(320 + (self.nowPlayingLabel.frame.size.width / 2));
 	self.scrollText.toValue = @(0 - (self.nowPlayingLabel.frame.size.width / 2));
 	[self.nowPlayingLabel.layer addAnimation:self.scrollText forKey:@"scrollTextKey"];
-	self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(updateNowPlaying) userInfo:nil repeats:YES];
+	self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(ae_updateNowPlaying) userInfo:nil repeats:YES];
 	
 	self.busyLoading = NO;
 	self.playing = NO;
