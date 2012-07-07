@@ -39,78 +39,9 @@
 
 @implementation MainViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) 
-	{
-		self.operationQueue = [[NSOperationQueue alloc] init];
-        [self.operationQueue setMaxConcurrentOperationCount:2];
-    }
-	
-    return self;
-}
+#pragma mark - Private
 
-- (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller
-{    
-	[self dismissModalViewControllerAnimated:YES];
-}
-
-- (IBAction)showInfo
-{    	
-	[TestFlight passCheckpoint:@"Info button touched"];
-	
-	FlipsideViewController *controller = [[FlipsideViewController alloc] initWithNibName:@"FlipsideView" bundle:nil];
-	controller.delegate = self;
-	controller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-	[self presentModalViewController:controller animated:YES];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-- (BOOL)canBecomeFirstResponder
-{
-    return TRUE;
-}
-
--(void)viewDidLoad
-{
-	[self resetEverything];
-			
-    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM Player version %@ — Developed by Aero Deko — Visit our site at http://aerodeko.com", version];
-	
-	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 434, 320, 24)];
-	self.nowPlayingLabel.text = introText;
-	self.nowPlayingLabel.font = [UIFont boldSystemFontOfSize:18];
-	self.nowPlayingLabel.backgroundColor = [UIColor clearColor];
-	self.nowPlayingLabel.textColor = [UIColor lightGrayColor];
-	[self.nowPlayingLabel sizeToFit];
-	[self.view addSubview:self.nowPlayingLabel];
-	
-	self.scrollText = [CABasicAnimation animationWithKeyPath:@"position.x"];
-	self.scrollText.duration = (640 + self.nowPlayingLabel.frame.size.width) / 60;
-	self.scrollText.repeatCount = 10000;
-	self.scrollText.autoreverses = NO;
-	self.scrollText.fromValue = @(320 + (self.nowPlayingLabel.frame.size.width / 2));
-	self.scrollText.toValue = @(0 - (self.nowPlayingLabel.frame.size.width / 2));
-	[self.nowPlayingLabel.layer addAnimation:self.scrollText forKey:@"scrollTextKey"];
-	self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(updateNowPlaying) userInfo:nil repeats:YES];
-	
-	self.busyLoading = NO;
-	self.playing = NO;
-	
-	self.savedChannelPlaying = 0;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-}
-
-- (void)destroyStreamer
+- (void)ae_destroyStreamer
 {
 	if (self.streamer)
 	{
@@ -144,7 +75,7 @@
 	stopButton.enabled = YES;
 }
 
-- (void)playbackStateChanged:(NSNotification *)aNotification
+- (void)ae_playbackStateChanged:(NSNotification *)aNotification
 {
 	if ([self.streamer isWaiting])
 	{
@@ -152,17 +83,17 @@
 	}
 	else if ([self.streamer isPlaying])
 	{
-		[self updateNowPlaying];
+		[self ae_updateNowPlaying];
 		[self ae_setChannelToPlaying:self.channelPlaying];
 	}
 	else if ([self.streamer isIdle])
 	{
-		[self resetEverything];
-		[self destroyStreamer];
+		[self ae_resetEverything];
+		[self ae_destroyStreamer];
 	}
 }
 
-- (void)createStreamer
+- (void)ae_createStreamer
 {
 	[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
 	[self becomeFirstResponder];
@@ -170,7 +101,7 @@
 	if (self.streamer)
 		return;
 	
-	[self destroyStreamer];
+	[self ae_destroyStreamer];
 	
 	NSString *escapedValue = [self.channelSelection stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	NSURL *url = [NSURL URLWithString:escapedValue];
@@ -179,7 +110,7 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackStateChanged:) name:ASStatusChangedNotification object:self.streamer];
 }
 
-- (void)updateNowPlaying
+- (void)ae_updateNowPlaying
 {
 	if (self.channelPlaying != 0 && self.busyLoading == NO)
 	{
@@ -190,7 +121,7 @@
 	}
 }
 
-- (void)synchronousLoadNowPlayingData
+- (void)ae_synchronousLoadNowPlayingData
 {
 	NSString *urlString = [[NSString alloc] initWithFormat:@"http://intergalactic.fm/data/playing%d.html", self.channelPlaying];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -198,33 +129,21 @@
 	
 	self.nowPlayingString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	self.nowPlayingString = [self.nowPlayingString stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
-
+	
 	NSArray* lines = [self.nowPlayingString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-		
+	
 	if ( ! [[lines objectAtIndex:2] isEqualToString:[self.nowPlayingLabel text]])
 		[self performSelectorOnMainThread:@selector(updateNowPlayingLabel:) withObject:[lines objectAtIndex:2] waitUntilDone:YES];
-
+	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	self.busyLoading = NO;
 }
 
-- (void)updateNowPlayingLabel:(NSString *)track
+- (void)ae_updateNowPlayingLabel:(NSString *)track
 {
 	self.nowPlayingLabel.text = track;
 	[self.nowPlayingLabel sizeToFit];
 	[self resetAnimation];
-}
-
-- (void)resetAnimation
-{
-	[self.nowPlayingLabel.layer removeAllAnimations];
-	self.scrollText = [CABasicAnimation animationWithKeyPath:@"position.x"];
-	self.scrollText.duration = (640 + self.nowPlayingLabel.frame.size.width) / 60;
-	self.scrollText.repeatCount = 10000;
-	self.scrollText.autoreverses = NO;
-	self.scrollText.fromValue = @(320 + (self.nowPlayingLabel.frame.size.width / 2));
-	self.scrollText.toValue = @(0 - (self.nowPlayingLabel.frame.size.width / 2));
-	[self.nowPlayingLabel.layer addAnimation:self.scrollText forKey:@"scrollTextKey"];
 }
 
 - (void)ae_playChannel:(NSInteger)channel
@@ -232,17 +151,50 @@
 	[TestFlight passCheckpoint:[NSString stringWithFormat:@"Channel %d button touched", channel]];
 	
 	[self.streamer stop];
-	[self destroyStreamer];
-	[self resetEverything];
+	[self ae_destroyStreamer];
+	[self ae_resetEverything];
 	
 	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://radio.intergalactic.fm/%daac.m3u", channel]]encoding:NSUTF8StringEncoding error:nil];
 	self.channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] objectAtIndex:0];
 	self.channelPlaying = channel;
 	self.savedChannelPlaying = channel;
 	
-	[self createStreamer];
+	[self ae_createStreamer];
 	[self.streamer start];
 	self.playing = YES;
+}
+
+- (void)ae_resetEverything
+{
+	self.channelPlaying = 0;
+	self.playing = NO;
+	
+	for (NSInteger channel = 1;  channel < 5; channel++)
+	{
+		[[self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]] setHidden:YES];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%dButton", channel]] setEnabled:YES];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%dStopButton", channel]] setEnabled:NO];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%dStopButton", channel]] setHidden:YES];
+	}
+	
+	self.nowPlayingLabel.text = @"";
+}
+
+- (void)ae_playSavedChannel
+{
+	[self ae_playChannel:self.savedChannelPlaying];
+}
+
+#pragma mark - IBActions
+
+- (IBAction)showInfo
+{
+	[TestFlight passCheckpoint:@"Info button touched"];
+	
+	FlipsideViewController *controller = [[FlipsideViewController alloc] initWithNibName:@"FlipsideView" bundle:nil];
+	controller.delegate = self;
+	controller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+	[self presentModalViewController:controller animated:YES];
 }
 
 - (IBAction)channel1ButtonPressed:(id)sender
@@ -268,27 +220,73 @@
 - (IBAction)stopButtonPressed:(id)sender
 {
 	[TestFlight passCheckpoint:@"Stop button touched"];
-
+	
 	[self.streamer stop];
-	[self destroyStreamer];
-	[self resetEverything];
+	[self ae_destroyStreamer];
+	[self ae_resetEverything];
 	self.savedChannelPlaying = 0;
 }
 
-- (void)resetEverything
+#pragma mark - Public
+
+- (void)resetAnimation
 {
-	self.channelPlaying = 0;
+	[self.nowPlayingLabel.layer removeAllAnimations];
+	self.scrollText = [CABasicAnimation animationWithKeyPath:@"position.x"];
+	self.scrollText.duration = (640 + self.nowPlayingLabel.frame.size.width) / 60;
+	self.scrollText.repeatCount = 10000;
+	self.scrollText.autoreverses = NO;
+	self.scrollText.fromValue = @(320 + (self.nowPlayingLabel.frame.size.width / 2));
+	self.scrollText.toValue = @(0 - (self.nowPlayingLabel.frame.size.width / 2));
+	[self.nowPlayingLabel.layer addAnimation:self.scrollText forKey:@"scrollTextKey"];
+}
+
+#pragma mark - UIViewController overrides
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) 
+	{
+		self.operationQueue = [[NSOperationQueue alloc] init];
+        [self.operationQueue setMaxConcurrentOperationCount:2];
+    }
+	
+    return self;
+}
+
+- (BOOL)canBecomeFirstResponder
+{
+    return TRUE;
+}
+
+-(void)viewDidLoad
+{
+	[self ae_resetEverything];
+	
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM Player version %@ — Developed by Aero Deko — Visit our site at http://aerodeko.com", version];
+	
+	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 434, 320, 24)];
+	self.nowPlayingLabel.text = introText;
+	self.nowPlayingLabel.font = [UIFont boldSystemFontOfSize:18];
+	self.nowPlayingLabel.backgroundColor = [UIColor clearColor];
+	self.nowPlayingLabel.textColor = [UIColor lightGrayColor];
+	[self.nowPlayingLabel sizeToFit];
+	[self.view addSubview:self.nowPlayingLabel];
+	
+	self.scrollText = [CABasicAnimation animationWithKeyPath:@"position.x"];
+	self.scrollText.duration = (640 + self.nowPlayingLabel.frame.size.width) / 60;
+	self.scrollText.repeatCount = 10000;
+	self.scrollText.autoreverses = NO;
+	self.scrollText.fromValue = @(320 + (self.nowPlayingLabel.frame.size.width / 2));
+	self.scrollText.toValue = @(0 - (self.nowPlayingLabel.frame.size.width / 2));
+	[self.nowPlayingLabel.layer addAnimation:self.scrollText forKey:@"scrollTextKey"];
+	self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(updateNowPlaying) userInfo:nil repeats:YES];
+	
+	self.busyLoading = NO;
 	self.playing = NO;
 	
-	for (NSInteger channel = 1;  channel < 5; channel++)
-	{
-		[[self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]] setHidden:YES];
-		[[self valueForKey:[NSString stringWithFormat:@"channel%dButton", channel]] setEnabled:YES];
-		[[self valueForKey:[NSString stringWithFormat:@"channel%dStopButton", channel]] setEnabled:NO];
-		[[self valueForKey:[NSString stringWithFormat:@"channel%dStopButton", channel]] setHidden:YES];
-	}
-	
-	self.nowPlayingLabel.text = @"";
+	self.savedChannelPlaying = 0;
 }
 
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event
@@ -306,15 +304,15 @@
             case UIEventSubtypeRemoteControlPause:
 			{
 				[self.streamer stop];
-				[self destroyStreamer];
-				[self resetEverything];
-                break;                
+				[self ae_destroyStreamer];
+				[self ae_resetEverything];
+                break;
             }
 			case UIEventSubtypeRemoteControlStop:
 			{
 				[self.streamer stop];
-				[self destroyStreamer];
-				[self resetEverything];
+				[self ae_destroyStreamer];
+				[self ae_resetEverything];
                 break;
 			}
             case UIEventSubtypeRemoteControlTogglePlayPause:
@@ -323,40 +321,40 @@
 				{
 					self.playing = NO;
 					[self.streamer stop];
-					[self destroyStreamer];
-					[self resetEverything];
+					[self ae_destroyStreamer];
+					[self ae_resetEverything];
 				}
 				else if ( ! self.playing && self.savedChannelPlaying != 0)
-					[self playSavedChannel];
-
+					[self ae_playSavedChannel];
+				
                 break;
 			}
             case UIEventSubtypeRemoteControlNextTrack:
-			{        
+			{
 				[self.streamer stop];
-				[self destroyStreamer];
-				[self resetEverything];
+				[self ae_destroyStreamer];
+				[self ae_resetEverything];
 				
 				if (self.savedChannelPlaying < 4)
 					self.savedChannelPlaying++;
 				else
 					self.savedChannelPlaying = 1;
 				
-				[self playSavedChannel];
+				[self ae_playSavedChannel];
 				break;
 			}
             case UIEventSubtypeRemoteControlPreviousTrack:
-			{        
+			{
 				[self.streamer stop];
-				[self destroyStreamer];
-				[self resetEverything];
+				[self ae_destroyStreamer];
+				[self ae_resetEverything];
 				
 				if (self.savedChannelPlaying == 1)
 					self.savedChannelPlaying = 4;
 				else
 					self.savedChannelPlaying--;
 				
-				[self playSavedChannel];
+				[self ae_playSavedChannel];
 				break;
 			}
 			default:
@@ -365,9 +363,11 @@
 	}
 }
 
-- (void)playSavedChannel
-{
-	[self ae_playChannel:self.savedChannelPlaying];
+#pragma mark - FlipsideViewControllerDelegate
+
+- (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller
+{    
+	[self dismissModalViewControllerAnimated:YES];
 }
 
 @end
