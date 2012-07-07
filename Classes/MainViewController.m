@@ -46,6 +46,7 @@
 		self.operationQueue = [[NSOperationQueue alloc] init];
         [self.operationQueue setMaxConcurrentOperationCount:2];
     }
+	
     return self;
 }
 
@@ -167,9 +168,7 @@
 	[self becomeFirstResponder];
 	
 	if (self.streamer)
-	{
 		return;
-	}
 	
 	[self destroyStreamer];
 	
@@ -182,7 +181,7 @@
 
 - (void)updateNowPlaying
 {
-	if(self.channelPlaying != 0 && self.busyLoading == NO)
+	if (self.channelPlaying != 0 && self.busyLoading == NO)
 	{
 		self.busyLoading = YES;
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -202,10 +201,9 @@
 
 	NSArray* lines = [self.nowPlayingString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 		
-	if(![[lines objectAtIndex:2] isEqualToString:[self.nowPlayingLabel text]])
-	{		
+	if ( ! [[lines objectAtIndex:2] isEqualToString:[self.nowPlayingLabel text]])
 		[self performSelectorOnMainThread:@selector(updateNowPlayingLabel:) withObject:[lines objectAtIndex:2] waitUntilDone:YES];
-	}	
+
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	self.busyLoading = NO;
 }
@@ -295,52 +293,55 @@
 
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event
 {
-	if(event.type == UIEventTypeRemoteControl)
+	if (event.type == UIEventTypeRemoteControl)
 	{
 		[TestFlight passCheckpoint:@"Remote control event received"];
 		
 		switch (event.subtype)
 		{
             case UIEventSubtypeRemoteControlPlay:
+			{
                 break;
+			}
             case UIEventSubtypeRemoteControlPause:
+			{
 				[self.streamer stop];
 				[self destroyStreamer];
 				[self resetEverything];
                 break;                
-            case UIEventSubtypeRemoteControlStop:
+            }
+			case UIEventSubtypeRemoteControlStop:
+			{
 				[self.streamer stop];
 				[self destroyStreamer];
 				[self resetEverything];
-                break;                
+                break;
+			}
             case UIEventSubtypeRemoteControlTogglePlayPause:
 			{
-				if(self.playing)
+				if (self.playing)
 				{
 					self.playing = NO;
 					[self.streamer stop];
 					[self destroyStreamer];
 					[self resetEverything];
 				}
-				else if(self.playing == NO && self.savedChannelPlaying != 0)
-				{
+				else if ( ! self.playing && self.savedChannelPlaying != 0)
 					[self playSavedChannel];
-				}
-                break;                
+
+                break;
 			}
             case UIEventSubtypeRemoteControlNextTrack:
 			{        
 				[self.streamer stop];
 				[self destroyStreamer];
 				[self resetEverything];
-				if(self.savedChannelPlaying < 4)
-				{
+				
+				if (self.savedChannelPlaying < 4)
 					self.savedChannelPlaying++;
-				}
-				else 
-				{
+				else
 					self.savedChannelPlaying = 1;
-				}
+				
 				[self playSavedChannel];
 				break;
 			}
@@ -349,14 +350,12 @@
 				[self.streamer stop];
 				[self destroyStreamer];
 				[self resetEverything];
-				if(self.savedChannelPlaying == 1)
-				{
+				
+				if (self.savedChannelPlaying == 1)
 					self.savedChannelPlaying = 4;
-				}
-				else 
-				{
+				else
 					self.savedChannelPlaying--;
-				}
+				
 				[self playSavedChannel];
 				break;
 			}
@@ -368,26 +367,7 @@
 
 - (void)playSavedChannel
 {
-	self.playing = YES;
-	switch (self.savedChannelPlaying)
-	{
-		case 1:
-			[self channel1ButtonPressed:nil];
-			break;
-		case 2:
-			[self channel2ButtonPressed:nil];
-			break;
-		case 3:
-			[self channel3ButtonPressed:nil];
-			break;
-		case 4:
-			[self channel4ButtonPressed:nil];
-			break;
-		default:
-			break;
-	}					
+	[self ae_playChannel:self.savedChannelPlaying];
 }
-
-
 
 @end
