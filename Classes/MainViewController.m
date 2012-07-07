@@ -31,7 +31,6 @@
 @property (nonatomic, assign) NSInteger channelPlaying;
 @property (nonatomic, assign) NSInteger savedChannelPlaying;
 @property (nonatomic, strong) NSOperationQueue *operationQueue;
-@property (nonatomic, strong) CABasicAnimation *scrollText;
 @property (nonatomic, strong) NSTimer *nowPlayingTimer;
 @property (nonatomic, assign) BOOL busyLoading;
 @property (nonatomic, assign) BOOL playing;
@@ -141,7 +140,6 @@
 - (void)ae_updateNowPlayingLabel:(NSString *)track
 {
 	self.nowPlayingLabel.text = track;
-	[self.nowPlayingLabel sizeToFit];
 	[self resetAnimation];
 }
 
@@ -227,14 +225,17 @@
 
 - (void)resetAnimation
 {
-	[self.nowPlayingLabel.layer removeAllAnimations];
-	self.scrollText = [CABasicAnimation animationWithKeyPath:@"position.x"];
-	self.scrollText.duration = (640 + self.nowPlayingLabel.frame.size.width) / 60;
-	self.scrollText.repeatCount = 10000;
-	self.scrollText.autoreverses = NO;
-	self.scrollText.fromValue = @(320 + (self.nowPlayingLabel.frame.size.width / 2));
-	self.scrollText.toValue = @(0 - (self.nowPlayingLabel.frame.size.width / 2));
-	[self.nowPlayingLabel.layer addAnimation:self.scrollText forKey:@"scrollTextKey"];
+	[self.nowPlayingLabel sizeToFit];
+	self.nowPlayingLabel.frame = CGRectMake(self.view.frame.size.width,
+											self.nowPlayingLabel.frame.origin.y,
+											self.nowPlayingLabel.frame.size.width,
+											self.nowPlayingLabel.frame.size.height);
+	[UIView animateWithDuration:((640 + self.nowPlayingLabel.frame.size.width) / 60) delay:0 options:(UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear) animations:^{
+		self.nowPlayingLabel.frame = CGRectMake(-self.nowPlayingLabel.frame.size.width,
+												self.nowPlayingLabel.frame.origin.y,
+												self.nowPlayingLabel.frame.size.width,
+												self.nowPlayingLabel.frame.size.height);
+	} completion:nil];
 }
 
 #pragma mark - UIViewController overrides
@@ -267,17 +268,8 @@
 	self.nowPlayingLabel.font = [UIFont boldSystemFontOfSize:18];
 	self.nowPlayingLabel.backgroundColor = [UIColor clearColor];
 	self.nowPlayingLabel.textColor = [UIColor lightGrayColor];
-	[self.nowPlayingLabel sizeToFit];
 	[self.view addSubview:self.nowPlayingLabel];
-	
-	self.scrollText = [CABasicAnimation animationWithKeyPath:@"position.x"];
-	self.scrollText.duration = (640 + self.nowPlayingLabel.frame.size.width) / 60;
-	self.scrollText.repeatCount = 10000;
-	self.scrollText.autoreverses = NO;
-	self.scrollText.fromValue = @(320 + (self.nowPlayingLabel.frame.size.width / 2));
-	self.scrollText.toValue = @(0 - (self.nowPlayingLabel.frame.size.width / 2));
-	[self.nowPlayingLabel.layer addAnimation:self.scrollText forKey:@"scrollTextKey"];
-	self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(ae_updateNowPlaying) userInfo:nil repeats:YES];
+	[self resetAnimation];
 	
 	self.busyLoading = NO;
 	self.playing = NO;
