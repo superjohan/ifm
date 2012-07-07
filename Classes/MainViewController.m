@@ -24,12 +24,10 @@
     return self;
 }
 
-
 - (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller
 {    
 	[self dismissModalViewControllerAnimated:YES];
 }
-
 
 - (IBAction)showInfo
 {    	
@@ -44,12 +42,10 @@
 	[controller release];
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
-
 
 - (BOOL)canBecomeFirstResponder
 {
@@ -102,7 +98,6 @@
 		streamer = nil;
 	}
 }
-
 
 - (void)playbackStateChanged:(NSNotification *)aNotification
 {
@@ -261,89 +256,43 @@
 	[[nowPlayingLabel layer] addAnimation:scrollText forKey:@"scrollTextKey"];		
 }
 
-- (IBAction)channel1ButtonPressed:(id)sender
+- (void)ae_playChannel:(NSInteger)channel
 {
-	[TestFlight passCheckpoint:@"Channel 1 button touched"];
+	[TestFlight passCheckpoint:[NSString stringWithFormat:@"Channel %d button touched", channel]];
 	
 	[streamer stop];
 	[self destroyStreamer];
 	[self resetEverything];
-		
-	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://radio.intergalactic.fm/1aac.m3u"] 
-											 encoding:NSUTF8StringEncoding
-												error:nil];
+	
+	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://radio.intergalactic.fm/%daac.m3u", channel]]encoding:NSUTF8StringEncoding error:nil];
 	channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] objectAtIndex:0];
-	channelPlaying = 1;
-	savedChannelPlaying = 1;
+	channelPlaying = channel;
+	savedChannelPlaying = channel;
 	
 	[self createStreamer];
 	[streamer start];
 	playing = YES;
 }
 
+- (IBAction)channel1ButtonPressed:(id)sender
+{
+	[self ae_playChannel:1];
+}
 
 - (IBAction)channel2ButtonPressed:(id)sender
 {
-	[TestFlight passCheckpoint:@"Channel 2 button touched"];
-	
-	[streamer stop];
-	[self destroyStreamer];
-	[self resetEverything];
-	
-	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://radio.intergalactic.fm/2aac.m3u"] 
-											 encoding:NSUTF8StringEncoding
-												error:nil];
-	channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] objectAtIndex:0];
-	channelPlaying = 2;
-	savedChannelPlaying = 2;
-	
-	[self createStreamer];
-	[streamer start];
-	playing = YES;
+	[self ae_playChannel:2];
 }
-
 
 - (IBAction)channel3ButtonPressed:(id)sender
 {
-	[TestFlight passCheckpoint:@"Channel 3 button touched"];
-	
-	[streamer stop];
-	[self destroyStreamer];
-	[self resetEverything];
-
-	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://radio.intergalactic.fm/3aac.m3u"] 
-											 encoding:NSUTF8StringEncoding
-												error:nil];
-	channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] objectAtIndex:0];
-	channelPlaying = 3;
-	savedChannelPlaying = 3;
-	
-	[self createStreamer];
-	[streamer start];
-	playing = YES;
+	[self ae_playChannel:3];
 }
-
 
 - (IBAction)channel4ButtonPressed:(id)sender
 {
-	[TestFlight passCheckpoint:@"Channel 4 button touched"];
-	
-	[streamer stop];
-	[self destroyStreamer];
-	[self resetEverything];
-
-	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://radio.intergalactic.fm/4aac.m3u"] 
-											 encoding:NSUTF8StringEncoding
-												error:nil];
-	channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] objectAtIndex:0];
-	channelPlaying = 4;
-	savedChannelPlaying = 4;
-	
-	[self createStreamer];
-	[streamer start];
-	playing = YES;
+	[self ae_playChannel:4];
 }
-
 
 - (IBAction)stopButtonPressed:(id)sender
 {
@@ -354,7 +303,6 @@
 	[self performSelectorOnMainThread:@selector(resetEverything) withObject:nil waitUntilDone:YES];
 	savedChannelPlaying = 0;
 }
-
 
 - (void)resetEverything
 {
@@ -479,7 +427,8 @@
 	}					
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     [super dealloc];
 }
 
