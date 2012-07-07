@@ -59,7 +59,7 @@
 		90D0D58F115CA03F007C9F6F /* newch3playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58B115CA03F007C9F6F /* newch3playing.png */; };
 		90D0D590115CA03F007C9F6F /* newch4playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58C115CA03F007C9F6F /* newch4playing.png */; };
 		90EDC422112AA08000D1395C /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EDC421112AA08000D1395C /* stop.png */; };
-		DBC9B02815A8489C00F1B239 /* AudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC9B02715A8489C00F1B239 /* AudioStreamer.m */; };
+		DBC9B02A15A8583200F1B239 /* AudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC9B02715A8489C00F1B239 /* AudioStreamer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -395,7 +395,7 @@
 				1D3623260D0F684500981E51 /* IFM_PlayerAppDelegate.m in Sources */,
 				289233AE0DB2D0DB0083E9F9 /* MainViewController.m in Sources */,
 				289233B00DB2D0DB0083E9F9 /* FlipsideViewController.m in Sources */,
-				DBC9B02815A8489C00F1B239 /* AudioStreamer.m in Sources */,
+				DBC9B02A15A8583200F1B239 /* AudioStreamer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,6 +406,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -432,6 +433,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -468,6 +470,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Johan Halin";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Johan Halin";
 				COPY_PHASE_STRIP = YES;

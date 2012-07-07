@@ -12,8 +12,8 @@
 
 @interface IFM_PlayerAppDelegate : NSObject <UIApplicationDelegate>
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) MainViewController *mainViewController;
+@property (nonatomic, strong) IBOutlet UIWindow *window;
+@property (nonatomic, strong) MainViewController *mainViewController;
 
 @end
 

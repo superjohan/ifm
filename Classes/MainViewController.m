@@ -12,27 +12,27 @@
 #import <CFNetwork/CFNetwork.h>
 
 @interface MainViewController ()
-@property (nonatomic, retain) IBOutlet UIButton *channel1Button;
-@property (nonatomic, retain) IBOutlet UIButton *channel2Button;
-@property (nonatomic, retain) IBOutlet UIButton *channel3Button;
-@property (nonatomic, retain) IBOutlet UIButton *channel4Button;
-@property (nonatomic, retain) IBOutlet UIButton *channel1StopButton;
-@property (nonatomic, retain) IBOutlet UIButton *channel2StopButton;
-@property (nonatomic, retain) IBOutlet UIButton *channel3StopButton;
-@property (nonatomic, retain) IBOutlet UIButton *channel4StopButton;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *channel1Spinner;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *channel2Spinner;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *channel3Spinner;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *channel4Spinner;
-@property (nonatomic, retain) UILabel *nowPlayingLabel;
-@property (nonatomic, retain) AudioStreamer *streamer;
-@property (nonatomic, retain) NSString *channelSelection;
-@property (nonatomic, retain) NSString *nowPlayingString;
+@property (nonatomic, strong) IBOutlet UIButton *channel1Button;
+@property (nonatomic, strong) IBOutlet UIButton *channel2Button;
+@property (nonatomic, strong) IBOutlet UIButton *channel3Button;
+@property (nonatomic, strong) IBOutlet UIButton *channel4Button;
+@property (nonatomic, strong) IBOutlet UIButton *channel1StopButton;
+@property (nonatomic, strong) IBOutlet UIButton *channel2StopButton;
+@property (nonatomic, strong) IBOutlet UIButton *channel3StopButton;
+@property (nonatomic, strong) IBOutlet UIButton *channel4StopButton;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *channel1Spinner;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *channel2Spinner;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *channel3Spinner;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *channel4Spinner;
+@property (nonatomic, strong) UILabel *nowPlayingLabel;
+@property (nonatomic, strong) AudioStreamer *streamer;
+@property (nonatomic, strong) NSString *channelSelection;
+@property (nonatomic, strong) NSString *nowPlayingString;
 @property (nonatomic, assign) NSInteger channelPlaying;
 @property (nonatomic, assign) NSInteger savedChannelPlaying;
-@property (nonatomic, retain) NSOperationQueue *operationQueue;
-@property (nonatomic, retain) CABasicAnimation *scrollText;
-@property (nonatomic, retain) NSTimer *nowPlayingTimer;
+@property (nonatomic, strong) NSOperationQueue *operationQueue;
+@property (nonatomic, strong) CABasicAnimation *scrollText;
+@property (nonatomic, strong) NSTimer *nowPlayingTimer;
 @property (nonatomic, assign) BOOL busyLoading;
 @property (nonatomic, assign) BOOL playing;
 @end
@@ -58,7 +58,7 @@
 {    	
 	[TestFlight passCheckpoint:@"Info button touched"];
 	
-	FlipsideViewController *controller = [[[FlipsideViewController alloc] initWithNibName:@"FlipsideView" bundle:nil] autorelease];
+	FlipsideViewController *controller = [[FlipsideViewController alloc] initWithNibName:@"FlipsideView" bundle:nil];
 	controller.delegate = self;
 	controller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
 	[self presentModalViewController:controller animated:YES];
@@ -116,7 +116,6 @@
 		[[NSNotificationCenter defaultCenter] removeObserver:self name:ASStatusChangedNotification object:self.streamer];
 		
 		[self.streamer stop];
-		[self.streamer release];
 		self.streamer = nil;
 	}
 }
@@ -174,9 +173,7 @@
 	
 	[self destroyStreamer];
 	
-	NSString *escapedValue =
-	[(NSString *)CFURLCreateStringByAddingPercentEscapes(nil, (CFStringRef)self.channelSelection, NULL, NULL, kCFStringEncodingUTF8) autorelease];
-	
+	NSString *escapedValue = [self.channelSelection stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	NSURL *url = [NSURL URLWithString:escapedValue];
 	self.streamer = [[AudioStreamer alloc] initWithURL:url];
 	
@@ -191,7 +188,6 @@
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(synchronousLoadNowPlayingData) object:nil];
 		[self.operationQueue addOperation:operation];
-		[operation release];
 	}
 }
 
@@ -392,10 +388,6 @@
 	}					
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 
 @end

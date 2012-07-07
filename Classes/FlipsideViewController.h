@@ -11,7 +11,7 @@
 @protocol FlipsideViewControllerDelegate;
 
 @interface FlipsideViewController : UIViewController <UIWebViewDelegate>
-@property (nonatomic, assign) id<FlipsideViewControllerDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id<FlipsideViewControllerDelegate> delegate;
 @end
 
 @protocol FlipsideViewControllerDelegate

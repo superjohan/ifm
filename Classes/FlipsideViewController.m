@@ -9,10 +9,10 @@
 #import "FlipsideViewController.h"
 
 @interface FlipsideViewController ()
-@property (nonatomic, retain) IBOutlet UIWebView *webView;
-@property (nonatomic, retain) IBOutlet UIBarButtonItem *backButton;
-@property (nonatomic, retain) IBOutlet UIBarButtonItem *forwardButton;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *loadingSpinner;
+@property (nonatomic, strong) IBOutlet UIWebView *webView;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *backButton;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *forwardButton;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *loadingSpinner;
 @end
 
 @implementation FlipsideViewController
@@ -64,12 +64,6 @@
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
-- (void)dealloc
-{
-	self.webView = nil;
-	
-	[super dealloc];
-}
 
 
 @end
