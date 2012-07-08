@@ -11,6 +11,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <CFNetwork/CFNetwork.h>
 #import "AECGHelpers.h"
+#import "AENSArrayAdditions.h"
 
 @interface MainViewController ()
 @property (nonatomic, strong) IBOutlet UIButton *channel1Button;
@@ -144,20 +145,37 @@
 	[self resetAnimation];
 }
 
+- (void)ae_startPlayingWithM3U:(NSString *)m3u
+{
+	self.channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] firstObject];
+	[self ae_createStreamer];
+	[self.streamer start];
+	self.playing = YES;
+}
+
 - (void)ae_playChannel:(NSInteger)channel
 {
 	[TestFlight passCheckpoint:[NSString stringWithFormat:@"Channel %d button touched", channel]];
 	
 	[self ae_stopStreamer];
 	
-	NSString *m3u = [NSString stringWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://radio.intergalactic.fm/%daac.m3u", channel]]encoding:NSUTF8StringEncoding error:nil];
-	self.channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] objectAtIndex:0];
+	// TODO: disable all buttons while we wait for a response
 	self.channelPlaying = channel;
-	self.savedChannelPlaying = channel;
+	self.savedChannelPlaying = self.channelPlaying;
 	
-	[self ae_createStreamer];
-	[self.streamer start];
-	self.playing = YES;
+	__block MainViewController *blockSelf = self;
+	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://radio.intergalactic.fm/%daac.m3u", channel]]];
+	[NSURLConnection sendAsynchronousRequest:request queue:self.operationQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+		if (data == nil)
+		{
+			// re-enable all buttons and whatnot
+		}
+		else
+		{
+			NSString *m3u = [NSString stringWithCString:[data bytes] encoding:NSUTF8StringEncoding];
+			[blockSelf performSelectorOnMainThread:@selector(ae_startPlayingWithM3U:) withObject:m3u waitUntilDone:YES];
+		}
+	}];
 }
 
 - (void)ae_resetEverything
