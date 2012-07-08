@@ -10,6 +10,7 @@
 #import "AudioStreamer.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <CFNetwork/CFNetwork.h>
+#import "AECGHelpers.h"
 
 @interface MainViewController ()
 @property (nonatomic, strong) IBOutlet UIButton *channel1Button;
@@ -226,15 +227,9 @@
 - (void)resetAnimation
 {
 	[self.nowPlayingLabel sizeToFit];
-	self.nowPlayingLabel.frame = CGRectMake(self.view.frame.size.width,
-											self.nowPlayingLabel.frame.origin.y,
-											self.nowPlayingLabel.frame.size.width,
-											self.nowPlayingLabel.frame.size.height);
+	self.nowPlayingLabel.frame = AECGRectPlaceX(self.nowPlayingLabel.frame, self.view.frame.size.width);
 	[UIView animateWithDuration:((640 + self.nowPlayingLabel.frame.size.width) / 60) delay:0 options:(UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear) animations:^{
-		self.nowPlayingLabel.frame = CGRectMake(-self.nowPlayingLabel.frame.size.width,
-												self.nowPlayingLabel.frame.origin.y,
-												self.nowPlayingLabel.frame.size.width,
-												self.nowPlayingLabel.frame.size.height);
+		self.nowPlayingLabel.frame = AECGRectPlaceX(self.nowPlayingLabel.frame, -self.nowPlayingLabel.frame.size.width);
 	} completion:nil];
 }
 
