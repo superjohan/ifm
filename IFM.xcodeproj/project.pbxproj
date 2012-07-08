@@ -59,6 +59,7 @@
 		90D0D58F115CA03F007C9F6F /* newch3playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58B115CA03F007C9F6F /* newch3playing.png */; };
 		90D0D590115CA03F007C9F6F /* newch4playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58C115CA03F007C9F6F /* newch4playing.png */; };
 		90EDC422112AA08000D1395C /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EDC421112AA08000D1395C /* stop.png */; };
+		DB2AB66A15A9859C005A1E98 /* AENSArrayAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2AB66915A9859C005A1E98 /* AENSArrayAdditions.m */; };
 		DBC9B02A15A8583200F1B239 /* AudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC9B02715A8489C00F1B239 /* AudioStreamer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
@@ -123,6 +124,10 @@
 		90D0D58C115CA03F007C9F6F /* newch4playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newch4playing.png; sourceTree = "<group>"; };
 		90D6F5101287FCAE0060ED15 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		90EDC421112AA08000D1395C /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = "<group>"; };
+		DB2AB66615A9859C005A1E98 /* AECGHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AECGHelpers.h; path = AEKit/AECGHelpers.h; sourceTree = "<group>"; };
+		DB2AB66715A9859C005A1E98 /* AELog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AELog.h; path = AEKit/AELog.h; sourceTree = "<group>"; };
+		DB2AB66815A9859C005A1E98 /* AENSArrayAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AENSArrayAdditions.h; path = AEKit/AENSArrayAdditions.h; sourceTree = "<group>"; };
+		DB2AB66915A9859C005A1E98 /* AENSArrayAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AENSArrayAdditions.m; path = AEKit/AENSArrayAdditions.m; sourceTree = "<group>"; };
 		DBC9B02615A8489C00F1B239 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioStreamer.h; path = AudioStreamer/Classes/AudioStreamer.h; sourceTree = "<group>"; };
 		DBC9B02715A8489C00F1B239 /* AudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioStreamer.m; path = AudioStreamer/Classes/AudioStreamer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -186,6 +191,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				DB2AB66C15A985A2005A1E98 /* AEKit */,
 				DBC9B02915A848A300F1B239 /* AudioStreamer */,
 				289233A00DB2D0730083E9F9 /* Main View */,
 				281C6CD70DB2D82200F60ACC /* Flipside View */,
@@ -269,6 +275,17 @@
 				903B8A94114E28F70076A1C2 /* QuartzCore.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DB2AB66C15A985A2005A1E98 /* AEKit */ = {
+			isa = PBXGroup;
+			children = (
+				DB2AB66615A9859C005A1E98 /* AECGHelpers.h */,
+				DB2AB66715A9859C005A1E98 /* AELog.h */,
+				DB2AB66815A9859C005A1E98 /* AENSArrayAdditions.h */,
+				DB2AB66915A9859C005A1E98 /* AENSArrayAdditions.m */,
+			);
+			name = AEKit;
 			sourceTree = "<group>";
 		};
 		DBC9B02415A8437D00F1B239 /* TestFlight */ = {
@@ -396,6 +413,7 @@
 				289233AE0DB2D0DB0083E9F9 /* MainViewController.m in Sources */,
 				289233B00DB2D0DB0083E9F9 /* FlipsideViewController.m in Sources */,
 				DBC9B02A15A8583200F1B239 /* AudioStreamer.m in Sources */,
+				DB2AB66A15A9859C005A1E98 /* AENSArrayAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
