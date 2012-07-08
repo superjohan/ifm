@@ -151,6 +151,23 @@
 	[self ae_createStreamer];
 	[self.streamer start];
 	self.playing = YES;
+	[self ae_setPlayButtonsEnabled:YES];
+}
+
+- (void)ae_setPlayButtonsEnabled:(BOOL)enabled
+{
+	for (NSInteger channel = 1;  channel < 5; channel++)
+		[[self valueForKey:[NSString stringWithFormat:@"channel%dButton", channel]] setEnabled:enabled];
+}
+
+- (void)ae_displayPlaylistError
+{
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Unable to load playlist", nil) message:NSLocalizedString(@"The Internet connection may be down, or the servers aren't responding.", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Dismiss", nil), nil];
+	[alert show];
+	[self ae_setPlayButtonsEnabled:YES];
+
+	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", self.channelPlaying]];
+	spinner.hidden = YES;
 }
 
 - (void)ae_playChannel:(NSInteger)channel
@@ -158,8 +175,12 @@
 	[TestFlight passCheckpoint:[NSString stringWithFormat:@"Channel %d button touched", channel]];
 	
 	[self ae_stopStreamer];
+	[self ae_setPlayButtonsEnabled:NO];
 	
-	// TODO: disable all buttons while we wait for a response
+	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]];
+	spinner.hidden = NO;
+	[spinner startAnimating];
+
 	self.channelPlaying = channel;
 	self.savedChannelPlaying = self.channelPlaying;
 	
@@ -167,9 +188,7 @@
 	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://radio.intergalactic.fm/%daac.m3u", channel]]];
 	[NSURLConnection sendAsynchronousRequest:request queue:self.operationQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 		if (data == nil)
-		{
-			// re-enable all buttons and whatnot
-		}
+			[blockSelf performSelectorOnMainThread:@selector(ae_displayPlaylistError) withObject:nil waitUntilDone:YES];
 		else
 		{
 			NSString *m3u = [NSString stringWithCString:[data bytes] encoding:NSUTF8StringEncoding];
