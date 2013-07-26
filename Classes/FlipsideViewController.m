@@ -22,7 +22,7 @@
     [super viewDidLoad];
 	
 	self.webView.delegate = self;
-	[self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://intergalactic.fm"]]];
+	[self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://intergalacticfm.com"]]];
 }
 
 - (IBAction)done
