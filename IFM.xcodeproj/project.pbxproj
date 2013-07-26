@@ -128,8 +128,8 @@
 		DB2AB66915A9859C005A1E98 /* AENSArrayAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AENSArrayAdditions.m; path = AEKit/AENSArrayAdditions.m; sourceTree = "<group>"; };
 		DB2AB66D15A98755005A1E98 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTestFlight.a; path = AEKit/TestFlight/libTestFlight.a; sourceTree = "<group>"; };
 		DB2AB66E15A98755005A1E98 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestFlight.h; path = AEKit/TestFlight/TestFlight.h; sourceTree = "<group>"; };
-		DBC9B02615A8489C00F1B239 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioStreamer.h; path = AudioStreamer/Classes/AudioStreamer.h; sourceTree = "<group>"; };
-		DBC9B02715A8489C00F1B239 /* AudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioStreamer.m; path = AudioStreamer/Classes/AudioStreamer.m; sourceTree = "<group>"; };
+		DBC9B02615A8489C00F1B239 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioStreamer.h; sourceTree = "<group>"; };
+		DBC9B02715A8489C00F1B239 /* AudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioStreamer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
