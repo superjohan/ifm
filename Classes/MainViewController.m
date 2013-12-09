@@ -85,14 +85,18 @@
 - (void)_playbackStateChanged:(NSNotification *)aNotification
 {
 	if ([self.streamer isWaiting])
+	{
 		[self _setChannelToWaiting:self.channelPlaying];
+	}
 	else if ([self.streamer isPlaying])
 	{
 		[self _updateNowPlaying];
 		[self _setChannelToPlaying:self.channelPlaying];
 	}
 	else if ([self.streamer isIdle])
+	{
 		[self _stopStreamer];
+	}
 }
 
 - (void)_createStreamer
@@ -101,7 +105,9 @@
 	[self becomeFirstResponder];
 	
 	if (self.streamer)
+	{
 		return;
+	}
 	
 	NSString *escapedValue = [self.channelSelection stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	NSURL *url = [NSURL URLWithString:escapedValue];
@@ -134,7 +140,9 @@
 	NSArray* lines = [self.nowPlayingString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 	
 	if ( ! [[lines objectAtIndex:2] isEqualToString:[self.nowPlayingLabel text]])
+	{
 		[self performSelectorOnMainThread:@selector(ae_updateNowPlayingLabel:) withObject:[lines objectAtIndex:2] waitUntilDone:YES];
+	}
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	self.busyLoading = NO;
@@ -158,7 +166,9 @@
 - (void)_setPlayButtonsEnabled:(BOOL)enabled
 {
 	for (NSInteger channel = 1;  channel < 5; channel++)
+	{
 		[[self valueForKey:[NSString stringWithFormat:@"channel%dButton", channel]] setEnabled:enabled];
+	}
 }
 
 - (void)_displayPlaylistError
@@ -187,9 +197,12 @@
 	
 	__block MainViewController *blockSelf = self;
 	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://radio.intergalacticfm.com/%daac.m3u", channel]]];
-	[NSURLConnection sendAsynchronousRequest:request queue:self.operationQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+	[NSURLConnection sendAsynchronousRequest:request queue:self.operationQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
+	{
 		if (data == nil)
+		{
 			[blockSelf performSelectorOnMainThread:@selector(ae_displayPlaylistError) withObject:nil waitUntilDone:YES];
+		}
 		else
 		{
 			NSString *m3u = [NSString stringWithCString:[data bytes] encoding:NSUTF8StringEncoding];
@@ -266,9 +279,11 @@
 {
 	[self.nowPlayingLabel sizeToFit];
 	self.nowPlayingLabel.frame = AECGRectPlaceX(self.nowPlayingLabel.frame, self.view.frame.size.width);
-	[UIView animateWithDuration:((640 + self.nowPlayingLabel.frame.size.width) / 60) delay:0 options:(UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear) animations:^{
+	[UIView animateWithDuration:((640 + self.nowPlayingLabel.frame.size.width) / 60) delay:0 options:(UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear) animations:^
+	{
 		self.nowPlayingLabel.frame = AECGRectPlaceX(self.nowPlayingLabel.frame, -self.nowPlayingLabel.frame.size.width);
-	} completion:nil];
+	}
+	completion:nil];
 }
 
 #pragma mark - UIViewController overrides
@@ -335,9 +350,13 @@
             case UIEventSubtypeRemoteControlTogglePlayPause:
 			{
 				if (self.playing)
+				{
 					[self _stopStreamer];
+				}
 				else if ( ! self.playing && self.savedChannelPlaying != 0)
+				{
 					[self _playSavedChannel];
+				}
 				
                 break;
 			}
@@ -346,9 +365,13 @@
 				[self _stopStreamer];
 				
 				if (self.savedChannelPlaying < 4)
+				{
 					self.savedChannelPlaying++;
+				}
 				else
+				{
 					self.savedChannelPlaying = 1;
+				}
 				
 				[self _playSavedChannel];
 				break;
@@ -358,9 +381,13 @@
 				[self _stopStreamer];
 				
 				if (self.savedChannelPlaying == 1)
+				{
 					self.savedChannelPlaying = 4;
+				}
 				else
+				{
 					self.savedChannelPlaying--;
+				}
 				
 				[self _playSavedChannel];
 				break;
