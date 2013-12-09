@@ -123,7 +123,7 @@
 
 - (void)ae_synchronousLoadNowPlayingData
 {
-	NSString *urlString = [[NSString alloc] initWithFormat:@"http://intergalactic.fm/data/playing%d.html", self.channelPlaying];
+	NSString *urlString = [[NSString alloc] initWithFormat:@"http://intergalacticfm.com/data/playing%d.html", self.channelPlaying];
     NSURL *url = [NSURL URLWithString:urlString];
 	NSData *data = [NSData dataWithContentsOfURL:url];
 	
@@ -185,7 +185,7 @@
 	self.savedChannelPlaying = self.channelPlaying;
 	
 	__block MainViewController *blockSelf = self;
-	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://radio.intergalactic.fm/%daac.m3u", channel]]];
+	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://radio.intergalacticfm.com/%daac.m3u", channel]]];
 	[NSURLConnection sendAsynchronousRequest:request queue:self.operationQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 		if (data == nil)
 			[blockSelf performSelectorOnMainThread:@selector(ae_displayPlaylistError) withObject:nil waitUntilDone:YES];
@@ -293,7 +293,7 @@
 	[self ae_resetEverything];
 	
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — http://intergalactic.fm/ — Developed by Aero Deko — Visit our site at http://aerodeko.com/ — Intergalactic FM for iPhone uses AudioStreamer by Matt Gallagher.", version];
+	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — http://intergalacticfm.com/ — Developed by Aero Deko — Visit our site at http://aerodeko.com/ — Intergalactic FM for iPhone uses AudioStreamer by Matt Gallagher.", version];
 	
 	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 434, 320, 24)];
 	self.nowPlayingLabel.text = introText;
