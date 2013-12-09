@@ -288,7 +288,7 @@
     return TRUE;
 }
 
--(void)viewDidLoad
+- (void)viewDidLoad
 {
 	[self ae_resetEverything];
 	
