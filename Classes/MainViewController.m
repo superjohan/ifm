@@ -42,7 +42,7 @@
 
 #pragma mark - Private
 
-- (void)ae_destroyStreamer
+- (void)_destroyStreamer
 {
 	if (self.streamer)
 	{
@@ -53,13 +53,13 @@
 	}
 }
 
-- (void)ae_stopStreamer
+- (void)_stopStreamer
 {
-	[self ae_destroyStreamer];
-	[self ae_resetEverything];
+	[self _destroyStreamer];
+	[self _resetEverything];
 }
 
-- (void)ae_setChannelToWaiting:(NSInteger)channel
+- (void)_setChannelToWaiting:(NSInteger)channel
 {
 	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]];
 	UIButton *playButton = [self valueForKey:[NSString stringWithFormat:@"channel%dButton", channel]];
@@ -72,7 +72,7 @@
 	stopButton.enabled = NO;
 }
 
-- (void)ae_setChannelToPlaying:(NSInteger)channel
+- (void)_setChannelToPlaying:(NSInteger)channel
 {
 	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]];
 	UIButton *stopButton = [self valueForKey:[NSString stringWithFormat:@"channel%dStopButton", channel]];
@@ -82,20 +82,20 @@
 	stopButton.enabled = YES;
 }
 
-- (void)ae_playbackStateChanged:(NSNotification *)aNotification
+- (void)_playbackStateChanged:(NSNotification *)aNotification
 {
 	if ([self.streamer isWaiting])
-		[self ae_setChannelToWaiting:self.channelPlaying];
+		[self _setChannelToWaiting:self.channelPlaying];
 	else if ([self.streamer isPlaying])
 	{
-		[self ae_updateNowPlaying];
-		[self ae_setChannelToPlaying:self.channelPlaying];
+		[self _updateNowPlaying];
+		[self _setChannelToPlaying:self.channelPlaying];
 	}
 	else if ([self.streamer isIdle])
-		[self ae_stopStreamer];
+		[self _stopStreamer];
 }
 
-- (void)ae_createStreamer
+- (void)_createStreamer
 {
 	[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
 	[self becomeFirstResponder];
@@ -110,7 +110,7 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ae_playbackStateChanged:) name:ASStatusChangedNotification object:self.streamer];
 }
 
-- (void)ae_updateNowPlaying
+- (void)_updateNowPlaying
 {
 	if (self.channelPlaying != 0 && self.busyLoading == NO)
 	{
@@ -121,7 +121,8 @@
 	}
 }
 
-- (void)ae_synchronousLoadNowPlayingData
+// FIXME: this is the dumbest thing ever
+- (void)_synchronousLoadNowPlayingData
 {
 	NSString *urlString = [[NSString alloc] initWithFormat:@"http://intergalacticfm.com/data/playing%d.html", self.channelPlaying];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -139,43 +140,43 @@
 	self.busyLoading = NO;
 }
 
-- (void)ae_updateNowPlayingLabel:(NSString *)track
+- (void)_updateNowPlayingLabel:(NSString *)track
 {
 	self.nowPlayingLabel.text = track;
 	[self resetAnimation];
 }
 
-- (void)ae_startPlayingWithM3U:(NSString *)m3u
+- (void)_startPlayingWithM3U:(NSString *)m3u
 {
 	self.channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] firstObject];
-	[self ae_createStreamer];
+	[self _createStreamer];
 	[self.streamer start];
 	self.playing = YES;
-	[self ae_setPlayButtonsEnabled:YES];
+	[self _setPlayButtonsEnabled:YES];
 }
 
-- (void)ae_setPlayButtonsEnabled:(BOOL)enabled
+- (void)_setPlayButtonsEnabled:(BOOL)enabled
 {
 	for (NSInteger channel = 1;  channel < 5; channel++)
 		[[self valueForKey:[NSString stringWithFormat:@"channel%dButton", channel]] setEnabled:enabled];
 }
 
-- (void)ae_displayPlaylistError
+- (void)_displayPlaylistError
 {
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Unable to load playlist", nil) message:NSLocalizedString(@"The Internet connection may be down, or the servers aren't responding.", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Dismiss", nil), nil];
 	[alert show];
-	[self ae_setPlayButtonsEnabled:YES];
+	[self _setPlayButtonsEnabled:YES];
 
 	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", self.channelPlaying]];
 	spinner.hidden = YES;
 }
 
-- (void)ae_playChannel:(NSInteger)channel
+- (void)_playChannel:(NSInteger)channel
 {
 	[TestFlight passCheckpoint:[NSString stringWithFormat:@"Channel %d button touched", channel]];
 	
-	[self ae_stopStreamer];
-	[self ae_setPlayButtonsEnabled:NO];
+	[self _stopStreamer];
+	[self _setPlayButtonsEnabled:NO];
 	
 	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]];
 	spinner.hidden = NO;
@@ -197,7 +198,7 @@
 	}];
 }
 
-- (void)ae_resetEverything
+- (void)_resetEverything
 {
 	self.channelPlaying = 0;
 	self.playing = NO;
@@ -213,9 +214,9 @@
 	self.nowPlayingLabel.text = @"";
 }
 
-- (void)ae_playSavedChannel
+- (void)_playSavedChannel
 {
-	[self ae_playChannel:self.savedChannelPlaying];
+	[self _playChannel:self.savedChannelPlaying];
 }
 
 #pragma mark - IBActions
@@ -232,29 +233,29 @@
 
 - (IBAction)channel1ButtonPressed:(id)sender
 {
-	[self ae_playChannel:1];
+	[self _playChannel:1];
 }
 
 - (IBAction)channel2ButtonPressed:(id)sender
 {
-	[self ae_playChannel:2];
+	[self _playChannel:2];
 }
 
 - (IBAction)channel3ButtonPressed:(id)sender
 {
-	[self ae_playChannel:3];
+	[self _playChannel:3];
 }
 
 - (IBAction)channel4ButtonPressed:(id)sender
 {
-	[self ae_playChannel:4];
+	[self _playChannel:4];
 }
 
 - (IBAction)stopButtonPressed:(id)sender
 {
 	[TestFlight passCheckpoint:@"Stop button touched"];
 	
-	[self ae_stopStreamer];
+	[self _stopStreamer];
 	
 	self.savedChannelPlaying = 0;
 }
@@ -290,7 +291,7 @@
 
 - (void)viewDidLoad
 {
-	[self ae_resetEverything];
+	[self _resetEverything];
 	
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — http://intergalacticfm.com/ — Developed by Aero Deko — Visit our site at http://aerodeko.com/ — Intergalactic FM for iPhone uses AudioStreamer by Matt Gallagher.", version];
@@ -323,45 +324,45 @@
 			}
             case UIEventSubtypeRemoteControlPause:
 			{
-				[self ae_stopStreamer];
+				[self _stopStreamer];
                 break;
             }
 			case UIEventSubtypeRemoteControlStop:
 			{
-				[self ae_stopStreamer];
+				[self _stopStreamer];
                 break;
 			}
             case UIEventSubtypeRemoteControlTogglePlayPause:
 			{
 				if (self.playing)
-					[self ae_stopStreamer];
+					[self _stopStreamer];
 				else if ( ! self.playing && self.savedChannelPlaying != 0)
-					[self ae_playSavedChannel];
+					[self _playSavedChannel];
 				
                 break;
 			}
             case UIEventSubtypeRemoteControlNextTrack:
 			{
-				[self ae_stopStreamer];
+				[self _stopStreamer];
 				
 				if (self.savedChannelPlaying < 4)
 					self.savedChannelPlaying++;
 				else
 					self.savedChannelPlaying = 1;
 				
-				[self ae_playSavedChannel];
+				[self _playSavedChannel];
 				break;
 			}
             case UIEventSubtypeRemoteControlPreviousTrack:
 			{
-				[self ae_stopStreamer];
+				[self _stopStreamer];
 				
 				if (self.savedChannelPlaying == 1)
 					self.savedChannelPlaying = 4;
 				else
 					self.savedChannelPlaying--;
 				
-				[self ae_playSavedChannel];
+				[self _playSavedChannel];
 				break;
 			}
 			default:
