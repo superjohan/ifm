@@ -9,8 +9,6 @@
 #import "FlipsideViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@class AudioStreamer;
-
 @interface MainViewController : UIViewController <FlipsideViewControllerDelegate>
 
 - (void)resetAnimation;

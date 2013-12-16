@@ -27,7 +27,6 @@
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *channel3Spinner;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *channel4Spinner;
 @property (nonatomic, strong) UILabel *nowPlayingLabel;
-@property (nonatomic, strong) AudioStreamer *streamer;
 @property (nonatomic, strong) NSString *channelSelection;
 @property (nonatomic, strong) NSString *nowPlayingString;
 @property (nonatomic, assign) NSInteger channelPlaying;
