@@ -7,11 +7,11 @@
 //
 
 #import "MainViewController.h"
-#import "AudioStreamer.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <CFNetwork/CFNetwork.h>
 #import "AECGHelpers.h"
 #import "AENSArrayAdditions.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface MainViewController ()
 @property (nonatomic, strong) IBOutlet UIButton *channel1Button;
@@ -36,26 +36,16 @@
 @property (nonatomic, strong) NSTimer *nowPlayingTimer;
 @property (nonatomic, assign) BOOL busyLoading;
 @property (nonatomic, assign) BOOL playing;
+@property (nonatomic, strong) MPMoviePlayerController *player;
 @end
 
 @implementation MainViewController
 
 #pragma mark - Private
 
-- (void)_destroyStreamer
-{
-	if (self.streamer)
-	{
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:ASStatusChangedNotification object:self.streamer];
-		
-		[self.streamer stop];
-		self.streamer = nil;
-	}
-}
-
 - (void)_stopStreamer
 {
-	[self _destroyStreamer];
+	[self.player stop];
 	[self _resetEverything];
 }
 
@@ -82,38 +72,25 @@
 	stopButton.enabled = YES;
 }
 
-- (void)_playbackStateChanged:(NSNotification *)aNotification
+- (void)_playerNotificationReceived:(NSNotification *)notification
 {
-	if ([self.streamer isWaiting])
+	if (self.player.playbackState == MPMoviePlaybackStateInterrupted)
+	{
+		[self _stopStreamer];
+	}
+	else if (self.player.playbackState == MPMoviePlaybackStatePaused)
 	{
 		[self _setChannelToWaiting:self.channelPlaying];
 	}
-	else if ([self.streamer isPlaying])
+	else if (self.player.playbackState == MPMoviePlaybackStatePlaying)
 	{
 		[self _updateNowPlaying];
 		[self _setChannelToPlaying:self.channelPlaying];
 	}
-	else if ([self.streamer isIdle])
+	else if (self.player.playbackState == MPMoviePlaybackStateStopped)
 	{
 		[self _stopStreamer];
 	}
-}
-
-- (void)_createStreamer
-{
-	[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-	[self becomeFirstResponder];
-	
-	if (self.streamer)
-	{
-		return;
-	}
-	
-	NSString *escapedValue = [self.channelSelection stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	NSURL *url = [NSURL URLWithString:escapedValue];
-	self.streamer = [[AudioStreamer alloc] initWithURL:url];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ae_playbackStateChanged:) name:ASStatusChangedNotification object:self.streamer];
 }
 
 - (void)_updateNowPlaying
@@ -122,7 +99,7 @@
 	{
 		self.busyLoading = YES;
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(ae_synchronousLoadNowPlayingData) object:nil];
+		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(_synchronousLoadNowPlayingData) object:nil];
 		[self.operationQueue addOperation:operation];
 	}
 }
@@ -130,7 +107,7 @@
 // FIXME: this is the dumbest thing ever
 - (void)_synchronousLoadNowPlayingData
 {
-	NSString *urlString = [[NSString alloc] initWithFormat:@"http://intergalacticfm.com/data/playing%d.html", self.channelPlaying];
+	NSString *urlString = [[NSString alloc] initWithFormat:@"https://intergalacticfm.com/ifm-system/playing%d.php", self.channelPlaying];
     NSURL *url = [NSURL URLWithString:urlString];
 	NSData *data = [NSData dataWithContentsOfURL:url];
 	
@@ -141,7 +118,7 @@
 	
 	if ( ! [[lines objectAtIndex:2] isEqualToString:[self.nowPlayingLabel text]])
 	{
-		[self performSelectorOnMainThread:@selector(ae_updateNowPlayingLabel:) withObject:[lines objectAtIndex:2] waitUntilDone:YES];
+		[self performSelectorOnMainThread:@selector(_updateNowPlayingLabel:) withObject:[lines objectAtIndex:2] waitUntilDone:YES];
 	}
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -156,9 +133,6 @@
 
 - (void)_startPlayingWithM3U:(NSString *)m3u
 {
-	self.channelSelection = [[m3u componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] firstObject];
-	[self _createStreamer];
-	[self.streamer start];
 	self.playing = YES;
 	[self _setPlayButtonsEnabled:YES];
 }
@@ -177,16 +151,35 @@
 	[alert show];
 	[self _setPlayButtonsEnabled:YES];
 
+	// FIXME: create a method for this
 	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", self.channelPlaying]];
 	spinner.hidden = YES;
 }
 
 - (void)_playChannel:(NSInteger)channel
 {
-	[TestFlight passCheckpoint:[NSString stringWithFormat:@"Channel %d button touched", channel]];
-	
 	[self _stopStreamer];
-	[self _setPlayButtonsEnabled:NO];
+	[self _setPlayButtonsEnabled:YES];
+	
+	if (channel == 1)
+	{
+		self.player.contentURL = [NSURL URLWithString:@"http://95.211.225.124:1935/live/mfm/playlist.m3u8"];
+	}
+	else if (channel == 2)
+	{
+		self.player.contentURL = [NSURL URLWithString:@"http://95.211.225.124:1935/live/ifm2/playlist.m3u8"];
+	}
+	else if (channel == 3)
+	{
+		self.player.contentURL = [NSURL URLWithString:@"http://95.211.225.124:1935/live/ifm3/playlist.m3u8"];
+	}
+	else if (channel == 4)
+	{
+		self.player.contentURL = [NSURL URLWithString:@"http://95.211.225.124:1935/live/ifm4/playlist.m3u8"];
+	}
+	
+	[self.player prepareToPlay];
+	[self.player play];
 	
 	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]];
 	spinner.hidden = NO;
@@ -194,21 +187,6 @@
 
 	self.channelPlaying = channel;
 	self.savedChannelPlaying = self.channelPlaying;
-	
-	__block MainViewController *blockSelf = self;
-	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://radio.intergalacticfm.com/%daac.m3u", channel]]];
-	[NSURLConnection sendAsynchronousRequest:request queue:self.operationQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-	{
-		if (data == nil)
-		{
-			[blockSelf performSelectorOnMainThread:@selector(ae_displayPlaylistError) withObject:nil waitUntilDone:YES];
-		}
-		else
-		{
-			NSString *m3u = [NSString stringWithCString:[data bytes] encoding:NSUTF8StringEncoding];
-			[blockSelf performSelectorOnMainThread:@selector(ae_startPlayingWithM3U:) withObject:m3u waitUntilDone:YES];
-		}
-	}];
 }
 
 - (void)_resetEverything
@@ -236,8 +214,6 @@
 
 - (IBAction)showInfo
 {
-	[TestFlight passCheckpoint:@"Info button touched"];
-	
 	FlipsideViewController *controller = [[FlipsideViewController alloc] initWithNibName:@"FlipsideView" bundle:nil];
 	controller.delegate = self;
 	controller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
@@ -266,8 +242,6 @@
 
 - (IBAction)stopButtonPressed:(id)sender
 {
-	[TestFlight passCheckpoint:@"Stop button touched"];
-	
 	[self _stopStreamer];
 	
 	self.savedChannelPlaying = 0;
@@ -308,8 +282,19 @@
 {
 	[self _resetEverything];
 	
-    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — http://intergalacticfm.com/ — Developed by Aero Deko — Visit our site at http://aerodeko.com/ — Intergalactic FM for iPhone uses AudioStreamer by Matt Gallagher.", version];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_playerNotificationReceived:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
+	
+	self.player = [[MPMoviePlayerController alloc] init];
+	self.player.movieSourceType = MPMovieSourceTypeStreaming;
+	self.player.view.hidden = YES;
+	[self.view addSubview:self.player.view];
+	
+	NSError *activationError = nil;
+	[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&activationError];
+	[[AVAudioSession sharedInstance] setActive:YES error:&activationError];
+	
+	NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — http://intergalacticfm.com/ — Developed by Aero Deko — Visit our site at http://aerodeko.com/", version];
 	
 	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 434, 320, 24)];
 	self.nowPlayingLabel.text = introText;
@@ -329,8 +314,6 @@
 {
 	if (event.type == UIEventTypeRemoteControl)
 	{
-		[TestFlight passCheckpoint:@"Remote control event received"];
-		
 		switch (event.subtype)
 		{
             case UIEventSubtypeRemoteControlPlay:
