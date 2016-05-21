@@ -50,9 +50,9 @@
 
 - (void)_setChannelToWaiting:(NSInteger)channel
 {
-	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]];
-	UIButton *playButton = [self valueForKey:[NSString stringWithFormat:@"channel%dButton", channel]];
-	UIButton *stopButton = [self valueForKey:[NSString stringWithFormat:@"channel%dStopButton", channel]];
+	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]];
+	UIButton *playButton = [self valueForKey:[NSString stringWithFormat:@"channel%ldButton", (long)channel]];
+	UIButton *stopButton = [self valueForKey:[NSString stringWithFormat:@"channel%ldStopButton", (long)channel]];
 	
 	[spinner startAnimating];
 	spinner.hidden = NO;
@@ -63,8 +63,8 @@
 
 - (void)_setChannelToPlaying:(NSInteger)channel
 {
-	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]];
-	UIButton *stopButton = [self valueForKey:[NSString stringWithFormat:@"channel%dStopButton", channel]];
+	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]];
+	UIButton *stopButton = [self valueForKey:[NSString stringWithFormat:@"channel%ldStopButton", (long)channel]];
 	
 	spinner.hidden = YES;
 	stopButton.hidden = NO;
@@ -106,7 +106,7 @@
 // FIXME: this is the dumbest thing ever
 - (void)_synchronousLoadNowPlayingData
 {
-	NSString *urlString = [[NSString alloc] initWithFormat:@"https://intergalacticfm.com/ifm-system/playing%d.php", self.channelPlaying];
+	NSString *urlString = [[NSString alloc] initWithFormat:@"https://intergalacticfm.com/ifm-system/playing%ld.php", (long)self.channelPlaying];
     NSURL *url = [NSURL URLWithString:urlString];
 	NSData *data = [NSData dataWithContentsOfURL:url];
 	
@@ -140,7 +140,7 @@
 {
 	for (NSInteger channel = 1;  channel < 5; channel++)
 	{
-		[[self valueForKey:[NSString stringWithFormat:@"channel%dButton", channel]] setEnabled:enabled];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%ldButton", (long)channel]] setEnabled:enabled];
 	}
 }
 
@@ -151,7 +151,7 @@
 	[self _setPlayButtonsEnabled:YES];
 
 	// FIXME: create a method for this
-	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", self.channelPlaying]];
+	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)self.channelPlaying]];
 	spinner.hidden = YES;
 }
 
@@ -180,7 +180,7 @@
 	[self.player prepareToPlay];
 	[self.player play];
 	
-	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]];
+	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]];
 	spinner.hidden = NO;
 	[spinner startAnimating];
 
@@ -195,10 +195,10 @@
 	
 	for (NSInteger channel = 1;  channel < 5; channel++)
 	{
-		[[self valueForKey:[NSString stringWithFormat:@"channel%dSpinner", channel]] setHidden:YES];
-		[[self valueForKey:[NSString stringWithFormat:@"channel%dButton", channel]] setEnabled:YES];
-		[[self valueForKey:[NSString stringWithFormat:@"channel%dStopButton", channel]] setEnabled:NO];
-		[[self valueForKey:[NSString stringWithFormat:@"channel%dStopButton", channel]] setHidden:YES];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]] setHidden:YES];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%ldButton", (long)channel]] setEnabled:YES];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%ldStopButton", (long)channel]] setEnabled:NO];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%ldStopButton", (long)channel]] setHidden:YES];
 	}
 	
 	self.nowPlayingLabel.text = @"";
@@ -216,7 +216,7 @@
 	FlipsideViewController *controller = [[FlipsideViewController alloc] initWithNibName:@"FlipsideView" bundle:nil];
 	controller.delegate = self;
 	controller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-	[self presentModalViewController:controller animated:YES];
+	[self presentViewController:controller animated:YES completion:nil];
 }
 
 - (IBAction)channel1ButtonPressed:(id)sender
@@ -279,6 +279,8 @@
 
 - (void)viewDidLoad
 {
+	[super viewDidLoad];
+	
 	[self _resetEverything];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_playerNotificationReceived:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
@@ -292,7 +294,7 @@
 	[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&activationError];
 	[[AVAudioSession sharedInstance] setActive:YES error:&activationError];
 	
-	NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+	NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — http://intergalacticfm.com/ — Developed by Aero Deko — Visit our site at http://aerodeko.com/", version];
 	
 	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 434, 320, 24)];
@@ -383,8 +385,8 @@
 #pragma mark - FlipsideViewControllerDelegate
 
 - (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller
-{    
-	[self dismissModalViewControllerAnimated:YES];
+{
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

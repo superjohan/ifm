@@ -37,11 +37,6 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)viewDidUnload
-{
-	self.webView = nil;
-}
-
 - (IBAction)goBack:(id)sender
 {
 	[self.webView goBack];
