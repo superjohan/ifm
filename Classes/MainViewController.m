@@ -162,19 +162,19 @@
 	
 	if (channel == 1)
 	{
-		self.player.contentURL = [NSURL URLWithString:@"http://95.211.225.124:1935/live/mfm/playlist.m3u8"];
+		self.player.contentURL = [NSURL URLWithString:@"http://intergalactic.tv:1935/live/mfm/playlist.m3u8"];
 	}
 	else if (channel == 2)
 	{
-		self.player.contentURL = [NSURL URLWithString:@"http://95.211.225.124:1935/live/ifm2/playlist.m3u8"];
+		self.player.contentURL = [NSURL URLWithString:@"http://intergalactic.tv:1935/live/ifm2/playlist.m3u8"];
 	}
 	else if (channel == 3)
 	{
-		self.player.contentURL = [NSURL URLWithString:@"http://95.211.225.124:1935/live/ifm3/playlist.m3u8"];
+		self.player.contentURL = [NSURL URLWithString:@"http://radio.intergalacticfm.com/4.m3u"];
 	}
 	else if (channel == 4)
 	{
-		self.player.contentURL = [NSURL URLWithString:@"http://95.211.225.124:1935/live/ifm4/playlist.m3u8"];
+		self.player.contentURL = [NSURL URLWithString:@"http://radio.intergalacticfm.com/5.m3u"];
 	}
 	
 	[self.player prepareToPlay];
