@@ -162,11 +162,11 @@
 	
 	if (channel == 1)
 	{
-		self.player.contentURL = [NSURL URLWithString:@"http://intergalactic.tv:1935/live/mfm/playlist.m3u8"];
+		self.player.contentURL = [NSURL URLWithString:@"http://radio.intergalacticfm.com/1.m3u"];
 	}
 	else if (channel == 2)
 	{
-		self.player.contentURL = [NSURL URLWithString:@"http://intergalactic.tv:1935/live/ifm2/playlist.m3u8"];
+		self.player.contentURL = [NSURL URLWithString:@"http://radio.intergalacticfm.com/2.m3u"];
 	}
 	else if (channel == 3)
 	{
