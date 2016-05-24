@@ -12,6 +12,6 @@
 
 @interface IFMStationsUpdater : NSObject
 
-- (void)updateStationsWithCompletion:(void(^)(NSArray<IFMStation *> *stations))completion;
+- (void)updateStationsWithCompletion:(void(^)(NSArray<IFMStation *> *stations, NSData *data))completion;
 
 @end

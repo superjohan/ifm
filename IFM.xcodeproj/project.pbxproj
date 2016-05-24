@@ -64,6 +64,7 @@
 		90FB69451CF4D5EE00706581 /* IFMStationsUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB69441CF4D5EE00706581 /* IFMStationsUpdater.m */; };
 		90FB69481CF4D97000706581 /* IFMStationsResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB69471CF4D97000706581 /* IFMStationsResponseParser.m */; };
 		90FB694B1CF4D98F00706581 /* IFMStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB694A1CF4D98F00706581 /* IFMStation.m */; };
+		90FB694D1CF4E1EF00706581 /* stations.json in Resources */ = {isa = PBXBuildFile; fileRef = 90FB694C1CF4E1EF00706581 /* stations.json */; };
 		90FF10BF1CF072F100772A38 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90FF10BE1CF072F100772A38 /* Images.xcassets */; };
 		DB2AB66A15A9859C005A1E98 /* AENSArrayAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2AB66915A9859C005A1E98 /* AENSArrayAdditions.m */; };
 /* End PBXBuildFile section */
@@ -137,6 +138,7 @@
 		90FB69471CF4D97000706581 /* IFMStationsResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMStationsResponseParser.m; sourceTree = "<group>"; };
 		90FB69491CF4D98F00706581 /* IFMStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMStation.h; sourceTree = "<group>"; };
 		90FB694A1CF4D98F00706581 /* IFMStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMStation.m; sourceTree = "<group>"; };
+		90FB694C1CF4E1EF00706581 /* stations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stations.json; sourceTree = "<group>"; };
 		90FF10BE1CF072F100772A38 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = IFM/Images.xcassets; sourceTree = "<group>"; };
 		DB2AB66615A9859C005A1E98 /* AECGHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AECGHelpers.h; path = AEKit/AECGHelpers.h; sourceTree = "<group>"; };
 		DB2AB66715A9859C005A1E98 /* AELog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AELog.h; path = AEKit/AELog.h; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources-iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				90FB694C1CF4E1EF00706581 /* stations.json */,
 				908BDDAE11CCC8B600210717 /* Default@2x.png */,
 				906174AB11CB5E8A00CDF89B /* channel1@2x.png */,
 				906174AC11CB5E8A00CDF89B /* channel2@2x.png */,
@@ -377,6 +380,7 @@
 			files = (
 				280E754D0DD40C5E005A515E /* FlipsideView.xib in Resources */,
 				280E754E0DD40C5E005A515E /* MainView.xib in Resources */,
+				90FB694D1CF4E1EF00706581 /* stations.json in Resources */,
 				280E754F0DD40C5E005A515E /* MainWindow.xib in Resources */,
 				90884AE21129540400707F33 /* channel1.png in Resources */,
 				90884AE41129540400707F33 /* channel2.png in Resources */,

@@ -9,6 +9,7 @@
 #import "IFMStations.h"
 #import "AENSArrayAdditions.h"
 #import "IFMStationsUpdater.h"
+#import "IFMStationsResponseParser.h"
 
 @interface IFMStations ()
 
@@ -19,11 +20,37 @@
 
 @implementation IFMStations
 
+#pragma mark - Private
+
+- (NSString *)_stationsFilePath {
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+	NSString *path = paths[0];
+	NSString *stationsFilePath = [path stringByAppendingPathComponent:@"stations.json"];
+	
+	return stationsFilePath;
+}
+
+- (NSArray *)_loadStations {
+	NSString *stationsPath = [self _stationsFilePath];
+	
+	if ([[NSFileManager defaultManager] fileExistsAtPath:stationsPath] == NO) {
+		NSString *bundledStationsPath = [[NSBundle mainBundle] pathForResource:@"stations" ofType:@"json"];
+		NSError *error = nil;
+		if ([[NSFileManager defaultManager] copyItemAtPath:bundledStationsPath toPath:stationsPath error:&error] == NO) {
+			AELOG_INFO(@"%@", error);
+		}
+	}
+	
+	NSData *data = [[NSData alloc] initWithContentsOfFile:stationsPath];
+	
+	return [IFMStationsResponseParser parseStationResponse:data];
+}
+
 #pragma mark - Public
 
 - (instancetype)init {
 	if ((self = [super init])) {
-		_stations = [[NSArray alloc] init]; // TODO: Read from disk.
+		_stations = [self _loadStations];
 		_updater = [[IFMStationsUpdater alloc] init];
 	}
 	
@@ -39,9 +66,11 @@
 }
 
 - (void)updateStations {
-	[self.updater updateStationsWithCompletion:^(NSArray<IFMStation *> *stations) {
+	[self.updater updateStationsWithCompletion:^(NSArray<IFMStation *> *stations, NSData *data) {
 		if (stations != nil) {
 			self.stations = stations;
+			
+			[data writeToFile:[self _stationsFilePath] atomically:YES];
 		}
 	}];
 }

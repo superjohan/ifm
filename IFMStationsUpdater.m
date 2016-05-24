@@ -33,7 +33,7 @@ static NSString * const IFMStationsListURL = @"https://technopop.pp.fi/ifm/stati
 	return self;
 }
 
-- (void)updateStationsWithCompletion:(void(^)(NSArray<IFMStation *> *stations))completion {
+- (void)updateStationsWithCompletion:(void(^)(NSArray<IFMStation *> *stations, NSData *data))completion {
 	if (self.downloading) {
 		return;
 	}
@@ -45,11 +45,11 @@ static NSString * const IFMStationsListURL = @"https://technopop.pp.fi/ifm/stati
 	NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData * __nullable data, NSURLResponse * __nullable response, NSError * __nullable error) {
 		if (data != nil) {
 			NSArray<IFMStation *> *stations = [IFMStationsResponseParser parseStationResponse:data];
-			completion(stations);
+			completion(stations, data);
 		} else {
 			AELOG_INFO(@"%@", error);
 
-			completion(nil);
+			completion(nil, nil);
 		}
 	}];
 	
