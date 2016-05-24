@@ -13,6 +13,7 @@
 #import "AENSArrayAdditions.h"
 #import <AVFoundation/AVFoundation.h>
 #import "IFMStations.h"
+#import "IFMStation.h"
 
 @interface MainViewController ()
 @property (nonatomic, strong) IBOutlet UIButton *channel1Button;
@@ -162,23 +163,8 @@
 	[self _stopStreamer];
 	[self _setPlayButtonsEnabled:YES];
 	
-	if (channel == 1)
-	{
-		self.player.contentURL = [NSURL URLWithString:@"http://radio.intergalacticfm.com/1.m3u"];
-	}
-	else if (channel == 2)
-	{
-		self.player.contentURL = [NSURL URLWithString:@"http://radio.intergalacticfm.com/2.m3u"];
-	}
-	else if (channel == 3)
-	{
-		self.player.contentURL = [NSURL URLWithString:@"http://radio.intergalacticfm.com/4.m3u"];
-	}
-	else if (channel == 4)
-	{
-		self.player.contentURL = [NSURL URLWithString:@"http://radio.intergalacticfm.com/5.m3u"];
-	}
-	
+	IFMStation *station = [self.stations stationForIndex:channel - 1];
+	self.player.contentURL = station.url;
 	[self.player prepareToPlay];
 	[self.player play];
 	
