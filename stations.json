@@ -1,0 +1,20 @@
+{
+    "stations": [
+        {
+            "name": "Intergalactic FM",
+            "url": "http://radio.intergalacticfm.com/1.m3u"
+        },
+        {
+            "name": "Intergalactic Classix",
+            "url": "http://radio.intergalacticfm.com/2.m3u"
+        },
+        {
+            "name": "Dream Machine",
+            "url": "http://radio.intergalacticfm.com/4.m3u"
+        },
+        {
+            "name": "The Garden",
+            "url": "http://radio.intergalacticfm.com/5.m3u"
+        }
+    ]
+}

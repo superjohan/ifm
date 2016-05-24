@@ -60,6 +60,10 @@
 		90D0D58F115CA03F007C9F6F /* newch3playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58B115CA03F007C9F6F /* newch3playing.png */; };
 		90D0D590115CA03F007C9F6F /* newch4playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58C115CA03F007C9F6F /* newch4playing.png */; };
 		90EDC422112AA08000D1395C /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EDC421112AA08000D1395C /* stop.png */; };
+		90FB69421CF4D4B400706581 /* IFMStations.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB69411CF4D4B400706581 /* IFMStations.m */; };
+		90FB69451CF4D5EE00706581 /* IFMStationsUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB69441CF4D5EE00706581 /* IFMStationsUpdater.m */; };
+		90FB69481CF4D97000706581 /* IFMStationsResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB69471CF4D97000706581 /* IFMStationsResponseParser.m */; };
+		90FB694B1CF4D98F00706581 /* IFMStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB694A1CF4D98F00706581 /* IFMStation.m */; };
 		90FF10BF1CF072F100772A38 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90FF10BE1CF072F100772A38 /* Images.xcassets */; };
 		DB2AB66A15A9859C005A1E98 /* AENSArrayAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2AB66915A9859C005A1E98 /* AENSArrayAdditions.m */; };
 /* End PBXBuildFile section */
@@ -125,6 +129,14 @@
 		90D0D58C115CA03F007C9F6F /* newch4playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newch4playing.png; sourceTree = "<group>"; };
 		90D6F5101287FCAE0060ED15 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		90EDC421112AA08000D1395C /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = "<group>"; };
+		90FB69401CF4D4B400706581 /* IFMStations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMStations.h; sourceTree = "<group>"; };
+		90FB69411CF4D4B400706581 /* IFMStations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMStations.m; sourceTree = "<group>"; };
+		90FB69431CF4D5EE00706581 /* IFMStationsUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMStationsUpdater.h; sourceTree = "<group>"; };
+		90FB69441CF4D5EE00706581 /* IFMStationsUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMStationsUpdater.m; sourceTree = "<group>"; };
+		90FB69461CF4D97000706581 /* IFMStationsResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMStationsResponseParser.h; sourceTree = "<group>"; };
+		90FB69471CF4D97000706581 /* IFMStationsResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMStationsResponseParser.m; sourceTree = "<group>"; };
+		90FB69491CF4D98F00706581 /* IFMStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMStation.h; sourceTree = "<group>"; };
+		90FB694A1CF4D98F00706581 /* IFMStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMStation.m; sourceTree = "<group>"; };
 		90FF10BE1CF072F100772A38 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = IFM/Images.xcassets; sourceTree = "<group>"; };
 		DB2AB66615A9859C005A1E98 /* AECGHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AECGHelpers.h; path = AEKit/AECGHelpers.h; sourceTree = "<group>"; };
 		DB2AB66715A9859C005A1E98 /* AELog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AELog.h; path = AEKit/AELog.h; sourceTree = "<group>"; };
@@ -191,6 +203,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				90FB693F1CF4D4A500706581 /* Model */,
 				90FF10BE1CF072F100772A38 /* Images.xcassets */,
 				909C2C4117A27A9400261E20 /* Default-568h@2x.png */,
 				DB2AB66C15A985A2005A1E98 /* AEKit */,
@@ -276,6 +289,21 @@
 				903B8A94114E28F70076A1C2 /* QuartzCore.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		90FB693F1CF4D4A500706581 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				90FB69401CF4D4B400706581 /* IFMStations.h */,
+				90FB69411CF4D4B400706581 /* IFMStations.m */,
+				90FB69431CF4D5EE00706581 /* IFMStationsUpdater.h */,
+				90FB69441CF4D5EE00706581 /* IFMStationsUpdater.m */,
+				90FB69461CF4D97000706581 /* IFMStationsResponseParser.h */,
+				90FB69471CF4D97000706581 /* IFMStationsResponseParser.m */,
+				90FB69491CF4D98F00706581 /* IFMStation.h */,
+				90FB694A1CF4D98F00706581 /* IFMStation.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		DB2AB66C15A985A2005A1E98 /* AEKit */ = {
@@ -399,10 +427,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				90FB694B1CF4D98F00706581 /* IFMStation.m in Sources */,
 				1D3623260D0F684500981E51 /* IFM_PlayerAppDelegate.m in Sources */,
 				289233AE0DB2D0DB0083E9F9 /* MainViewController.m in Sources */,
+				90FB69481CF4D97000706581 /* IFMStationsResponseParser.m in Sources */,
 				289233B00DB2D0DB0083E9F9 /* FlipsideViewController.m in Sources */,
+				90FB69451CF4D5EE00706581 /* IFMStationsUpdater.m in Sources */,
 				DB2AB66A15A9859C005A1E98 /* AENSArrayAdditions.m in Sources */,
+				90FB69421CF4D4B400706581 /* IFMStations.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

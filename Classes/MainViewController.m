@@ -12,6 +12,7 @@
 #import "AECGHelpers.h"
 #import "AENSArrayAdditions.h"
 #import <AVFoundation/AVFoundation.h>
+#import "IFMStations.h"
 
 @interface MainViewController ()
 @property (nonatomic, strong) IBOutlet UIButton *channel1Button;
@@ -36,6 +37,7 @@
 @property (nonatomic, assign) BOOL busyLoading;
 @property (nonatomic, assign) BOOL playing;
 @property (nonatomic, strong) MPMoviePlayerController *player;
+@property (nonatomic) IFMStations *stations;
 @end
 
 @implementation MainViewController
@@ -280,6 +282,9 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+	
+	self.stations = [[IFMStations alloc] init];
+	[self.stations updateStations];
 	
 	[self _resetEverything];
 	
