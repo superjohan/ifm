@@ -35,7 +35,6 @@
 @property (nonatomic, assign) NSInteger channelPlaying;
 @property (nonatomic, assign) NSInteger savedChannelPlaying;
 @property (nonatomic, strong) NSTimer *nowPlayingTimer;
-@property (nonatomic, assign) BOOL busyLoading;
 @property (nonatomic, assign) BOOL playing;
 @property (nonatomic, strong) MPMoviePlayerController *player;
 @property (nonatomic) IFMStations *stations;
@@ -101,15 +100,13 @@
 
 - (void)_updateNowPlaying
 {
-	if (self.channelPlaying != 0 && self.busyLoading == NO)
+	if (self.channelPlaying != 0 && self.nowPlayingUpdater.updating == NO)
 	{
-		self.busyLoading = YES;
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 		
 		[self.nowPlayingUpdater updateNowPlayingWithStation:self.currentStation completion:^(NSString *nowPlaying) {
 			[self _updateNowPlayingLabel:nowPlaying];
 			
-			self.busyLoading = NO;
 			[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 		}];
 	}
@@ -286,7 +283,6 @@
 	[self.view addSubview:self.nowPlayingLabel];
 	[self resetAnimation];
 	
-	self.busyLoading = NO;
 	self.playing = NO;
 	
 	self.savedChannelPlaying = 0;

@@ -12,6 +12,8 @@
 
 @interface IFMNowPlaying : NSObject
 
+@property (nonatomic, readonly) BOOL updating;
+
 - (void)updateNowPlayingWithStation:(IFMStation *)station completion:(void(^)(NSString *nowPlaying))completion;
 
 @end

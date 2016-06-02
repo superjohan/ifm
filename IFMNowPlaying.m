@@ -12,7 +12,7 @@
 
 @interface IFMNowPlaying ()
 
-@property (nonatomic) BOOL downloading;
+@property (nonatomic) BOOL updating;
 @property (nonatomic) NSURLSession *session;
 
 @end
@@ -43,16 +43,14 @@
 }
 
 - (void)updateNowPlayingWithStation:(IFMStation *)station completion:(void(^)(NSString *nowPlaying))completion {
-	if (self.downloading) {
+	if (self.updating) {
 		return;
 	}
 	
-	self.downloading = YES;
+	self.updating = YES;
 	
 	NSURLRequest *request = [NSURLRequest requestWithURL:station.nowPlayingUrl];
 	NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData * __nullable data, NSURLResponse * __nullable response, NSError * __nullable error) {
-		self.downloading = NO;
-		
 		NSString *parsedNowPlaying;
 		
 		if (data != nil) {
@@ -64,6 +62,8 @@
 		}
 
 		dispatch_async(dispatch_get_main_queue(), ^{
+			self.updating = NO;
+
 			completion(parsedNowPlaying);
 		});
 	}];
