@@ -31,8 +31,6 @@
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *channel4Spinner;
 @property (nonatomic, strong) UILabel *nowPlayingLabel;
 @property (nonatomic, strong) NSString *nowPlayingString;
-@property (nonatomic, assign) NSInteger channelPlaying;
-@property (nonatomic, assign) NSInteger savedChannelPlaying;
 @property (nonatomic, strong) NSTimer *nowPlayingTimer;
 @property (nonatomic, strong) MPMoviePlayerController *player;
 @property (nonatomic) IFMStations *stations;
@@ -81,14 +79,14 @@
 	}
 	else if (self.player.playbackState == MPMoviePlaybackStatePaused)
 	{
-		[self _setChannelToWaiting:self.channelPlaying];
+		[self _setChannelToWaiting:[self.stations uiIndexForStation:self.currentStation]];
 	}
 	else if (self.player.playbackState == MPMoviePlaybackStatePlaying)
 	{
 		self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(_updateNowPlaying) userInfo:nil repeats:YES];
 
 		[self _updateNowPlaying];
-		[self _setChannelToPlaying:self.channelPlaying];
+		[self _setChannelToPlaying:[self.stations uiIndexForStation:self.currentStation]];
 	}
 	else if (self.player.playbackState == MPMoviePlaybackStateStopped)
 	{
@@ -98,7 +96,7 @@
 
 - (void)_updateNowPlaying
 {
-	if (self.channelPlaying != 0 && self.nowPlayingUpdater.updating == NO)
+	if (self.currentStation != nil && self.nowPlayingUpdater.updating == NO)
 	{
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 		
@@ -139,7 +137,7 @@
 	[self _setPlayButtonsEnabled:YES];
 
 	// FIXME: create a method for this
-	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)self.channelPlaying]];
+	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)[self.stations uiIndexForStation:self.currentStation]]];
 	spinner.hidden = YES;
 }
 
@@ -158,15 +156,11 @@
 	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]];
 	spinner.hidden = NO;
 	[spinner startAnimating];
-
-	self.channelPlaying = channel;
-	self.savedChannelPlaying = self.channelPlaying;
 }
 
 - (void)_resetEverything
 {
 	self.currentStation = nil;
-	self.channelPlaying = 0;
 	
 	[self.nowPlayingTimer invalidate];
 	self.nowPlayingTimer = nil;
@@ -180,11 +174,6 @@
 	}
 	
 	self.nowPlayingLabel.text = @"";
-}
-
-- (void)_playSavedChannel
-{
-	[self _playChannel:self.savedChannelPlaying];
 }
 
 #pragma mark - IBActions
@@ -220,8 +209,6 @@
 - (IBAction)stopButtonPressed:(id)sender
 {
 	[self _stopStreamer];
-	
-	self.savedChannelPlaying = 0;
 }
 
 #pragma mark - Public
@@ -278,8 +265,6 @@
 	self.nowPlayingLabel.textColor = [UIColor lightGrayColor];
 	[self.view addSubview:self.nowPlayingLabel];
 	[self resetAnimation];
-	
-	self.savedChannelPlaying = 0;
 }
 
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event
@@ -310,9 +295,9 @@
 				{
 					[self _stopStreamer];
 				}
-				else if (self.player.playbackState != MPMoviePlaybackStatePlaying && self.savedChannelPlaying != 0)
+				else if (self.player.playbackState != MPMoviePlaybackStatePlaying && self.currentStation != nil)
 				{
-					[self _playSavedChannel];
+					[self _playChannel:[self.stations uiIndexForStation:self.currentStation]];
 				}
 				
                 break;
@@ -321,32 +306,42 @@
 			{
 				[self _stopStreamer];
 				
-				if (self.savedChannelPlaying < 4)
+				NSInteger index = [self.stations uiIndexForStation:self.currentStation];
+				
+				if (index < self.stations.numberOfStations)
 				{
-					self.savedChannelPlaying++;
+					index += 1;
 				}
 				else
 				{
-					self.savedChannelPlaying = 1;
+					index = 1;
 				}
 				
-				[self _playSavedChannel];
+				self.currentStation = [self.stations stationForIndex:index + 1];
+				
+				[self _playChannel:index];
+				
 				break;
 			}
             case UIEventSubtypeRemoteControlPreviousTrack:
 			{
 				[self _stopStreamer];
 				
-				if (self.savedChannelPlaying == 1)
+				NSInteger index = [self.stations uiIndexForStation:self.currentStation];
+
+				if (index == 1)
 				{
-					self.savedChannelPlaying = 4;
+					index = self.stations.numberOfStations;
 				}
 				else
 				{
-					self.savedChannelPlaying--;
+					index -= 1;
 				}
 				
-				[self _playSavedChannel];
+				self.currentStation = [self.stations stationForIndex:index + 1];
+				
+				[self _playChannel:index];
+
 				break;
 			}
 			default:
