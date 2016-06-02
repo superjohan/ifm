@@ -68,9 +68,11 @@
 - (void)updateStations {
 	[self.updater updateStationsWithCompletion:^(NSArray<IFMStation *> *stations, NSData *data) {
 		if (stations != nil) {
-			self.stations = stations;
-			
 			[data writeToFile:[self _stationsFilePath] atomically:YES];
+			
+			dispatch_async(dispatch_get_main_queue(), ^{
+				self.stations = stations;
+			});
 		}
 	}];
 }
