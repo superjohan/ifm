@@ -65,8 +65,14 @@
 	return [self.stations objectAtIndexOrNil:stationIndex];
 }
 
+- (NSInteger)indexForStation:(IFMStation *)station {
+	return [self.stations indexOfObject:station];
+}
+
 - (void)updateStations {
 	[self.updater updateStationsWithCompletion:^(NSArray<IFMStation *> *stations, NSData *data) {
+		// TODO: Verify that stations have changed.
+		
 		if (stations != nil) {
 			[data writeToFile:[self _stationsFilePath] atomically:YES];
 			

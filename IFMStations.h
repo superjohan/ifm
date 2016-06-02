@@ -15,6 +15,7 @@
 @property (nonatomic, readonly) NSInteger numberOfStations;
 
 - (IFMStation *)stationForIndex:(NSInteger)stationIndex;
+- (NSInteger)indexForStation:(IFMStation *)station;
 - (void)updateStations;
 
 @end
