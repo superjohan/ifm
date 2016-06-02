@@ -88,6 +88,8 @@
 	}
 	else if (self.player.playbackState == MPMoviePlaybackStatePlaying)
 	{
+		self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(_updateNowPlaying) userInfo:nil repeats:YES];
+
 		[self _updateNowPlaying];
 		[self _setChannelToPlaying:self.channelPlaying];
 	}
@@ -172,6 +174,9 @@
 	self.currentStation = nil;
 	self.channelPlaying = 0;
 	self.playing = NO;
+	
+	[self.nowPlayingTimer invalidate];
+	self.nowPlayingTimer = nil;
 	
 	for (NSInteger channel = 1;  channel < 5; channel++)
 	{
