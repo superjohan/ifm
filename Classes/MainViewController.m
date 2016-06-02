@@ -35,7 +35,6 @@
 @property (nonatomic, assign) NSInteger channelPlaying;
 @property (nonatomic, assign) NSInteger savedChannelPlaying;
 @property (nonatomic, strong) NSTimer *nowPlayingTimer;
-@property (nonatomic, assign) BOOL playing;
 @property (nonatomic, strong) MPMoviePlayerController *player;
 @property (nonatomic) IFMStations *stations;
 @property (nonatomic) IFMNowPlaying *nowPlayingUpdater;
@@ -123,7 +122,6 @@
 
 - (void)_startPlayingWithM3U:(NSString *)m3u
 {
-	self.playing = YES;
 	[self _setPlayButtonsEnabled:YES];
 }
 
@@ -170,7 +168,6 @@
 {
 	self.currentStation = nil;
 	self.channelPlaying = 0;
-	self.playing = NO;
 	
 	[self.nowPlayingTimer invalidate];
 	self.nowPlayingTimer = nil;
@@ -283,8 +280,6 @@
 	[self.view addSubview:self.nowPlayingLabel];
 	[self resetAnimation];
 	
-	self.playing = NO;
-	
 	self.savedChannelPlaying = 0;
 }
 
@@ -310,11 +305,13 @@
 			}
             case UIEventSubtypeRemoteControlTogglePlayPause:
 			{
-				if (self.playing)
+				// TODO: Verify that playbackState works.
+				
+				if (self.player.playbackState == MPMoviePlaybackStatePlaying)
 				{
 					[self _stopStreamer];
 				}
-				else if ( ! self.playing && self.savedChannelPlaying != 0)
+				else if (self.player.playbackState != MPMoviePlaybackStatePlaying && self.savedChannelPlaying != 0)
 				{
 					[self _playSavedChannel];
 				}
