@@ -205,7 +205,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				90FB693F1CF4D4A500706581 /* Model */,
+				90FB693F1CF4D4A500706581 /* Stations */,
 				90FF10BE1CF072F100772A38 /* Images.xcassets */,
 				909C2C4117A27A9400261E20 /* Default-568h@2x.png */,
 				DB2AB66C15A985A2005A1E98 /* AEKit */,
@@ -294,7 +294,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		90FB693F1CF4D4A500706581 /* Model */ = {
+		90FB693F1CF4D4A500706581 /* Stations */ = {
 			isa = PBXGroup;
 			children = (
 				90FB69401CF4D4B400706581 /* IFMStations.h */,
@@ -306,7 +306,7 @@
 				90FB69491CF4D98F00706581 /* IFMStation.h */,
 				90FB694A1CF4D98F00706581 /* IFMStation.m */,
 			);
-			name = Model;
+			name = Stations;
 			sourceTree = "<group>";
 		};
 		DB2AB66C15A985A2005A1E98 /* AEKit */ = {
