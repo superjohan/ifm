@@ -43,6 +43,8 @@ static NSString * const IFMStationsListURL = @"https://technopop.pp.fi/ifm/stati
 	NSURL *url = [NSURL URLWithString:IFMStationsListURL];
 	NSURLRequest *request = [NSURLRequest requestWithURL:url];
 	NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData * __nullable data, NSURLResponse * __nullable response, NSError * __nullable error) {
+		self.downloading = NO;
+		
 		if (data != nil) {
 			NSArray<IFMStation *> *stations = [IFMStationsResponseParser parseStationResponse:data];
 			completion(stations, data);
