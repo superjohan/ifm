@@ -20,6 +20,7 @@
 		902BB63115A0CD9A00DB1C33 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 902BB63015A0CD9A00DB1C33 /* libz.dylib */; };
 		903B8A95114E28F80076A1C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903B8A94114E28F70076A1C2 /* QuartzCore.framework */; };
 		90496EAC185F70BC0029E0FE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90496EAB185F70BC0029E0FE /* AVFoundation.framework */; };
+		904F5E0B1D00B5F6003A238D /* IFMNowPlaying.m in Sources */ = {isa = PBXBuildFile; fileRef = 904F5E0A1D00B5F6003A238D /* IFMNowPlaying.m */; };
 		906174B611CB5E8A00CDF89B /* channel1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 906174AB11CB5E8A00CDF89B /* channel1@2x.png */; };
 		906174B711CB5E8A00CDF89B /* channel2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 906174AC11CB5E8A00CDF89B /* channel2@2x.png */; };
 		906174B811CB5E8A00CDF89B /* channel3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 906174AD11CB5E8A00CDF89B /* channel3@2x.png */; };
@@ -89,6 +90,8 @@
 		902BB63015A0CD9A00DB1C33 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		903B8A94114E28F70076A1C2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		90496EAB185F70BC0029E0FE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		904F5E091D00B5F6003A238D /* IFMNowPlaying.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMNowPlaying.h; sourceTree = "<group>"; };
+		904F5E0A1D00B5F6003A238D /* IFMNowPlaying.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMNowPlaying.m; sourceTree = "<group>"; };
 		906174AB11CB5E8A00CDF89B /* channel1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "channel1@2x.png"; sourceTree = "<group>"; };
 		906174AC11CB5E8A00CDF89B /* channel2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "channel2@2x.png"; sourceTree = "<group>"; };
 		906174AD11CB5E8A00CDF89B /* channel3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "channel3@2x.png"; sourceTree = "<group>"; };
@@ -305,6 +308,8 @@
 				90FB69471CF4D97000706581 /* IFMStationsResponseParser.m */,
 				90FB69491CF4D98F00706581 /* IFMStation.h */,
 				90FB694A1CF4D98F00706581 /* IFMStation.m */,
+				904F5E091D00B5F6003A238D /* IFMNowPlaying.h */,
+				904F5E0A1D00B5F6003A238D /* IFMNowPlaying.m */,
 			);
 			name = Stations;
 			sourceTree = "<group>";
@@ -436,6 +441,7 @@
 				289233AE0DB2D0DB0083E9F9 /* MainViewController.m in Sources */,
 				90FB69481CF4D97000706581 /* IFMStationsResponseParser.m in Sources */,
 				289233B00DB2D0DB0083E9F9 /* FlipsideViewController.m in Sources */,
+				904F5E0B1D00B5F6003A238D /* IFMNowPlaying.m in Sources */,
 				90FB69451CF4D5EE00706581 /* IFMStationsUpdater.m in Sources */,
 				DB2AB66A15A9859C005A1E98 /* AENSArrayAdditions.m in Sources */,
 				90FB69421CF4D4B400706581 /* IFMStations.m in Sources */,

@@ -14,6 +14,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "IFMStations.h"
 #import "IFMStation.h"
+#import "IFMNowPlaying.h"
 
 @interface MainViewController ()
 @property (nonatomic, strong) IBOutlet UIButton *channel1Button;
@@ -33,12 +34,13 @@
 @property (nonatomic, strong) NSString *nowPlayingString;
 @property (nonatomic, assign) NSInteger channelPlaying;
 @property (nonatomic, assign) NSInteger savedChannelPlaying;
-@property (nonatomic, strong) NSOperationQueue *operationQueue;
 @property (nonatomic, strong) NSTimer *nowPlayingTimer;
 @property (nonatomic, assign) BOOL busyLoading;
 @property (nonatomic, assign) BOOL playing;
 @property (nonatomic, strong) MPMoviePlayerController *player;
 @property (nonatomic) IFMStations *stations;
+@property (nonatomic) IFMNowPlaying *nowPlayingUpdater;
+@property (nonatomic) IFMStation *currentStation;
 @end
 
 @implementation MainViewController
@@ -101,36 +103,23 @@
 	{
 		self.busyLoading = YES;
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(_synchronousLoadNowPlayingData) object:nil];
-		[self.operationQueue addOperation:operation];
+		
+		[self.nowPlayingUpdater updateNowPlayingWithStation:self.currentStation completion:^(NSString *nowPlaying) {
+			[self _updateNowPlayingLabel:nowPlaying];
+			
+			self.busyLoading = NO;
+			[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+		}];
 	}
-}
-
-// FIXME: this is the dumbest thing ever
-- (void)_synchronousLoadNowPlayingData
-{
-	NSString *urlString = [[NSString alloc] initWithFormat:@"https://intergalacticfm.com/ifm-system/playing%ld.php", (long)self.channelPlaying];
-    NSURL *url = [NSURL URLWithString:urlString];
-	NSData *data = [NSData dataWithContentsOfURL:url];
-	
-	self.nowPlayingString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-	self.nowPlayingString = [self.nowPlayingString stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
-	
-	NSArray* lines = [self.nowPlayingString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-	
-	if ( ! [[lines objectAtIndex:2] isEqualToString:[self.nowPlayingLabel text]])
-	{
-		[self performSelectorOnMainThread:@selector(_updateNowPlayingLabel:) withObject:[lines objectAtIndex:2] waitUntilDone:YES];
-	}
-	
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	self.busyLoading = NO;
 }
 
 - (void)_updateNowPlayingLabel:(NSString *)track
 {
-	self.nowPlayingLabel.text = track;
-	[self resetAnimation];
+	if ([track isEqualToString:self.nowPlayingLabel.text] == NO)
+	{
+		self.nowPlayingLabel.text = track;
+		[self resetAnimation];
+	}
 }
 
 - (void)_startPlayingWithM3U:(NSString *)m3u
@@ -168,6 +157,8 @@
 	[self.player prepareToPlay];
 	[self.player play];
 	
+	self.currentStation = station;
+	
 	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]];
 	spinner.hidden = NO;
 	[spinner startAnimating];
@@ -178,6 +169,7 @@
 
 - (void)_resetEverything
 {
+	self.currentStation = nil;
 	self.channelPlaying = 0;
 	self.playing = NO;
 	
@@ -249,20 +241,9 @@
 
 #pragma mark - UIViewController overrides
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) 
-	{
-		self.operationQueue = [[NSOperationQueue alloc] init];
-        [self.operationQueue setMaxConcurrentOperationCount:2];
-    }
-	
-    return self;
-}
-
 - (BOOL)canBecomeFirstResponder
 {
-    return TRUE;
+    return YES;
 }
 
 - (void)viewDidLoad
@@ -271,6 +252,8 @@
 	
 	self.stations = [[IFMStations alloc] init];
 	[self.stations updateStations];
+	
+	self.nowPlayingUpdater = [[IFMNowPlaying alloc] init];
 	
 	[self _resetEverything];
 	
