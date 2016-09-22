@@ -469,7 +469,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/AEKit/TestFlight\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.aerodeko.ifm;
 				PRODUCT_NAME = IFM;
@@ -496,7 +495,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/AEKit/TestFlight\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.aerodeko.ifm;
 				PRODUCT_NAME = IFM;
@@ -552,7 +550,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/AEKit/TestFlight\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.aerodeko.ifm;
 				PRODUCT_NAME = IFM;
