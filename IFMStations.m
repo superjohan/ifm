@@ -22,7 +22,8 @@
 
 #pragma mark - Private
 
-- (NSString *)_stationsFilePath {
+- (NSString *)_stationsFilePath
+{
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
 	NSString *path = paths[0];
 	NSString *stationsFilePath = [path stringByAppendingPathComponent:@"stations.json"];
@@ -30,13 +31,16 @@
 	return stationsFilePath;
 }
 
-- (NSArray *)_loadStations {
+- (NSArray *)_loadStations
+{
 	NSString *stationsPath = [self _stationsFilePath];
 	
-	if ([[NSFileManager defaultManager] fileExistsAtPath:stationsPath] == NO) {
+	if ([[NSFileManager defaultManager] fileExistsAtPath:stationsPath] == NO)
+	{
 		NSString *bundledStationsPath = [[NSBundle mainBundle] pathForResource:@"stations" ofType:@"json"];
 		NSError *error = nil;
-		if ([[NSFileManager defaultManager] copyItemAtPath:bundledStationsPath toPath:stationsPath error:&error] == NO) {
+		if ([[NSFileManager defaultManager] copyItemAtPath:bundledStationsPath toPath:stationsPath error:&error] == NO)
+		{
 			AELOG_INFO(@"%@", error);
 		}
 	}
@@ -48,8 +52,10 @@
 
 #pragma mark - Public
 
-- (instancetype)init {
-	if ((self = [super init])) {
+- (instancetype)init
+{
+	if ((self = [super init]))
+	{
 		_stations = [self _loadStations];
 		_updater = [[IFMStationsUpdater alloc] init];
 	}
@@ -57,23 +63,28 @@
 	return self;
 }
 
-- (NSInteger)numberOfStations {
+- (NSInteger)numberOfStations
+{
 	return self.stations.count;
 }
 
-- (IFMStation *)stationForIndex:(NSInteger)stationIndex {
+- (IFMStation *)stationForIndex:(NSInteger)stationIndex
+{
 	return [self.stations objectAtIndexOrNil:stationIndex];
 }
 
-- (NSInteger)uiIndexForStation:(IFMStation *)station {
+- (NSInteger)uiIndexForStation:(IFMStation *)station
+{
 	return [self.stations indexOfObject:station] + 1;
 }
 
-- (void)updateStations {
+- (void)updateStations
+{
 	[self.updater updateStationsWithCompletion:^(NSArray<IFMStation *> *stations, NSData *data) {
 		// TODO: Verify that stations have changed.
 		
-		if (stations != nil) {
+		if (stations != nil)
+		{
 			[data writeToFile:[self _stationsFilePath] atomically:YES];
 			
 			dispatch_async(dispatch_get_main_queue(), ^{

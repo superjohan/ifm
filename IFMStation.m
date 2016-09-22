@@ -17,8 +17,10 @@
 
 @implementation IFMStation
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary {
-	if ((self = [super init])) {
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+{
+	if ((self = [super init]))
+	{
 		_name = dictionary[@"name"];
 		_url = [NSURL URLWithString:dictionary[@"url"]];
 		_nowPlayingUrl = [NSURL URLWithString:dictionary[@"nowplaying"]];

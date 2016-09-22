@@ -22,8 +22,10 @@ static NSString * const IFMStationsListURL = @"https://technopop.pp.fi/ifm/stati
 
 #pragma mark - Public
 
-- (instancetype)init {
-	if ((self = [super init])) {
+- (instancetype)init
+{
+	if ((self = [super init]))
+	{
 		NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
 		configuration.URLCache = nil;
 		
@@ -33,8 +35,10 @@ static NSString * const IFMStationsListURL = @"https://technopop.pp.fi/ifm/stati
 	return self;
 }
 
-- (void)updateStationsWithCompletion:(void(^)(NSArray<IFMStation *> *stations, NSData *data))completion {
-	if (self.downloading) {
+- (void)updateStationsWithCompletion:(void(^)(NSArray<IFMStation *> *stations, NSData *data))completion
+{
+	if (self.downloading)
+	{
 		return;
 	}
 	
@@ -45,10 +49,13 @@ static NSString * const IFMStationsListURL = @"https://technopop.pp.fi/ifm/stati
 	NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData * __nullable data, NSURLResponse * __nullable response, NSError * __nullable error) {
 		self.downloading = NO;
 		
-		if (data != nil) {
+		if (data != nil)
+		{
 			NSArray<IFMStation *> *stations = [IFMStationsResponseParser parseStationResponse:data];
 			completion(stations, data);
-		} else {
+		}
+		else
+		{
 			AELOG_INFO(@"%@", error);
 
 			completion(nil, nil);

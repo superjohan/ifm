@@ -21,7 +21,8 @@
 
 #pragma mark - Private
 
-- (NSString *)_parseResponse:(NSData *)response {
+- (NSString *)_parseResponse:(NSData *)response
+{
 	NSString *nowPlayingString = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
 	nowPlayingString = [nowPlayingString stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
 	NSArray *lines = [nowPlayingString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
@@ -31,8 +32,10 @@
 
 #pragma mark - Public
 
-- (instancetype)init {
-	if ((self = [super init])) {
+- (instancetype)init
+{
+	if ((self = [super init]))
+	{
 		NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
 		configuration.URLCache = nil;
 		
@@ -42,8 +45,10 @@
 	return self;
 }
 
-- (void)updateNowPlayingWithStation:(IFMStation *)station completion:(void(^)(NSString *nowPlaying))completion {
-	if (self.updating) {
+- (void)updateNowPlayingWithStation:(IFMStation *)station completion:(void(^)(NSString *nowPlaying))completion
+{
+	if (self.updating)
+	{
 		return;
 	}
 	
@@ -53,9 +58,12 @@
 	NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request completionHandler:^(NSData * __nullable data, NSURLResponse * __nullable response, NSError * __nullable error) {
 		NSString *parsedNowPlaying;
 		
-		if (data != nil) {
+		if (data != nil)
+		{
 			parsedNowPlaying = [self _parseResponse:data];
-		} else {
+		}
+		else
+		{
 			AELOG_INFO(@"%@", error);
 			
 			parsedNowPlaying = nil;
