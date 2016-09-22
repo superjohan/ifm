@@ -245,7 +245,7 @@
 	
 	[self _resetEverything];
 	
-	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_playerNotificationReceived:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
 	
@@ -258,7 +258,7 @@
 	[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&activationError];
 	[[AVAudioSession sharedInstance] setActive:YES error:&activationError];
 	
-	NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+	NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
 	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — http://intergalacticfm.com/ — Developed by Aero Deko — Visit our site at http://aerodeko.com/", version];
 	
 	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 454, 320, 24)]; // <-- holy shit FIXME FIXME FIXME
