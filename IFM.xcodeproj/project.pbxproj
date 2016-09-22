@@ -457,8 +457,9 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = T583396HNX;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -472,8 +473,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.aerodeko.ifm;
 				PRODUCT_NAME = IFM;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "cdd4c46e-1a97-4885-8b56-f4dd7f91c00f";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE_SPECIFIER = "XC: *";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -485,8 +487,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = T583396HNX;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -498,7 +501,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.aerodeko.ifm;
 				PRODUCT_NAME = IFM;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4c5262ed-c481-443f-93a8-6d5e9a2018cf";
+				PROVISIONING_PROFILE_SPECIFIER = "IFM App Store";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -540,7 +544,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
@@ -553,7 +557,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.aerodeko.ifm;
 				PRODUCT_NAME = IFM;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4c5262ed-c481-443f-93a8-6d5e9a2018cf";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4c5262ed-c481-443f-93a8-6d5e9a2018cf";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
