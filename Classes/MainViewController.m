@@ -16,22 +16,22 @@
 #import "IFMNowPlaying.h"
 
 @interface MainViewController ()
-@property (nonatomic, strong) IBOutlet UIButton *channel1Button;
-@property (nonatomic, strong) IBOutlet UIButton *channel2Button;
-@property (nonatomic, strong) IBOutlet UIButton *channel3Button;
-@property (nonatomic, strong) IBOutlet UIButton *channel4Button;
-@property (nonatomic, strong) IBOutlet UIButton *channel1StopButton;
-@property (nonatomic, strong) IBOutlet UIButton *channel2StopButton;
-@property (nonatomic, strong) IBOutlet UIButton *channel3StopButton;
-@property (nonatomic, strong) IBOutlet UIButton *channel4StopButton;
-@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *channel1Spinner;
-@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *channel2Spinner;
-@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *channel3Spinner;
-@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *channel4Spinner;
-@property (nonatomic, strong) UILabel *nowPlayingLabel;
-@property (nonatomic, strong) NSString *nowPlayingString;
-@property (nonatomic, strong) NSTimer *nowPlayingTimer;
-@property (nonatomic, strong) MPMoviePlayerController *player;
+@property (nonatomic) IBOutlet UIButton *channel1Button;
+@property (nonatomic) IBOutlet UIButton *channel2Button;
+@property (nonatomic) IBOutlet UIButton *channel3Button;
+@property (nonatomic) IBOutlet UIButton *channel4Button;
+@property (nonatomic) IBOutlet UIButton *channel1StopButton;
+@property (nonatomic) IBOutlet UIButton *channel2StopButton;
+@property (nonatomic) IBOutlet UIButton *channel3StopButton;
+@property (nonatomic) IBOutlet UIButton *channel4StopButton;
+@property (nonatomic) IBOutlet UIActivityIndicatorView *channel1Spinner;
+@property (nonatomic) IBOutlet UIActivityIndicatorView *channel2Spinner;
+@property (nonatomic) IBOutlet UIActivityIndicatorView *channel3Spinner;
+@property (nonatomic) IBOutlet UIActivityIndicatorView *channel4Spinner;
+@property (nonatomic) UILabel *nowPlayingLabel;
+@property (nonatomic) NSString *nowPlayingString;
+@property (nonatomic) NSTimer *nowPlayingTimer;
+@property (nonatomic) MPMoviePlayerController *player;
 @property (nonatomic) IFMStations *stations;
 @property (nonatomic) IFMNowPlaying *nowPlayingUpdater;
 @property (nonatomic) IFMStation *currentStation;

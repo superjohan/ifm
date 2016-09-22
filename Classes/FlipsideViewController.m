@@ -9,10 +9,10 @@
 #import "FlipsideViewController.h"
 
 @interface FlipsideViewController ()
-@property (nonatomic, strong) IBOutlet UIWebView *webView;
-@property (nonatomic, strong) IBOutlet UIBarButtonItem *backButton;
-@property (nonatomic, strong) IBOutlet UIBarButtonItem *forwardButton;
-@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *loadingSpinner;
+@property (nonatomic) IBOutlet UIWebView *webView;
+@property (nonatomic) IBOutlet UIBarButtonItem *backButton;
+@property (nonatomic) IBOutlet UIBarButtonItem *forwardButton;
+@property (nonatomic) IBOutlet UIActivityIndicatorView *loadingSpinner;
 @end
 
 @implementation FlipsideViewController
