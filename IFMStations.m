@@ -7,7 +7,7 @@
 //
 
 #import "IFMStations.h"
-#import "AENSArrayAdditions.h"
+#import "NSArray+IFMAdditions.h"
 #import "IFMStationsUpdater.h"
 #import "IFMStationsResponseParser.h"
 
@@ -41,7 +41,7 @@
 		NSError *error = nil;
 		if ([[NSFileManager defaultManager] copyItemAtPath:bundledStationsPath toPath:stationsPath error:&error] == NO)
 		{
-			AELOG_INFO(@"%@", error);
+			IFMLOG_INFO(@"%@", error);
 		}
 	}
 	

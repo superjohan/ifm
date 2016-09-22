@@ -8,7 +8,7 @@
 
 #import "IFMNowPlaying.h"
 #import "IFMStation.h"
-#import "AENSArrayAdditions.h"
+#import "NSArray+IFMAdditions.h"
 
 @interface IFMNowPlaying ()
 
@@ -64,7 +64,7 @@
 		}
 		else
 		{
-			AELOG_INFO(@"%@", error);
+			IFMLOG_INFO(@"%@", error);
 			
 			parsedNowPlaying = nil;
 		}

@@ -56,7 +56,7 @@ static NSString * const IFMStationsListURL = @"https://technopop.pp.fi/ifm/stati
 		}
 		else
 		{
-			AELOG_INFO(@"%@", error);
+			IFMLOG_INFO(@"%@", error);
 
 			completion(nil, nil);
 		}

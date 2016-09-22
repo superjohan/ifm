@@ -9,8 +9,7 @@
 #import "MainViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <CFNetwork/CFNetwork.h>
-#import "AECGHelpers.h"
-#import "AENSArrayAdditions.h"
+#import "NSArray+IFMAdditions.h"
 #import <AVFoundation/AVFoundation.h>
 #import "IFMStations.h"
 #import "IFMStation.h"
@@ -216,12 +215,16 @@
 - (void)resetAnimation
 {
 	[self.nowPlayingLabel sizeToFit];
-	self.nowPlayingLabel.frame = AECGRectPlaceX(self.nowPlayingLabel.frame, self.view.frame.size.width);
-	[UIView animateWithDuration:((640 + self.nowPlayingLabel.frame.size.width) / 60) delay:0 options:(UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear) animations:^
-	{
-		self.nowPlayingLabel.frame = AECGRectPlaceX(self.nowPlayingLabel.frame, -self.nowPlayingLabel.frame.size.width);
-	}
-	completion:nil];
+	self.nowPlayingLabel.frame = CGRectMake(self.view.frame.size.width,
+											self.nowPlayingLabel.frame.origin.y,
+											self.nowPlayingLabel.bounds.size.width,
+											self.nowPlayingLabel.bounds.size.height);
+	[UIView animateWithDuration:((640 + self.nowPlayingLabel.frame.size.width) / 60) delay:0 options:(UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear) animations:^{
+		self.nowPlayingLabel.frame = CGRectMake(-self.nowPlayingLabel.frame.size.width,
+												self.nowPlayingLabel.frame.origin.y,
+												self.nowPlayingLabel.bounds.size.width,
+												self.nowPlayingLabel.bounds.size.height);
+	} completion:nil];
 }
 
 #pragma mark - UIViewController overrides
@@ -345,7 +348,9 @@
 				break;
 			}
 			default:
+			{
 				break;
+			}
 		}
 	}
 }

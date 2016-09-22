@@ -17,14 +17,14 @@
 	NSDictionary *stationInfo = [NSJSONSerialization JSONObjectWithData:stationResponse options:0 error:&stationInfoError];
 	if (stationInfo == nil)
 	{
-		AELOG_INFO(@"%@", stationInfoError);
+		IFMLOG_INFO(@"%@", stationInfoError);
 		
 		return nil;
 	}
 	
 	if ([stationInfo isKindOfClass:[NSDictionary class]] == NO)
 	{
-		AELOG_INFO(@"stationInfo is not a dictionary");
+		IFMLOG_INFO(@"stationInfo is not a dictionary");
 		
 		return nil;
 	}
@@ -32,7 +32,7 @@
 	NSArray *stationDicts = stationInfo[@"stations"];
 	if (stationDicts == nil || [stationDicts isKindOfClass:[NSArray class]] == NO)
 	{
-		AELOG_INFO(@"stationDicts is nil or not an array: %@", stationDicts);
+		IFMLOG_INFO(@"stationDicts is nil or not an array: %@", stationDicts);
 		
 		return nil;
 	}
@@ -43,7 +43,7 @@
 	{
 		if ([stationDict isKindOfClass:[NSDictionary class]] == NO)
 		{
-			AELOG_INFO(@"station info is not a dictionary: %@", stationDict);
+			IFMLOG_INFO(@"station info is not a dictionary: %@", stationDict);
 			
 			continue;
 		}

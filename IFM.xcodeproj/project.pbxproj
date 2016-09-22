@@ -67,7 +67,7 @@
 		90FB694B1CF4D98F00706581 /* IFMStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB694A1CF4D98F00706581 /* IFMStation.m */; };
 		90FB694D1CF4E1EF00706581 /* stations.json in Resources */ = {isa = PBXBuildFile; fileRef = 90FB694C1CF4E1EF00706581 /* stations.json */; };
 		90FF10BF1CF072F100772A38 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90FF10BE1CF072F100772A38 /* Images.xcassets */; };
-		DB2AB66A15A9859C005A1E98 /* AENSArrayAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2AB66915A9859C005A1E98 /* AENSArrayAdditions.m */; };
+		DB2AB66A15A9859C005A1E98 /* NSArray+IFMAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2AB66915A9859C005A1E98 /* NSArray+IFMAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -143,10 +143,9 @@
 		90FB694A1CF4D98F00706581 /* IFMStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMStation.m; sourceTree = "<group>"; };
 		90FB694C1CF4E1EF00706581 /* stations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stations.json; sourceTree = "<group>"; };
 		90FF10BE1CF072F100772A38 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = IFM/Images.xcassets; sourceTree = "<group>"; };
-		DB2AB66615A9859C005A1E98 /* AECGHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AECGHelpers.h; path = AEKit/AECGHelpers.h; sourceTree = "<group>"; };
-		DB2AB66715A9859C005A1E98 /* AELog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AELog.h; path = AEKit/AELog.h; sourceTree = "<group>"; };
-		DB2AB66815A9859C005A1E98 /* AENSArrayAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AENSArrayAdditions.h; path = AEKit/AENSArrayAdditions.h; sourceTree = "<group>"; };
-		DB2AB66915A9859C005A1E98 /* AENSArrayAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AENSArrayAdditions.m; path = AEKit/AENSArrayAdditions.m; sourceTree = "<group>"; };
+		DB2AB66715A9859C005A1E98 /* IFMLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMLog.h; sourceTree = "<group>"; };
+		DB2AB66815A9859C005A1E98 /* NSArray+IFMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+IFMAdditions.h"; sourceTree = "<group>"; };
+		DB2AB66915A9859C005A1E98 /* NSArray+IFMAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+IFMAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,10 +207,10 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				90FB693F1CF4D4A500706581 /* Stations */,
 				90FF10BE1CF072F100772A38 /* Images.xcassets */,
 				909C2C4117A27A9400261E20 /* Default-568h@2x.png */,
-				DB2AB66C15A985A2005A1E98 /* AEKit */,
+				90FB693F1CF4D4A500706581 /* Stations */,
+				DB2AB66C15A985A2005A1E98 /* Utils */,
 				289233A00DB2D0730083E9F9 /* Main View */,
 				281C6CD70DB2D82200F60ACC /* Flipside View */,
 				080E96DDFE201D6D7F000001 /* Application Delegate */,
@@ -314,15 +313,14 @@
 			name = Stations;
 			sourceTree = "<group>";
 		};
-		DB2AB66C15A985A2005A1E98 /* AEKit */ = {
+		DB2AB66C15A985A2005A1E98 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				DB2AB66615A9859C005A1E98 /* AECGHelpers.h */,
-				DB2AB66715A9859C005A1E98 /* AELog.h */,
-				DB2AB66815A9859C005A1E98 /* AENSArrayAdditions.h */,
-				DB2AB66915A9859C005A1E98 /* AENSArrayAdditions.m */,
+				DB2AB66715A9859C005A1E98 /* IFMLog.h */,
+				DB2AB66815A9859C005A1E98 /* NSArray+IFMAdditions.h */,
+				DB2AB66915A9859C005A1E98 /* NSArray+IFMAdditions.m */,
 			);
-			name = AEKit;
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -443,7 +441,7 @@
 				289233B00DB2D0DB0083E9F9 /* FlipsideViewController.m in Sources */,
 				904F5E0B1D00B5F6003A238D /* IFMNowPlaying.m in Sources */,
 				90FB69451CF4D5EE00706581 /* IFMStationsUpdater.m in Sources */,
-				DB2AB66A15A9859C005A1E98 /* AENSArrayAdditions.m in Sources */,
+				DB2AB66A15A9859C005A1E98 /* NSArray+IFMAdditions.m in Sources */,
 				90FB69421CF4D4B400706581 /* IFMStations.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
