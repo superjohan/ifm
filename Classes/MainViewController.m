@@ -19,15 +19,12 @@
 @property (nonatomic) IBOutlet UIButton *channel1Button;
 @property (nonatomic) IBOutlet UIButton *channel2Button;
 @property (nonatomic) IBOutlet UIButton *channel3Button;
-@property (nonatomic) IBOutlet UIButton *channel4Button;
 @property (nonatomic) IBOutlet UIButton *channel1StopButton;
 @property (nonatomic) IBOutlet UIButton *channel2StopButton;
 @property (nonatomic) IBOutlet UIButton *channel3StopButton;
-@property (nonatomic) IBOutlet UIButton *channel4StopButton;
 @property (nonatomic) IBOutlet UIActivityIndicatorView *channel1Spinner;
 @property (nonatomic) IBOutlet UIActivityIndicatorView *channel2Spinner;
 @property (nonatomic) IBOutlet UIActivityIndicatorView *channel3Spinner;
-@property (nonatomic) IBOutlet UIActivityIndicatorView *channel4Spinner;
 @property (nonatomic) UILabel *nowPlayingLabel;
 @property (nonatomic) NSString *nowPlayingString;
 @property (nonatomic) NSTimer *nowPlayingTimer;
@@ -123,7 +120,7 @@
 
 - (void)_setPlayButtonsEnabled:(BOOL)enabled
 {
-	for (NSInteger channel = 1;  channel < 5; channel++)
+	for (NSInteger channel = 1;  channel < 4; channel++)
 	{
 		[[self valueForKey:[NSString stringWithFormat:@"channel%ldButton", (long)channel]] setEnabled:enabled];
 	}
@@ -164,7 +161,7 @@
 	[self.nowPlayingTimer invalidate];
 	self.nowPlayingTimer = nil;
 	
-	for (NSInteger channel = 1;  channel < 5; channel++)
+	for (NSInteger channel = 1;  channel < 4; channel++)
 	{
 		[[self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]] setHidden:YES];
 		[[self valueForKey:[NSString stringWithFormat:@"channel%ldButton", (long)channel]] setEnabled:YES];
@@ -198,11 +195,6 @@
 - (IBAction)channel3ButtonPressed:(id)sender
 {
 	[self _playChannel:3];
-}
-
-- (IBAction)channel4ButtonPressed:(id)sender
-{
-	[self _playChannel:4];
 }
 
 - (IBAction)stopButtonPressed:(id)sender

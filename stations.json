@@ -1,24 +1,19 @@
 {
     "stations": [
         {
-            "name": "Intergalactic FM",
-            "url": "http://radio.intergalacticfm.com/1.m3u",
-            "nowplaying": "https://intergalacticfm.com/ifm-system/playing1.php"
+            "name": "Cybernetic Broadcasting System",
+            "url": "http://radio.intergalactic.fm/1.m3u",
+            "nowplaying": "https://tracks.intergalactic.fm/station/1.json?limit=1&offset=0"
         },
         {
-            "name": "Intergalactic Classix",
-            "url": "http://radio.intergalacticfm.com/2.m3u",
-            "nowplaying": "https://intergalacticfm.com/ifm-system/playing2.php"
+            "name": "Disco Fetish",
+            "url": "http://radio.intergalactic.fm/2.m3u",
+            "nowplaying": "https://tracks.intergalactic.fm/station/2.json?limit=1&offset=0"
         },
         {
-            "name": "Dream Machine",
-            "url": "http://radio.intergalacticfm.com/4.m3u",
-            "nowplaying": "https://intergalacticfm.com/ifm-system/playing4.php"
-        },
-        {
-            "name": "The Garden",
-            "url": "http://radio.intergalacticfm.com/5.m3u",
-            "nowplaying": "https://intergalacticfm.com/ifm-system/playing5.php"
+            "name": "The Dream Machine",
+            "url": "http://radio.intergalactic.fm/3.m3u",
+            "nowplaying": "https://tracks.intergalactic.fm/station/3.json?limit=1&offset=0"
         }
     ]
 }
