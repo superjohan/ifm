@@ -35,6 +35,8 @@
     NSNumber *yearInt = dict[@"year"];
     NSLog(@"yearInt: %@",yearInt);
     NSString *year = [NSString stringWithFormat:@"%@",yearInt];
+    
+    
 
     NSString *nowPlaying1 = [dict[@"artist"] stringByAppendingString:[sepa1 stringByAppendingString:dict[@"track"]]];
     NSString *nowPlaying2 = [nowPlaying1 stringByAppendingString:[sepa2 stringByAppendingString:dict[@"release"]]];
