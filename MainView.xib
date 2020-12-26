@@ -101,7 +101,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </activityIndicatorView>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="78">
-                    <rect key="frame" x="0.0" y="130" width="128" height="69"/>
+                    <rect key="frame" x="0.0" y="126" width="320" height="77"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
                     <state key="normal" image="newch1playing.png">
@@ -116,7 +116,7 @@
                     </connections>
                 </button>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="79">
-                    <rect key="frame" x="0.0" y="206" width="128" height="68"/>
+                    <rect key="frame" x="0.0" y="201" width="320" height="78"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
                     <state key="normal" image="newch2playing.png">
@@ -131,7 +131,7 @@
                     </connections>
                 </button>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="80">
-                    <rect key="frame" x="0.0" y="281" width="128" height="68"/>
+                    <rect key="frame" x="0.0" y="278" width="320" height="74"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
                     <state key="normal" image="newch3playing.png">
@@ -173,9 +173,9 @@
         <image name="channel3.png" width="746" height="186"/>
         <image name="info.png" width="320" height="108"/>
         <image name="newbackground.png" width="320" height="460"/>
-        <image name="newch1playing.png" width="128" height="69"/>
-        <image name="newch2playing.png" width="128" height="68"/>
-        <image name="newch3playing.png" width="128" height="68"/>
+        <image name="newch1playing.png" width="751" height="191"/>
+        <image name="newch2playing.png" width="746" height="187"/>
+        <image name="newch3playing.png" width="746" height="186"/>
         <image name="newlogo.png" width="320" height="108"/>
     </resources>
 </document>
