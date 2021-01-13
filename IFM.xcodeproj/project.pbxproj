@@ -59,6 +59,7 @@
 		90FB694B1CF4D98F00706581 /* IFMStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB694A1CF4D98F00706581 /* IFMStation.m */; };
 		90FB694D1CF4E1EF00706581 /* stations.json in Resources */ = {isa = PBXBuildFile; fileRef = 90FB694C1CF4E1EF00706581 /* stations.json */; };
 		90FF10BF1CF072F100772A38 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90FF10BE1CF072F100772A38 /* Images.xcassets */; };
+		D4D14D3025AE1846002866D5 /* Michroma-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4D14D2F25AE1845002866D5 /* Michroma-Regular.ttf */; };
 		DB2AB66A15A9859C005A1E98 /* NSArray+IFMAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2AB66915A9859C005A1E98 /* NSArray+IFMAdditions.m */; };
 /* End PBXBuildFile section */
 
@@ -127,6 +128,7 @@
 		90FB694A1CF4D98F00706581 /* IFMStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMStation.m; sourceTree = "<group>"; };
 		90FB694C1CF4E1EF00706581 /* stations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stations.json; sourceTree = "<group>"; };
 		90FF10BE1CF072F100772A38 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = IFM/Images.xcassets; sourceTree = "<group>"; };
+		D4D14D2F25AE1845002866D5 /* Michroma-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Michroma-Regular.ttf"; sourceTree = "<group>"; };
 		DB2AB66715A9859C005A1E98 /* IFMLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMLog.h; sourceTree = "<group>"; };
 		DB2AB66815A9859C005A1E98 /* NSArray+IFMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+IFMAdditions.h"; sourceTree = "<group>"; };
 		DB2AB66915A9859C005A1E98 /* NSArray+IFMAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+IFMAdditions.m"; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 			children = (
 				90FF10BE1CF072F100772A38 /* Images.xcassets */,
 				909C2C4117A27A9400261E20 /* Default-568h@2x.png */,
+				D4D14D2F25AE1845002866D5 /* Michroma-Regular.ttf */,
 				90FB693F1CF4D4A500706581 /* Stations */,
 				DB2AB66C15A985A2005A1E98 /* Utils */,
 				289233A00DB2D0730083E9F9 /* Main View */,
@@ -374,6 +377,7 @@
 				906633DE1129A76F007A1DD0 /* Icon.png in Resources */,
 				9066342D1129AE38007A1DD0 /* Default.png in Resources */,
 				90EDC422112AA08000D1395C /* stop.png in Resources */,
+				D4D14D3025AE1846002866D5 /* Michroma-Regular.ttf in Resources */,
 				90D0D56A115C9A27007C9F6F /* newbackground.png in Resources */,
 				90D0D56C115C9AF6007C9F6F /* newlogo.png in Resources */,
 				90D0D58D115CA03F007C9F6F /* newch1playing.png in Resources */,
