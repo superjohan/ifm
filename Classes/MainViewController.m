@@ -40,7 +40,11 @@
 
 - (void)_stopStreamer
 {
-	[self.player stop];
+    if (self.player.playbackState != MPMoviePlaybackStateStopped)
+    {
+        [self.player stop];
+    }
+    
 	[self _resetEverything];
 }
 
