@@ -32,7 +32,12 @@
 @property (nonatomic) IFMStations *stations;
 @property (nonatomic) IFMNowPlaying *nowPlayingUpdater;
 @property (nonatomic) IFMStation *currentStation;
+@property (nonatomic) NSArray<UIButton *> *playButtons;
+@property (nonatomic) NSArray<UIButton *> *stopButtons;
+@property (nonatomic) NSArray<UIActivityIndicatorView *> *spinners;
 @end
+
+static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 @implementation MainViewController
 
@@ -50,9 +55,9 @@
 
 - (void)_setChannelToWaiting:(NSInteger)channel
 {
-	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]];
-	UIButton *playButton = [self valueForKey:[NSString stringWithFormat:@"channel%ldButton", (long)channel]];
-	UIButton *stopButton = [self valueForKey:[NSString stringWithFormat:@"channel%ldStopButton", (long)channel]];
+	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:channel];
+	UIButton *playButton = [self.playButtons objectAtIndexOrNil:channel];
+	UIButton *stopButton = [self.stopButtons objectAtIndexOrNil:channel];
 	
 	[spinner startAnimating];
 	spinner.hidden = NO;
@@ -63,9 +68,9 @@
 
 - (void)_setChannelToPlaying:(NSInteger)channel
 {
-	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]];
-	UIButton *stopButton = [self valueForKey:[NSString stringWithFormat:@"channel%ldStopButton", (long)channel]];
-	
+	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:channel];
+	UIButton *stopButton = [self.stopButtons objectAtIndexOrNil:channel];
+
 	spinner.hidden = YES;
 	stopButton.hidden = NO;
 	stopButton.enabled = YES;
@@ -124,9 +129,9 @@
 
 - (void)_setPlayButtonsEnabled:(BOOL)enabled
 {
-	for (NSInteger channel = 1;  channel < 4; channel++)
+	for (NSInteger channel = 0; channel < IFMChannelsMax; channel++)
 	{
-		[[self valueForKey:[NSString stringWithFormat:@"channel%ldButton", (long)channel]] setEnabled:enabled];
+		[[self.playButtons objectAtIndexOrNil:channel] setEnabled:enabled];
 	}
 }
 
@@ -136,8 +141,7 @@
 	[alert show];
 	[self _setPlayButtonsEnabled:YES];
 
-	// FIXME: create a method for this
-	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)[self.stations uiIndexForStation:self.currentStation]]];
+	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:[self.stations uiIndexForStation:self.currentStation]];
 	spinner.hidden = YES;
 }
 
@@ -146,14 +150,14 @@
 	[self _stopStreamer];
 	[self _setPlayButtonsEnabled:YES];
 	
-	IFMStation *station = [self.stations stationForIndex:channel - 1];
+	IFMStation *station = [self.stations stationForIndex:channel];
 	self.player.contentURL = station.url;
 	[self.player prepareToPlay];
 	[self.player play];
 	
 	self.currentStation = station;
 	
-	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]];
+	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:channel];
 	spinner.hidden = NO;
 	[spinner startAnimating];
 }
@@ -165,12 +169,12 @@
 	[self.nowPlayingTimer invalidate];
 	self.nowPlayingTimer = nil;
 	
-	for (NSInteger channel = 1;  channel < 4; channel++)
+	for (NSInteger channel = 0; channel < IFMChannelsMax; channel++)
 	{
-		[[self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]] setHidden:YES];
-		[[self valueForKey:[NSString stringWithFormat:@"channel%ldButton", (long)channel]] setEnabled:YES];
-		[[self valueForKey:[NSString stringWithFormat:@"channel%ldStopButton", (long)channel]] setEnabled:NO];
-		[[self valueForKey:[NSString stringWithFormat:@"channel%ldStopButton", (long)channel]] setHidden:YES];
+		[[self.spinners objectAtIndexOrNil:channel] setHidden:YES];
+		[[self.playButtons objectAtIndexOrNil:channel] setEnabled:YES];
+		[[self.stopButtons objectAtIndexOrNil:channel] setEnabled:NO];
+		[[self.stopButtons objectAtIndexOrNil:channel] setHidden:YES];
 	}
 	
 	self.nowPlayingLabel.text = @"";
@@ -188,17 +192,17 @@
 
 - (IBAction)channel1ButtonPressed:(id)sender
 {
-	[self _playChannel:1];
+	[self _playChannel:0];
 }
 
 - (IBAction)channel2ButtonPressed:(id)sender
 {
-	[self _playChannel:2];
+	[self _playChannel:1];
 }
 
 - (IBAction)channel3ButtonPressed:(id)sender
 {
-	[self _playChannel:3];
+	[self _playChannel:2];
 }
 
 - (IBAction)stopButtonPressed:(id)sender
@@ -233,7 +237,25 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	
+
+	NSMutableArray *playButtons = [[NSMutableArray alloc] init];
+	[playButtons addObject:self.channel1Button];
+	[playButtons addObject:self.channel2Button];
+	[playButtons addObject:self.channel3Button];
+	self.playButtons = playButtons;
+
+	NSMutableArray *stopButtons = [[NSMutableArray alloc] init];
+	[stopButtons addObject:self.channel1StopButton];
+	[stopButtons addObject:self.channel2StopButton];
+	[stopButtons addObject:self.channel3StopButton];
+	self.stopButtons = stopButtons;
+
+	NSMutableArray *spinners = [[NSMutableArray alloc] init];
+	[spinners addObject:self.channel1Spinner];
+	[spinners addObject:self.channel2Spinner];
+	[spinners addObject:self.channel3Spinner];
+	self.spinners = spinners;
+
 	self.stations = [[IFMStations alloc] init];
 	[self.stations updateStations];
 	
@@ -313,10 +335,10 @@
 				}
 				else
 				{
-					index = 1;
+					index = 0;
 				}
 				
-				self.currentStation = [self.stations stationForIndex:index + 1];
+				self.currentStation = [self.stations stationForIndex:index];
 				
 				[self _playChannel:index];
 				
@@ -328,7 +350,7 @@
 				
 				NSInteger index = [self.stations uiIndexForStation:self.currentStation];
 
-				if (index == 1)
+				if (index == 0)
 				{
 					index = self.stations.numberOfStations;
 				}
@@ -337,7 +359,7 @@
 					index -= 1;
 				}
 				
-				self.currentStation = [self.stations stationForIndex:index + 1];
+				self.currentStation = [self.stations stationForIndex:index];
 				
 				[self _playChannel:index];
 
