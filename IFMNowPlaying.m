@@ -24,7 +24,6 @@
 
 - (NSString *)_parseResponse:(NSData *)response
 {
-
     NSError *err = nil;
     NSArray *jsonData = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingAllowFragments error:&err];
     
@@ -41,7 +40,6 @@
     NSString *nowPlaying3 = [nowPlaying2 stringByAppendingString:[sepa2 stringByAppendingString:dict[@"label"]]];
     NSString *nowPlaying4 = [nowPlaying3 stringByAppendingString:[sepa2 stringByAppendingString:year]];
     NSString *nowPlaying5 = [nowPlaying4 stringByAppendingString:[sepa2 stringByAppendingString:dict[@"country"]]];
-    
     
     return nowPlaying5;
 }
