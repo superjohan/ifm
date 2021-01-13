@@ -40,11 +40,11 @@
 
 - (void)_stopStreamer
 {
-    if (self.player.playbackState != MPMoviePlaybackStateStopped)
-    {
-        [self.player stop];
-    }
-    
+	if (self.player.playbackState != MPMoviePlaybackStateStopped)
+	{
+		[self.player stop];
+	}
+
 	[self _resetEverything];
 }
 
@@ -227,7 +227,7 @@
 
 - (BOOL)canBecomeFirstResponder
 {
-    return YES;
+	return YES;
 }
 
 - (void)viewDidLoad
@@ -272,21 +272,21 @@
 	{
 		switch (event.subtype)
 		{
-            case UIEventSubtypeRemoteControlPlay:
+			case UIEventSubtypeRemoteControlPlay:
 			{
-                break;
+				break;
 			}
-            case UIEventSubtypeRemoteControlPause:
+			case UIEventSubtypeRemoteControlPause:
 			{
 				[self _stopStreamer];
-                break;
-            }
+				break;
+			}
 			case UIEventSubtypeRemoteControlStop:
 			{
 				[self _stopStreamer];
-                break;
+				break;
 			}
-            case UIEventSubtypeRemoteControlTogglePlayPause:
+			case UIEventSubtypeRemoteControlTogglePlayPause:
 			{
 				// TODO: Verify that playbackState works.
 				
@@ -299,9 +299,9 @@
 					[self _playChannel:[self.stations uiIndexForStation:self.currentStation]];
 				}
 				
-                break;
+				break;
 			}
-            case UIEventSubtypeRemoteControlNextTrack:
+			case UIEventSubtypeRemoteControlNextTrack:
 			{
 				[self _stopStreamer];
 				
@@ -322,7 +322,7 @@
 				
 				break;
 			}
-            case UIEventSubtypeRemoteControlPreviousTrack:
+			case UIEventSubtypeRemoteControlPreviousTrack:
 			{
 				[self _stopStreamer];
 				
