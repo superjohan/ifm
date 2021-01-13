@@ -24,6 +24,7 @@
 
 - (NSString *)_parseResponse:(NSData *)response
 {
+	// FIXME: this needs to be cleaned up
 	NSError *err = nil;
 	NSArray *jsonData = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingAllowFragments error:&err];
 
