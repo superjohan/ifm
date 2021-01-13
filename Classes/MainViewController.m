@@ -281,7 +281,6 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	
 	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 390, 320, 24)]; // <-- holy shit FIXME FIXME FIXME
 	self.nowPlayingLabel.text = introText;
-	//self.nowPlayingLabel.font = [UIFont boldSystemFontOfSize:30];
     self.nowPlayingLabel.font = [UIFont fontWithName:@"Michroma" size:20];
 	self.nowPlayingLabel.backgroundColor = [UIColor clearColor];
 	self.nowPlayingLabel.textColor = [UIColor redColor];
