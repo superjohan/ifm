@@ -277,7 +277,7 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	[[AVAudioSession sharedInstance] setActive:YES error:&activationError];
 	
 	NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
-	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — http://intergalacticfm.com/ — Developed by Aero Deko — Visit our site at http://aerodeko.com/", version];
+	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — https://www.intergalactic.fm/ — Developed by Aero Deko / Updated by IFM dev corps — Visit our site at http://aerodeko.com/", version];
 	
 	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 390, 320, 24)]; // <-- holy shit FIXME FIXME FIXME
 	self.nowPlayingLabel.text = introText;
