@@ -9,7 +9,7 @@
 #import "IFMStationsUpdater.h"
 #import "IFMStationsResponseParser.h"
 
-static NSString * const IFMStationsListURL = @"https://www.intergalactic.fm/ifm-system/stations.json";
+static NSString * const IFMStationsListURL = @"https://theconventicle.club/ifm/stations.json";
 
 @interface IFMStationsUpdater () <NSURLSessionDataDelegate>
 

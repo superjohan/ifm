@@ -24,28 +24,25 @@
 
 - (NSString *)_parseResponse:(NSData *)response
 {
+	// FIXME: this needs to be cleaned up
+	NSError *err = nil;
+	NSArray *jsonData = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingAllowFragments error:&err];
 
-    NSError *err = nil;
-    NSArray *jsonData = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingAllowFragments error:&err];
-    
-    NSDictionary *dict = [jsonData objectAtIndex:0];
-    
-    NSString *sepa1 = @" - ";
-    NSString *sepa2 = @" | ";
-    NSNumber *yearInt = dict[@"year"];
-    NSLog(@"yearInt: %@",yearInt);
-    NSString *year = [NSString stringWithFormat:@"%@",yearInt];
-    
-    
+	NSDictionary *dict = [jsonData objectAtIndex:0];
 
-    NSString *nowPlaying1 = [dict[@"artist"] stringByAppendingString:[sepa1 stringByAppendingString:dict[@"track"]]];
-    NSString *nowPlaying2 = [nowPlaying1 stringByAppendingString:[sepa2 stringByAppendingString:dict[@"release"]]];
-    NSString *nowPlaying3 = [nowPlaying2 stringByAppendingString:[sepa2 stringByAppendingString:dict[@"label"]]];
-    NSString *nowPlaying4 = [nowPlaying3 stringByAppendingString:[sepa2 stringByAppendingString:year]];
-    NSString *nowPlaying5 = [nowPlaying4 stringByAppendingString:[sepa2 stringByAppendingString:dict[@"country"]]];
-    
-    
-    return nowPlaying5;
+	NSString *sepa1 = @" - ";
+	NSString *sepa2 = @" | ";
+	NSNumber *yearInt = dict[@"year"];
+	NSLog(@"yearInt: %@",yearInt);
+	NSString *year = [NSString stringWithFormat:@"%@",yearInt];
+
+	NSString *nowPlaying1 = [dict[@"artist"] stringByAppendingString:[sepa1 stringByAppendingString:dict[@"track"]]];
+	NSString *nowPlaying2 = [nowPlaying1 stringByAppendingString:[sepa2 stringByAppendingString:dict[@"release"]]];
+	NSString *nowPlaying3 = [nowPlaying2 stringByAppendingString:[sepa2 stringByAppendingString:dict[@"label"]]];
+	NSString *nowPlaying4 = [nowPlaying3 stringByAppendingString:[sepa2 stringByAppendingString:year]];
+	NSString *nowPlaying5 = [nowPlaying4 stringByAppendingString:[sepa2 stringByAppendingString:dict[@"country"]]];
+
+	return nowPlaying5;
 }
 
 #pragma mark - Public
