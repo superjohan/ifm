@@ -30,7 +30,6 @@
 		906174BC11CB5E8A00CDF89B /* newch1playing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 906174B111CB5E8A00CDF89B /* newch1playing@2x.png */; };
 		906174BD11CB5E8A00CDF89B /* newch2playing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 906174B211CB5E8A00CDF89B /* newch2playing@2x.png */; };
 		906174BE11CB5E8A00CDF89B /* newch3playing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 906174B311CB5E8A00CDF89B /* newch3playing@2x.png */; };
-		906174BF11CB5E8A00CDF89B /* newch4playing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 906174B411CB5E8A00CDF89B /* newch4playing@2x.png */; };
 		906174C011CB5E8A00CDF89B /* newlogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 906174B511CB5E8A00CDF89B /* newlogo@2x.png */; };
 		906633DE1129A76F007A1DD0 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 906633DD1129A76F007A1DD0 /* Icon.png */; };
 		9066342D1129AE38007A1DD0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9066342C1129AE38007A1DD0 /* Default.png */; };
@@ -59,7 +58,6 @@
 		90D0D58D115CA03F007C9F6F /* newch1playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D589115CA03F007C9F6F /* newch1playing.png */; };
 		90D0D58E115CA03F007C9F6F /* newch2playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58A115CA03F007C9F6F /* newch2playing.png */; };
 		90D0D58F115CA03F007C9F6F /* newch3playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58B115CA03F007C9F6F /* newch3playing.png */; };
-		90D0D590115CA03F007C9F6F /* newch4playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58C115CA03F007C9F6F /* newch4playing.png */; };
 		90EDC422112AA08000D1395C /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EDC421112AA08000D1395C /* stop.png */; };
 		90FB69421CF4D4B400706581 /* IFMStations.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB69411CF4D4B400706581 /* IFMStations.m */; };
 		90FB69451CF4D5EE00706581 /* IFMStationsUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB69441CF4D5EE00706581 /* IFMStationsUpdater.m */; };
@@ -101,7 +99,6 @@
 		906174B111CB5E8A00CDF89B /* newch1playing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newch1playing@2x.png"; sourceTree = "<group>"; };
 		906174B211CB5E8A00CDF89B /* newch2playing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newch2playing@2x.png"; sourceTree = "<group>"; };
 		906174B311CB5E8A00CDF89B /* newch3playing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newch3playing@2x.png"; sourceTree = "<group>"; };
-		906174B411CB5E8A00CDF89B /* newch4playing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newch4playing@2x.png"; sourceTree = "<group>"; };
 		906174B511CB5E8A00CDF89B /* newlogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newlogo@2x.png"; sourceTree = "<group>"; };
 		906633DD1129A76F007A1DD0 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		9066342C1129AE38007A1DD0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -130,7 +127,6 @@
 		90D0D589115CA03F007C9F6F /* newch1playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newch1playing.png; sourceTree = "<group>"; };
 		90D0D58A115CA03F007C9F6F /* newch2playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newch2playing.png; sourceTree = "<group>"; };
 		90D0D58B115CA03F007C9F6F /* newch3playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newch3playing.png; sourceTree = "<group>"; };
-		90D0D58C115CA03F007C9F6F /* newch4playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newch4playing.png; sourceTree = "<group>"; };
 		90D6F5101287FCAE0060ED15 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		90EDC421112AA08000D1395C /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = "<group>"; };
 		90FB69401CF4D4B400706581 /* IFMStations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMStations.h; sourceTree = "<group>"; };
@@ -223,6 +219,7 @@
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
@@ -247,12 +244,10 @@
 				906174B111CB5E8A00CDF89B /* newch1playing@2x.png */,
 				906174B211CB5E8A00CDF89B /* newch2playing@2x.png */,
 				906174B311CB5E8A00CDF89B /* newch3playing@2x.png */,
-				906174B411CB5E8A00CDF89B /* newch4playing@2x.png */,
 				906174B511CB5E8A00CDF89B /* newlogo@2x.png */,
 				90D0D589115CA03F007C9F6F /* newch1playing.png */,
 				90D0D58A115CA03F007C9F6F /* newch2playing.png */,
 				90D0D58B115CA03F007C9F6F /* newch3playing.png */,
-				90D0D58C115CA03F007C9F6F /* newch4playing.png */,
 				90D0D56B115C9AF6007C9F6F /* newlogo.png */,
 				90D0D569115C9A27007C9F6F /* newbackground.png */,
 				90EDC421112AA08000D1395C /* stop.png */,
@@ -349,7 +344,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 1000;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = T583396HNX;
@@ -407,7 +402,6 @@
 				90D0D58D115CA03F007C9F6F /* newch1playing.png in Resources */,
 				90D0D58E115CA03F007C9F6F /* newch2playing.png in Resources */,
 				90D0D58F115CA03F007C9F6F /* newch3playing.png in Resources */,
-				90D0D590115CA03F007C9F6F /* newch4playing.png in Resources */,
 				906DC6FF1177335500EB3D92 /* Entitlements.plist in Resources */,
 				906174B611CB5E8A00CDF89B /* channel1@2x.png in Resources */,
 				906174B711CB5E8A00CDF89B /* channel2@2x.png in Resources */,
@@ -419,7 +413,6 @@
 				906174BC11CB5E8A00CDF89B /* newch1playing@2x.png in Resources */,
 				906174BD11CB5E8A00CDF89B /* newch2playing@2x.png in Resources */,
 				906174BE11CB5E8A00CDF89B /* newch3playing@2x.png in Resources */,
-				906174BF11CB5E8A00CDF89B /* newch4playing@2x.png in Resources */,
 				906174C011CB5E8A00CDF89B /* newlogo@2x.png in Resources */,
 				908BDDAF11CCC8B600210717 /* Default@2x.png in Resources */,
 				909C2C4217A27A9400261E20 /* Default-568h@2x.png in Resources */,
@@ -512,12 +505,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -531,7 +532,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 			};
@@ -568,12 +569,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -589,7 +598,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = YES;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -600,12 +609,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -619,7 +636,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;

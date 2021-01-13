@@ -75,7 +75,7 @@
 
 - (NSInteger)uiIndexForStation:(IFMStation *)station
 {
-	return [self.stations indexOfObject:station] + 1;
+	return [self.stations indexOfObject:station];
 }
 
 - (void)updateStations
