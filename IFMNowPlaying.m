@@ -24,25 +24,50 @@
 
 - (NSString *)_parseResponse:(NSData *)response
 {
-	// FIXME: this needs to be cleaned up
 	NSError *err = nil;
 	NSArray *jsonData = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingAllowFragments error:&err];
 
-	NSDictionary *dict = [jsonData objectAtIndex:0];
+	NSDictionary *dict = [jsonData objectAtIndexOrNil:0];
+	if (!dict) {
+		IFMLOG_INFO(@"Error parsing now playing info: %@", err);
+		return nil;
+	}
 
-	NSString *sepa1 = @" - ";
-	NSString *sepa2 = @" | ";
-	NSNumber *yearInt = dict[@"year"];
-	NSLog(@"yearInt: %@",yearInt);
-	NSString *year = [NSString stringWithFormat:@"%@",yearInt];
+	NSString *separator1 = @"-";
+	NSString *separator2 = @"|";
 
-	NSString *nowPlaying1 = [dict[@"artist"] stringByAppendingString:[sepa1 stringByAppendingString:dict[@"track"]]];
-	NSString *nowPlaying2 = [nowPlaying1 stringByAppendingString:[sepa2 stringByAppendingString:dict[@"release"]]];
-	NSString *nowPlaying3 = [nowPlaying2 stringByAppendingString:[sepa2 stringByAppendingString:dict[@"label"]]];
-	NSString *nowPlaying4 = [nowPlaying3 stringByAppendingString:[sepa2 stringByAppendingString:year]];
-	NSString *nowPlaying5 = [nowPlaying4 stringByAppendingString:[sepa2 stringByAppendingString:dict[@"country"]]];
+	NSString *artist = dict[@"artist"];
+	NSString *nowPlaying = artist != nil ? artist : @"";
+	nowPlaying = [self _appendStringIfNotEmpty:dict[@"track"] toString:nowPlaying withSeparator:separator1];
+	nowPlaying = [self _appendStringIfNotEmpty:dict[@"release"] toString:nowPlaying withSeparator:separator2];
+	nowPlaying = [self _appendStringIfNotEmpty:dict[@"label"] toString:nowPlaying withSeparator:separator2];
 
-	return nowPlaying5;
+	NSObject *yearValue = dict[@"year"];
+	NSString *year;
+	if ([yearValue isKindOfClass:[NSNumber class]]) {
+		year = [(NSNumber *)yearValue stringValue];
+	} else if ([yearValue isKindOfClass:[NSString class]]) {
+		year = (NSString *)yearValue;
+	} else {
+		year = nil;
+	}
+
+	nowPlaying = [self _appendStringIfNotEmpty:year toString:nowPlaying withSeparator:separator2];
+	nowPlaying = [self _appendStringIfNotEmpty:dict[@"country"] toString:nowPlaying withSeparator:separator2];
+
+	return nowPlaying;
+}
+
+- (NSString *)_appendStringIfNotEmpty:(NSString *)fromString
+							 toString:(NSString *)toString
+						withSeparator:(NSString *)separator
+{
+	if (fromString == nil || [[fromString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0)
+	{
+		return toString;
+	}
+
+	return [NSString stringWithFormat:@"%@ %@ %@", toString, separator, fromString];
 }
 
 #pragma mark - Public

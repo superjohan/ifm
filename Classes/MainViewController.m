@@ -277,13 +277,13 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	[[AVAudioSession sharedInstance] setActive:YES error:&activationError];
 	
 	NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
-	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — http://intergalacticfm.com/ — Developed by Aero Deko — Visit our site at http://aerodeko.com/", version];
+	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — https://www.intergalactic.fm/ — Developed by Aero Deko and IFM dev corps", version];
 	
-	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 454, 320, 24)]; // <-- holy shit FIXME FIXME FIXME
+	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 390, 320, 24)]; // <-- holy shit FIXME FIXME FIXME
 	self.nowPlayingLabel.text = introText;
-	self.nowPlayingLabel.font = [UIFont boldSystemFontOfSize:18];
+	self.nowPlayingLabel.font = [UIFont fontWithName:@"Michroma" size:20];
 	self.nowPlayingLabel.backgroundColor = [UIColor clearColor];
-	self.nowPlayingLabel.textColor = [UIColor lightGrayColor];
+	self.nowPlayingLabel.textColor = [UIColor redColor];
 	[self.view addSubview:self.nowPlayingLabel];
 	[self resetAnimation];
 }
