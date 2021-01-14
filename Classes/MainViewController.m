@@ -32,12 +32,7 @@
 @property (nonatomic) IFMStations *stations;
 @property (nonatomic) IFMNowPlaying *nowPlayingUpdater;
 @property (nonatomic) IFMStation *currentStation;
-@property (nonatomic) NSArray<UIButton *> *playButtons;
-@property (nonatomic) NSArray<UIButton *> *stopButtons;
-@property (nonatomic) NSArray<UIActivityIndicatorView *> *spinners;
 @end
-
-static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 @implementation MainViewController
 
@@ -45,19 +40,15 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (void)_stopStreamer
 {
-	if (self.player.playbackState != MPMoviePlaybackStateStopped)
-	{
-		[self.player stop];
-	}
-
+	[self.player stop];
 	[self _resetEverything];
 }
 
 - (void)_setChannelToWaiting:(NSInteger)channel
 {
-	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:channel];
-	UIButton *playButton = [self.playButtons objectAtIndexOrNil:channel];
-	UIButton *stopButton = [self.stopButtons objectAtIndexOrNil:channel];
+	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]];
+	UIButton *playButton = [self valueForKey:[NSString stringWithFormat:@"channel%ldButton", (long)channel]];
+	UIButton *stopButton = [self valueForKey:[NSString stringWithFormat:@"channel%ldStopButton", (long)channel]];
 	
 	[spinner startAnimating];
 	spinner.hidden = NO;
@@ -68,9 +59,9 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (void)_setChannelToPlaying:(NSInteger)channel
 {
-	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:channel];
-	UIButton *stopButton = [self.stopButtons objectAtIndexOrNil:channel];
-
+	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]];
+	UIButton *stopButton = [self valueForKey:[NSString stringWithFormat:@"channel%ldStopButton", (long)channel]];
+	
 	spinner.hidden = YES;
 	stopButton.hidden = NO;
 	stopButton.enabled = YES;
@@ -129,9 +120,9 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (void)_setPlayButtonsEnabled:(BOOL)enabled
 {
-	for (NSInteger channel = 0; channel < IFMChannelsMax; channel++)
+	for (NSInteger channel = 1;  channel < 4; channel++)
 	{
-		[[self.playButtons objectAtIndexOrNil:channel] setEnabled:enabled];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%ldButton", (long)channel]] setEnabled:enabled];
 	}
 }
 
@@ -141,7 +132,8 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	[alert show];
 	[self _setPlayButtonsEnabled:YES];
 
-	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:[self.stations uiIndexForStation:self.currentStation]];
+	// FIXME: create a method for this
+	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)[self.stations uiIndexForStation:self.currentStation]]];
 	spinner.hidden = YES;
 }
 
@@ -150,14 +142,14 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	[self _stopStreamer];
 	[self _setPlayButtonsEnabled:YES];
 	
-	IFMStation *station = [self.stations stationForIndex:channel];
+	IFMStation *station = [self.stations stationForIndex:channel - 1];
 	self.player.contentURL = station.url;
 	[self.player prepareToPlay];
 	[self.player play];
 	
 	self.currentStation = station;
 	
-	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:channel];
+	UIActivityIndicatorView *spinner = [self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]];
 	spinner.hidden = NO;
 	[spinner startAnimating];
 }
@@ -169,12 +161,12 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	[self.nowPlayingTimer invalidate];
 	self.nowPlayingTimer = nil;
 	
-	for (NSInteger channel = 0; channel < IFMChannelsMax; channel++)
+	for (NSInteger channel = 1;  channel < 4; channel++)
 	{
-		[[self.spinners objectAtIndexOrNil:channel] setHidden:YES];
-		[[self.playButtons objectAtIndexOrNil:channel] setEnabled:YES];
-		[[self.stopButtons objectAtIndexOrNil:channel] setEnabled:NO];
-		[[self.stopButtons objectAtIndexOrNil:channel] setHidden:YES];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%ldSpinner", (long)channel]] setHidden:YES];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%ldButton", (long)channel]] setEnabled:YES];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%ldStopButton", (long)channel]] setEnabled:NO];
+		[[self valueForKey:[NSString stringWithFormat:@"channel%ldStopButton", (long)channel]] setHidden:YES];
 	}
 	
 	self.nowPlayingLabel.text = @"";
@@ -192,17 +184,17 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (IBAction)channel1ButtonPressed:(id)sender
 {
-	[self _playChannel:0];
+	[self _playChannel:1];
 }
 
 - (IBAction)channel2ButtonPressed:(id)sender
 {
-	[self _playChannel:1];
+	[self _playChannel:2];
 }
 
 - (IBAction)channel3ButtonPressed:(id)sender
 {
-	[self _playChannel:2];
+	[self _playChannel:3];
 }
 
 - (IBAction)stopButtonPressed:(id)sender
@@ -231,31 +223,13 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (BOOL)canBecomeFirstResponder
 {
-	return YES;
+    return YES;
 }
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-
-	NSMutableArray *playButtons = [[NSMutableArray alloc] init];
-	[playButtons addObject:self.channel1Button];
-	[playButtons addObject:self.channel2Button];
-	[playButtons addObject:self.channel3Button];
-	self.playButtons = playButtons;
-
-	NSMutableArray *stopButtons = [[NSMutableArray alloc] init];
-	[stopButtons addObject:self.channel1StopButton];
-	[stopButtons addObject:self.channel2StopButton];
-	[stopButtons addObject:self.channel3StopButton];
-	self.stopButtons = stopButtons;
-
-	NSMutableArray *spinners = [[NSMutableArray alloc] init];
-	[spinners addObject:self.channel1Spinner];
-	[spinners addObject:self.channel2Spinner];
-	[spinners addObject:self.channel3Spinner];
-	self.spinners = spinners;
-
+	
 	self.stations = [[IFMStations alloc] init];
 	[self.stations updateStations];
 	
@@ -277,13 +251,14 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	[[AVAudioSession sharedInstance] setActive:YES error:&activationError];
 	
 	NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
-	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — http://intergalacticfm.com/ — Developed by Aero Deko — Visit our site at http://aerodeko.com/", version];
+	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — https://www.intergalactic.fm/ — Developed by Aero Deko / Updated by IFM dev corps — Visit our site at http://aerodeko.com/", version];
 	
-	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 454, 320, 24)]; // <-- holy shit FIXME FIXME FIXME
+	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 390, 320, 24)]; // <-- holy shit FIXME FIXME FIXME
 	self.nowPlayingLabel.text = introText;
-	self.nowPlayingLabel.font = [UIFont boldSystemFontOfSize:18];
+	//self.nowPlayingLabel.font = [UIFont boldSystemFontOfSize:30];
+    self.nowPlayingLabel.font = [UIFont fontWithName:@"Michroma" size:20];
 	self.nowPlayingLabel.backgroundColor = [UIColor clearColor];
-	self.nowPlayingLabel.textColor = [UIColor lightGrayColor];
+	self.nowPlayingLabel.textColor = [UIColor redColor];
 	[self.view addSubview:self.nowPlayingLabel];
 	[self resetAnimation];
 }
@@ -294,21 +269,21 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	{
 		switch (event.subtype)
 		{
-			case UIEventSubtypeRemoteControlPlay:
+            case UIEventSubtypeRemoteControlPlay:
 			{
-				break;
+                break;
 			}
-			case UIEventSubtypeRemoteControlPause:
+            case UIEventSubtypeRemoteControlPause:
 			{
 				[self _stopStreamer];
-				break;
-			}
+                break;
+            }
 			case UIEventSubtypeRemoteControlStop:
 			{
 				[self _stopStreamer];
-				break;
+                break;
 			}
-			case UIEventSubtypeRemoteControlTogglePlayPause:
+            case UIEventSubtypeRemoteControlTogglePlayPause:
 			{
 				// TODO: Verify that playbackState works.
 				
@@ -321,9 +296,9 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 					[self _playChannel:[self.stations uiIndexForStation:self.currentStation]];
 				}
 				
-				break;
+                break;
 			}
-			case UIEventSubtypeRemoteControlNextTrack:
+            case UIEventSubtypeRemoteControlNextTrack:
 			{
 				[self _stopStreamer];
 				
@@ -335,22 +310,22 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 				}
 				else
 				{
-					index = 0;
+					index = 1;
 				}
 				
-				self.currentStation = [self.stations stationForIndex:index];
+				self.currentStation = [self.stations stationForIndex:index + 1];
 				
 				[self _playChannel:index];
 				
 				break;
 			}
-			case UIEventSubtypeRemoteControlPreviousTrack:
+            case UIEventSubtypeRemoteControlPreviousTrack:
 			{
 				[self _stopStreamer];
 				
 				NSInteger index = [self.stations uiIndexForStation:self.currentStation];
 
-				if (index == 0)
+				if (index == 1)
 				{
 					index = self.stations.numberOfStations;
 				}
@@ -359,7 +334,7 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 					index -= 1;
 				}
 				
-				self.currentStation = [self.stations stationForIndex:index];
+				self.currentStation = [self.stations stationForIndex:index + 1];
 				
 				[self _playChannel:index];
 
