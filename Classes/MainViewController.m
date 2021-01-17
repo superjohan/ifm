@@ -279,7 +279,7 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
 	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — https://www.intergalactic.fm/ — Developed by Aero Deko and IFM dev corps", version];
 	
-	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 390, 320, 24)]; // <-- holy shit FIXME FIXME FIXME
+	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 391, 320, 24)];
 	self.nowPlayingLabel.text = introText;
 	self.nowPlayingLabel.font = [UIFont fontWithName:@"Michroma" size:20];
 	self.nowPlayingLabel.backgroundColor = [UIColor clearColor];
