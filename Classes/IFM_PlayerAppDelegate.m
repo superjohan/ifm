@@ -11,13 +11,9 @@
 
 @implementation IFM_PlayerAppDelegate
 
-@synthesize window;
-@synthesize mainViewController;
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
 	self.mainViewController = [[MainViewController alloc] initWithNibName:@"MainView" bundle:nil];
-    self.mainViewController.view.frame = [UIScreen mainScreen].applicationFrame;
 	self.window.rootViewController = self.mainViewController;
     [self.window makeKeyAndVisible];
 	
@@ -28,6 +24,5 @@
 {
 	[self.mainViewController resetAnimation];
 }
-
 
 @end
