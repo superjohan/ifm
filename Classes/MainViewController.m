@@ -46,7 +46,11 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (void)_stopStreamer
 {
+	[self.player removeObserver:self forKeyPath:@"status"];
+	[self.player removeObserver:self forKeyPath:@"rate"];
+	[self.player removeObserver:self forKeyPath:@"reasonForWaitingToPlay"];
 	[self.player pause];
+
 	self.player = nil;
 	
 	[self _resetEverything];
@@ -75,31 +79,6 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	stopButton.enabled = YES;
 }
 
-- (void)_playerNotificationReceived:(NSNotification *)notification
-{
-	// FIXME: this is never called now
-	
-//	if (self.player.playbackState == MPMoviePlaybackStateInterrupted)
-//	{
-//		[self _stopStreamer];
-//	}
-//	else if (self.player.playbackState == MPMoviePlaybackStatePaused)
-//	{
-//		[self _setChannelToWaiting:[self.stations uiIndexForStation:self.currentStation]];
-//	}
-//	else if (self.player.playbackState == MPMoviePlaybackStatePlaying)
-//	{
-//		self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(_updateNowPlaying) userInfo:nil repeats:YES];
-//
-//		[self _updateNowPlaying];
-//		[self _setChannelToPlaying:[self.stations uiIndexForStation:self.currentStation]];
-//	}
-//	else if (self.player.playbackState == MPMoviePlaybackStateStopped)
-//	{
-//		[self _stopStreamer];
-//	}
-}
-
 - (void)_updateNowPlaying
 {
 	if (self.currentStation != nil && self.nowPlayingUpdater.updating == NO)
@@ -116,6 +95,13 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (void)_updateNowPlayingLabel:(NSString *)track
 {
+	// hack for ignoring updates when the player has stopped, since there's no
+	// mechanism for canceling the request
+	if (self.player == nil)
+	{
+		return;
+	}
+	
 	if ([track isEqualToString:self.nowPlayingLabel.text] == NO)
 	{
 		self.nowPlayingLabel.text = track;
@@ -158,6 +144,19 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	
 	IFMStation *station = [self.stations stationForIndex:channel];
 	self.player = [[AVPlayer alloc] initWithURL:station.url];
+	self.player.automaticallyWaitsToMinimizeStalling = YES;
+	[self.player addObserver:self
+				  forKeyPath:@"status"
+					 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+					 context:nil];
+	[self.player addObserver:self
+				  forKeyPath:@"rate"
+					 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+					 context:nil];
+	[self.player addObserver:self
+				  forKeyPath:@"reasonForWaitingToPlay"
+					 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+					 context:nil];
 	[self.player play];
 	
 	self.currentStation = station;
@@ -316,16 +315,14 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 			}
 			case UIEventSubtypeRemoteControlTogglePlayPause:
 			{
-				// FIXME
-				
-//				if (self.player.playbackState == MPMoviePlaybackStatePlaying)
-//				{
-//					[self _stopStreamer];
-//				}
-//				else if (self.player.playbackState != MPMoviePlaybackStatePlaying && self.currentStation != nil)
-//				{
-//					[self _playChannel:[self.stations uiIndexForStation:self.currentStation]];
-//				}
+				if (self.player.rate > 0.0001)
+				{
+					[self _stopStreamer];
+				}
+				else if (self.player.rate < 0.0001 && self.currentStation != nil)
+				{
+					[self _playChannel:[self.stations uiIndexForStation:self.currentStation]];
+				}
 				
 				break;
 			}
@@ -376,6 +373,44 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 				break;
 			}
 		}
+	}
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+					  ofObject:(id)object
+						change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+					   context:(void *)context
+{
+	if ([object isKindOfClass:[AVPlayer class]]) {
+		AVPlayer *player = (AVPlayer *)object;
+		
+		if ([keyPath isEqualToString:@"rate"]) {
+			// based on empirical research, if the rate goes to 0, it means the
+			// internet connection has dropped entirely. stalling keeps it at 1
+			if (player.rate < 0.00001) {
+				[self _stopStreamer];
+			}
+		} else if ([keyPath isEqualToString:@"reasonForWaitingToPlay"]) {
+			if (player.reasonForWaitingToPlay) {
+				[self _setChannelToWaiting:[self.stations uiIndexForStation:self.currentStation]];
+			} else {
+				self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(_updateNowPlaying) userInfo:nil repeats:YES];
+
+				[self _updateNowPlaying];
+				[self _setChannelToPlaying:[self.stations uiIndexForStation:self.currentStation]];
+			}
+		} else if ([keyPath isEqualToString:@"status"]) {
+			if (player.status == AVPlayerStatusFailed) {
+				[self _stopStreamer];
+				[self _displayPlaylistError];
+			}
+		}
+	} else {
+		// Not interested.
+		[super observeValueForKeyPath:keyPath
+							 ofObject:object
+							   change:change
+							  context:context];
 	}
 }
 
