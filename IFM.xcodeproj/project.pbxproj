@@ -32,7 +32,6 @@
 		906174C011CB5E8A00CDF89B /* newlogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 906174B511CB5E8A00CDF89B /* newlogo@2x.png */; };
 		906633DE1129A76F007A1DD0 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 906633DD1129A76F007A1DD0 /* Icon.png */; };
 		9066342D1129AE38007A1DD0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9066342C1129AE38007A1DD0 /* Default.png */; };
-		906DC6FF1177335500EB3D92 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 906DC6FE1177335500EB3D92 /* Entitlements.plist */; };
 		90884ACB11294DD700707F33 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90884ACA11294DD700707F33 /* AudioToolbox.framework */; };
 		90884ACD11294DD700707F33 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90884ACC11294DD700707F33 /* CFNetwork.framework */; };
 		90884ACF11294DD700707F33 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90884ACE11294DD700707F33 /* MediaPlayer.framework */; };
@@ -96,7 +95,6 @@
 		906174B511CB5E8A00CDF89B /* newlogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newlogo@2x.png"; sourceTree = "<group>"; };
 		906633DD1129A76F007A1DD0 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		9066342C1129AE38007A1DD0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		906DC6FE1177335500EB3D92 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		90884ACA11294DD700707F33 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		90884ACC11294DD700707F33 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		90884ACE11294DD700707F33 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -205,7 +203,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources-iPhone */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				906DC6FE1177335500EB3D92 /* Entitlements.plist */,
 				90D6F5101287FCAE0060ED15 /* Default.png */,
 			);
 			name = CustomTemplate;
@@ -333,6 +330,7 @@
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = T583396HNX;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -383,7 +381,6 @@
 				90D0D58D115CA03F007C9F6F /* newch1playing.png in Resources */,
 				90D0D58E115CA03F007C9F6F /* newch2playing.png in Resources */,
 				90D0D58F115CA03F007C9F6F /* newch3playing.png in Resources */,
-				906DC6FF1177335500EB3D92 /* Entitlements.plist in Resources */,
 				906174B611CB5E8A00CDF89B /* channel1@2x.png in Resources */,
 				906174B711CB5E8A00CDF89B /* channel2@2x.png in Resources */,
 				906174B811CB5E8A00CDF89B /* channel3@2x.png in Resources */,
@@ -428,9 +425,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = T583396HNX;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -439,7 +436,7 @@
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -448,7 +445,7 @@
 				PRODUCT_NAME = IFM;
 				PROVISIONING_PROFILE = "cdd4c46e-1a97-4885-8b56-f4dd7f91c00f";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				PROVISIONING_PROFILE_SPECIFIER = "XC: *";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -459,15 +456,15 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = T583396HNX;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -475,7 +472,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.aerodeko.ifm;
 				PRODUCT_NAME = IFM;
 				PROVISIONING_PROFILE = "4c5262ed-c481-443f-93a8-6d5e9a2018cf";
-				PROVISIONING_PROFILE_SPECIFIER = "IFM App Store";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -524,14 +521,15 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = T583396HNX;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -540,6 +538,7 @@
 				PRODUCT_NAME = IFM;
 				PROVISIONING_PROFILE = "4c5262ed-c481-443f-93a8-6d5e9a2018cf";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4c5262ed-c481-443f-93a8-6d5e9a2018cf";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
