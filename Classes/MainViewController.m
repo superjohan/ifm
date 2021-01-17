@@ -29,7 +29,7 @@
 @property (nonatomic) UILabel *nowPlayingLabel;
 @property (nonatomic) NSString *nowPlayingString;
 @property (nonatomic) NSTimer *nowPlayingTimer;
-@property (nonatomic) MPMoviePlayerController *player;
+@property (nonatomic) AVPlayer *player;
 @property (nonatomic) IFMStations *stations;
 @property (nonatomic) IFMNowPlaying *nowPlayingUpdater;
 @property (nonatomic) IFMStation *currentStation;
@@ -46,11 +46,9 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (void)_stopStreamer
 {
-	if (self.player.playbackState != MPMoviePlaybackStateStopped)
-	{
-		[self.player stop];
-	}
-
+	[self.player pause];
+	self.player = nil;
+	
 	[self _resetEverything];
 }
 
@@ -79,25 +77,27 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (void)_playerNotificationReceived:(NSNotification *)notification
 {
-	if (self.player.playbackState == MPMoviePlaybackStateInterrupted)
-	{
-		[self _stopStreamer];
-	}
-	else if (self.player.playbackState == MPMoviePlaybackStatePaused)
-	{
-		[self _setChannelToWaiting:[self.stations uiIndexForStation:self.currentStation]];
-	}
-	else if (self.player.playbackState == MPMoviePlaybackStatePlaying)
-	{
-		self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(_updateNowPlaying) userInfo:nil repeats:YES];
-
-		[self _updateNowPlaying];
-		[self _setChannelToPlaying:[self.stations uiIndexForStation:self.currentStation]];
-	}
-	else if (self.player.playbackState == MPMoviePlaybackStateStopped)
-	{
-		[self _stopStreamer];
-	}
+	// FIXME: this is never called now
+	
+//	if (self.player.playbackState == MPMoviePlaybackStateInterrupted)
+//	{
+//		[self _stopStreamer];
+//	}
+//	else if (self.player.playbackState == MPMoviePlaybackStatePaused)
+//	{
+//		[self _setChannelToWaiting:[self.stations uiIndexForStation:self.currentStation]];
+//	}
+//	else if (self.player.playbackState == MPMoviePlaybackStatePlaying)
+//	{
+//		self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(_updateNowPlaying) userInfo:nil repeats:YES];
+//
+//		[self _updateNowPlaying];
+//		[self _setChannelToPlaying:[self.stations uiIndexForStation:self.currentStation]];
+//	}
+//	else if (self.player.playbackState == MPMoviePlaybackStateStopped)
+//	{
+//		[self _stopStreamer];
+//	}
 }
 
 - (void)_updateNowPlaying
@@ -157,8 +157,7 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	[self _setPlayButtonsEnabled:YES];
 	
 	IFMStation *station = [self.stations stationForIndex:channel];
-	self.player.contentURL = station.url;
-	[self.player prepareToPlay];
+	self.player = [[AVPlayer alloc] initWithURL:station.url];
 	[self.player play];
 	
 	self.currentStation = station;
@@ -274,13 +273,6 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	
 	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_playerNotificationReceived:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
-	
-	self.player = [[MPMoviePlayerController alloc] init];
-	self.player.movieSourceType = MPMovieSourceTypeStreaming;
-	self.player.view.hidden = YES;
-	[self.view addSubview:self.player.view];
-	
 	NSError *activationError = nil;
 	[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&activationError];
 	[[AVAudioSession sharedInstance] setActive:YES error:&activationError];
@@ -324,16 +316,16 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 			}
 			case UIEventSubtypeRemoteControlTogglePlayPause:
 			{
-				// TODO: Verify that playbackState works.
+				// FIXME
 				
-				if (self.player.playbackState == MPMoviePlaybackStatePlaying)
-				{
-					[self _stopStreamer];
-				}
-				else if (self.player.playbackState != MPMoviePlaybackStatePlaying && self.currentStation != nil)
-				{
-					[self _playChannel:[self.stations uiIndexForStation:self.currentStation]];
-				}
+//				if (self.player.playbackState == MPMoviePlaybackStatePlaying)
+//				{
+//					[self _stopStreamer];
+//				}
+//				else if (self.player.playbackState != MPMoviePlaybackStatePlaying && self.currentStation != nil)
+//				{
+//					[self _playChannel:[self.stations uiIndexForStation:self.currentStation]];
+//				}
 				
 				break;
 			}
