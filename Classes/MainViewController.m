@@ -138,8 +138,13 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (void)_displayPlaylistError
 {
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Unable to load playlist", nil) message:NSLocalizedString(@"The Internet connection may be down, or the servers aren't responding.", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Dismiss", nil), nil];
-	[alert show];
+	UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Unable to load playlist", nil)
+																   message:NSLocalizedString(@"The Internet connection may be down, or the servers aren't responding.", nil)
+															preferredStyle:UIAlertControllerStyleAlert];
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Dismiss", nil)
+											  style:UIAlertActionStyleDefault
+											handler:^(UIAlertAction * action) {}]];
+	[self presentViewController:alert animated:YES completion:nil];
 	[self _setPlayButtonsEnabled:YES];
 
 	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:[self.stations uiIndexForStation:self.currentStation]];
