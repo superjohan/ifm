@@ -6,10 +6,9 @@
 //  Copyright Aero Deko 2012. All rights reserved.
 //
 
-#import "FlipsideViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface MainViewController : UIViewController <FlipsideViewControllerDelegate>
+@interface MainViewController : UIViewController
 
 - (void)resetAnimation;
 

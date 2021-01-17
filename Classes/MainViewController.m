@@ -382,11 +382,4 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	}
 }
 
-#pragma mark - FlipsideViewControllerDelegate
-
-- (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller
-{
-	[self dismissViewControllerAnimated:YES completion:nil];
-}
-
 @end
