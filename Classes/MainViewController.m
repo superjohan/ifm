@@ -46,6 +46,7 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (void)_stopStreamer
 {
+	[self.player.currentItem removeObserver:self forKeyPath:@"status"];
 	[self.player removeObserver:self forKeyPath:@"status"];
 	[self.player removeObserver:self forKeyPath:@"rate"];
 	[self.player removeObserver:self forKeyPath:@"reasonForWaitingToPlay"];
@@ -145,6 +146,10 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	IFMStation *station = [self.stations stationForIndex:channel];
 	self.player = [[AVPlayer alloc] initWithURL:station.url];
 	self.player.automaticallyWaitsToMinimizeStalling = YES;
+	[self.player.currentItem addObserver:self
+							  forKeyPath:@"status"
+								 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+								 context:nil];
 	[self.player addObserver:self
 				  forKeyPath:@"status"
 					 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
@@ -405,7 +410,17 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 				[self _displayPlaylistError];
 			}
 		}
-	} else {
+	}
+	else if ([object isKindOfClass:[AVPlayerItem class]])
+	{
+		if ([(AVPlayerItem *)object status] == AVPlayerItemStatusFailed)
+		{
+			[self _stopStreamer];
+			[self _displayPlaylistError];
+		}
+	}
+	else
+	{
 		// Not interested.
 		[super observeValueForKeyPath:keyPath
 							 ofObject:object
