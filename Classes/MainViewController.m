@@ -25,6 +25,7 @@
 @property (nonatomic) IBOutlet UIActivityIndicatorView *channel1Spinner;
 @property (nonatomic) IBOutlet UIActivityIndicatorView *channel2Spinner;
 @property (nonatomic) IBOutlet UIActivityIndicatorView *channel3Spinner;
+@property (nonatomic) IBOutlet UIButton *infoButton;
 @property (nonatomic) UILabel *nowPlayingLabel;
 @property (nonatomic) NSString *nowPlayingString;
 @property (nonatomic) NSTimer *nowPlayingTimer;

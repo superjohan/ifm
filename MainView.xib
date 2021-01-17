@@ -18,6 +18,7 @@
                 <outlet property="channel3Button" destination="40" id="53"/>
                 <outlet property="channel3Spinner" destination="44" id="57"/>
                 <outlet property="channel3StopButton" destination="80" id="88"/>
+                <outlet property="infoButton" destination="73" id="YBv-DE-Fjz"/>
                 <outlet property="view" destination="34" id="35"/>
             </connections>
         </placeholder>
