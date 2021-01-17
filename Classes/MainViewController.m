@@ -195,9 +195,12 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 {
 	NSURL *url = [NSURL URLWithString:@"https://www.intergalactic.fm"];
 	
-	if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+	if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)])
+	{
 		[[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
-	} else {
+	}
+	else
+	{
 		[[UIApplication sharedApplication] openURL:url];
 	}
 }
@@ -386,26 +389,37 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 						change:(NSDictionary<NSKeyValueChangeKey,id> *)change
 					   context:(void *)context
 {
-	if ([object isKindOfClass:[AVPlayer class]]) {
+	if ([object isKindOfClass:[AVPlayer class]])
+	{
 		AVPlayer *player = (AVPlayer *)object;
 		
-		if ([keyPath isEqualToString:@"rate"]) {
+		if ([keyPath isEqualToString:@"rate"])
+		{
 			// based on empirical research, if the rate goes to 0, it means the
 			// internet connection has dropped entirely. stalling keeps it at 1
-			if (player.rate < 0.00001) {
+			if (player.rate < 0.00001)
+			{
 				[self _stopStreamer];
 			}
-		} else if ([keyPath isEqualToString:@"reasonForWaitingToPlay"]) {
-			if (player.reasonForWaitingToPlay) {
+		}
+		else if ([keyPath isEqualToString:@"reasonForWaitingToPlay"])
+		{
+			if (player.reasonForWaitingToPlay)
+			{
 				[self _setChannelToWaiting:[self.stations uiIndexForStation:self.currentStation]];
-			} else {
+			}
+			else
+			{
 				self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(_updateNowPlaying) userInfo:nil repeats:YES];
 
 				[self _updateNowPlaying];
 				[self _setChannelToPlaying:[self.stations uiIndexForStation:self.currentStation]];
 			}
-		} else if ([keyPath isEqualToString:@"status"]) {
-			if (player.status == AVPlayerStatusFailed) {
+		}
+		else if ([keyPath isEqualToString:@"status"])
+		{
+			if (player.status == AVPlayerStatusFailed)
+			{
 				[self _stopStreamer];
 				[self _displayPlaylistError];
 			}
