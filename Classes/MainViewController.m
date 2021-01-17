@@ -185,10 +185,13 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (IBAction)showInfo
 {
-	FlipsideViewController *controller = [[FlipsideViewController alloc] initWithNibName:@"FlipsideView" bundle:nil];
-	controller.delegate = self;
-	controller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-	[self presentViewController:controller animated:YES completion:nil];
+	NSURL *url = [NSURL URLWithString:@"https://www.intergalactic.fm"];
+	
+	if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+		[[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+	} else {
+		[[UIApplication sharedApplication] openURL:url];
+	}
 }
 
 - (IBAction)channel1ButtonPressed:(id)sender
