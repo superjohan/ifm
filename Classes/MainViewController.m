@@ -280,11 +280,16 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
 	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — https://www.intergalactic.fm/ — Developed by Aero Deko and IFM dev corps", version];
 	
-	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 391, 320, 24)];
+	self.nowPlayingLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	self.nowPlayingLabel.text = introText;
 	self.nowPlayingLabel.font = [UIFont fontWithName:@"Michroma" size:20];
 	self.nowPlayingLabel.backgroundColor = [UIColor clearColor];
 	self.nowPlayingLabel.textColor = [UIColor redColor];
+	[self.nowPlayingLabel sizeToFit];
+	CGFloat height = CGRectGetMinY(self.infoButton.frame) - CGRectGetMaxY(self.channel3Button.frame);
+	CGFloat y = CGRectGetMaxY(self.channel3Button.frame) + (height / 2.0) - (CGRectGetHeight(self.nowPlayingLabel.bounds) / 2.0);
+	CGFloat yOffset = 6;
+	self.nowPlayingLabel.frame = CGRectMake(0, y + yOffset, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.nowPlayingLabel.bounds));
 	[self.view addSubview:self.nowPlayingLabel];
 	[self resetAnimation];
 }
