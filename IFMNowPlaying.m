@@ -45,7 +45,12 @@
 	NSObject *yearValue = dict[@"year"];
 	NSString *year;
 	if ([yearValue isKindOfClass:[NSNumber class]]) {
-		year = [(NSNumber *)yearValue stringValue];
+		NSNumber *yearNumber = (NSNumber *)yearValue;
+		if (yearNumber.integerValue > 0) {
+			year = [(NSNumber *)yearValue stringValue];
+		} else {
+			year = nil;
+		}
 	} else if ([yearValue isKindOfClass:[NSString class]]) {
 		year = (NSString *)yearValue;
 	} else {
