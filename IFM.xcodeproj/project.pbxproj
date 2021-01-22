@@ -415,6 +415,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = T583396HNX;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -427,6 +428,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aerodeko.ifm;
 				PRODUCT_NAME = IFM;
 				PROVISIONING_PROFILE = "cdd4c46e-1a97-4885-8b56-f4dd7f91c00f";
@@ -445,6 +447,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = T583396HNX;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
@@ -455,6 +458,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aerodeko.ifm;
 				PRODUCT_NAME = IFM;
 				PROVISIONING_PROFILE = "4c5262ed-c481-443f-93a8-6d5e9a2018cf";
@@ -510,6 +514,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = T583396HNX;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
@@ -520,6 +525,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.aerodeko.ifm;
 				PRODUCT_NAME = IFM;
 				PROVISIONING_PROFILE = "4c5262ed-c481-443f-93a8-6d5e9a2018cf";
