@@ -85,12 +85,8 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 {
 	if (self.currentStation != nil && self.nowPlayingUpdater.updating == NO)
 	{
-		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		
 		[self.nowPlayingUpdater updateNowPlayingWithStation:self.currentStation completion:^(NSString *nowPlaying) {
 			[self _updateNowPlayingLabel:nowPlaying];
-			
-			[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 			
 			MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:self.currentStation.artwork.size requestHandler:^UIImage * _Nonnull(CGSize size) {
 				return self.currentStation.artwork;
@@ -283,8 +279,6 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	self.nowPlayingUpdater = [[IFMNowPlaying alloc] init];
 	
 	[self _resetEverything];
-	
-	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 	
 	NSError *activationError = nil;
 	[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&activationError];
