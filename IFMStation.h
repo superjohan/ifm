@@ -13,6 +13,7 @@
 @property (nonatomic, readonly) NSString *name;
 @property (nonatomic, readonly) NSURL *url;
 @property (nonatomic, readonly) NSURL *nowPlayingUrl;
+@property (nonatomic, readonly) UIImage *artwork;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;

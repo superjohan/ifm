@@ -33,6 +33,7 @@
 @property (nonatomic) IFMStations *stations;
 @property (nonatomic) IFMNowPlaying *nowPlayingUpdater;
 @property (nonatomic) IFMStation *currentStation;
+@property (nonatomic) IFMStation *lastStation;
 @property (nonatomic) NSArray<UIButton *> *playButtons;
 @property (nonatomic) NSArray<UIButton *> *stopButtons;
 @property (nonatomic) NSArray<UIActivityIndicatorView *> *spinners;
@@ -90,6 +91,19 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 			[self _updateNowPlayingLabel:nowPlaying];
 			
 			[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+			
+			MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:self.currentStation.artwork.size requestHandler:^UIImage * _Nonnull(CGSize size) {
+				return self.currentStation.artwork;
+			}];
+			
+			NSDictionary *nowPlayingInfo = @{
+				MPMediaItemPropertyTitle: [NSString stringWithFormat:@"Intergalactic FM - %@", self.currentStation.name],
+				MPMediaItemPropertyArtist: nowPlaying,
+				MPNowPlayingInfoPropertyIsLiveStream: @(YES),
+				MPMediaItemPropertyArtwork: artwork
+			};
+
+			[[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:nowPlayingInfo];
 		}];
 	}
 }
@@ -165,7 +179,8 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	[self.player play];
 	
 	self.currentStation = station;
-	
+	[self _updateNowPlaying];
+
 	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:channel];
 	spinner.hidden = NO;
 	[spinner startAnimating];
@@ -283,7 +298,8 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	NSError *activationError = nil;
 	[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&activationError];
 	[[AVAudioSession sharedInstance] setActive:YES error:&activationError];
-	
+	[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+
 	NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
 	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — https://www.intergalactic.fm/ — Developed by Aero Deko and IFM dev corps", version];
 	
@@ -309,10 +325,12 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 		{
 			case UIEventSubtypeRemoteControlPlay:
 			{
+				[self _playChannel:[self.stations uiIndexForStation:self.lastStation]];
 				break;
 			}
 			case UIEventSubtypeRemoteControlPause:
 			{
+				self.lastStation = self.currentStation;
 				[self _stopStreamer];
 				break;
 			}
@@ -325,22 +343,21 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 			{
 				if (self.player.rate > 0.0001)
 				{
+					self.lastStation = self.currentStation;
 					[self _stopStreamer];
 				}
 				else if (self.player.rate < 0.0001 && self.currentStation != nil)
 				{
-					[self _playChannel:[self.stations uiIndexForStation:self.currentStation]];
+					[self _playChannel:[self.stations uiIndexForStation:self.lastStation]];
 				}
 				
 				break;
 			}
 			case UIEventSubtypeRemoteControlNextTrack:
 			{
-				[self _stopStreamer];
-				
 				NSInteger index = [self.stations uiIndexForStation:self.currentStation];
 				
-				if (index < self.stations.numberOfStations)
+				if (index < (self.stations.numberOfStations - 1))
 				{
 					index += 1;
 				}
@@ -357,13 +374,11 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 			}
 			case UIEventSubtypeRemoteControlPreviousTrack:
 			{
-				[self _stopStreamer];
-				
 				NSInteger index = [self.stations uiIndexForStation:self.currentStation];
 
 				if (index == 0)
 				{
-					index = self.stations.numberOfStations;
+					index = (self.stations.numberOfStations - 1);
 				}
 				else
 				{
