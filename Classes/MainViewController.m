@@ -208,16 +208,7 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (IBAction)showInfo
 {
-	NSURL *url = [NSURL URLWithString:@"https://www.intergalactic.fm"];
-	
-	if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)])
-	{
-		[[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
-	}
-	else
-	{
-		[[UIApplication sharedApplication] openURL:url];
-	}
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.intergalactic.fm"] options:@{} completionHandler:nil];
 }
 
 - (IBAction)channel1ButtonPressed:(id)sender

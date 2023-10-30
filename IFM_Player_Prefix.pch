@@ -9,7 +9,9 @@
 
 
 #ifdef __OBJC__
-    #import <Foundation/Foundation.h>
-    #import <UIKit/UIKit.h>
-    #import "IFMLog.h"
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "IFMLog.h"
+
+#pragma clang diagnostic ignored "-Wpointer-to-int-cast"
 #endif
