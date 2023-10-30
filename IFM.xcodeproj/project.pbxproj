@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D3623260D0F684500981E51 /* IFM_PlayerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* IFM_PlayerAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -45,6 +44,7 @@
 		90884C611129A0F200707F33 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 90884C601129A0F200707F33 /* info.png */; };
 		908BDDAF11CCC8B600210717 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 908BDDAE11CCC8B600210717 /* Default@2x.png */; };
 		909C2C4217A27A9400261E20 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 909C2C4117A27A9400261E20 /* Default-568h@2x.png */; };
+		90A403792AF024F00060E026 /* IFMSceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A403782AF024F00060E026 /* IFMSceneDelegate.m */; };
 		90D0D56A115C9A27007C9F6F /* newbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D569115C9A27007C9F6F /* newbackground.png */; };
 		90D0D56C115C9AF6007C9F6F /* newlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D56B115C9AF6007C9F6F /* newlogo.png */; };
 		90D0D58D115CA03F007C9F6F /* newch1playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D589115CA03F007C9F6F /* newch1playing.png */; };
@@ -63,8 +63,6 @@
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D3623240D0F684500981E51 /* IFM_PlayerAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFM_PlayerAppDelegate.h; sourceTree = "<group>"; };
-		1D3623250D0F684500981E51 /* IFM_PlayerAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFM_PlayerAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* IFM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IFM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		280E754B0DD40C5E005A515E /* MainView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainView.xib; sourceTree = "<group>"; };
@@ -107,6 +105,8 @@
 		908BDDAE11CCC8B600210717 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		909C2C4117A27A9400261E20 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		90A403712AF01F560060E026 /* Entitlements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		90A403772AF024F00060E026 /* IFMSceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IFMSceneDelegate.h; sourceTree = "<group>"; };
+		90A403782AF024F00060E026 /* IFMSceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IFMSceneDelegate.m; sourceTree = "<group>"; };
 		90D0D569115C9A27007C9F6F /* newbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newbackground.png; sourceTree = "<group>"; };
 		90D0D56B115C9AF6007C9F6F /* newlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newlogo.png; sourceTree = "<group>"; };
 		90D0D589115CA03F007C9F6F /* newch1playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newch1playing.png; sourceTree = "<group>"; };
@@ -153,8 +153,8 @@
 		080E96DDFE201D6D7F000001 /* Application Delegate */ = {
 			isa = PBXGroup;
 			children = (
-				1D3623240D0F684500981E51 /* IFM_PlayerAppDelegate.h */,
-				1D3623250D0F684500981E51 /* IFM_PlayerAppDelegate.m */,
+				90A403772AF024F00060E026 /* IFMSceneDelegate.h */,
+				90A403782AF024F00060E026 /* IFMSceneDelegate.m */,
 			);
 			name = "Application Delegate";
 			path = Classes;
@@ -389,10 +389,10 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				90FB694B1CF4D98F00706581 /* IFMStation.m in Sources */,
-				1D3623260D0F684500981E51 /* IFM_PlayerAppDelegate.m in Sources */,
 				289233AE0DB2D0DB0083E9F9 /* MainViewController.m in Sources */,
 				90FB69481CF4D97000706581 /* IFMStationsResponseParser.m in Sources */,
 				904F5E0B1D00B5F6003A238D /* IFMNowPlaying.m in Sources */,
+				90A403792AF024F00060E026 /* IFMSceneDelegate.m in Sources */,
 				90FB69451CF4D5EE00706581 /* IFMStationsUpdater.m in Sources */,
 				DB2AB66A15A9859C005A1E98 /* NSArray+IFMAdditions.m in Sources */,
 				90FB69421CF4D4B400706581 /* IFMStations.m in Sources */,
@@ -423,7 +423,7 @@
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -456,7 +456,7 @@
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -529,7 +529,7 @@
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
