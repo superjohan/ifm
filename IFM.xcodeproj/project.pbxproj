@@ -69,6 +69,7 @@
 		90FB69491CF4D98F00706581 /* IFMStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFMStation.h; path = IFM/IFMStation.h; sourceTree = "<group>"; };
 		90FB694A1CF4D98F00706581 /* IFMStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IFMStation.m; path = IFM/IFMStation.m; sourceTree = "<group>"; };
 		90FB694C1CF4E1EF00706581 /* stations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = stations.json; path = IFM/stations.json; sourceTree = "<group>"; };
+		90A403712AF01F560060E026 /* Entitlements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		90FF10BE1CF072F100772A38 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = IFM/Images.xcassets; sourceTree = "<group>"; };
 		D4D14D2F25AE1845002866D5 /* Michroma-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Michroma-Regular.ttf"; path = "IFM/Michroma-Regular.ttf"; sourceTree = "<group>"; };
 		DB2AB66715A9859C005A1E98 /* IFMLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFMLog.h; path = IFM/IFMLog.h; sourceTree = "<group>"; };
@@ -115,6 +116,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				90A403712AF01F560060E026 /* Entitlements.plist */,
 				90FF10BE1CF072F100772A38 /* Images.xcassets */,
 				909C2C4117A27A9400261E20 /* Default-568h@2x.png */,
 				D4D14D2F25AE1845002866D5 /* Michroma-Regular.ttf */,
@@ -299,9 +301,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 6;
 				DEFINES_MODULE = YES;
@@ -324,6 +327,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.aerodeko.ifm;
 				PRODUCT_NAME = IFM;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "IFM 2023";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "IFM/IFM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -339,8 +343,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 6;
 				DEFINES_MODULE = YES;
@@ -361,6 +367,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.aerodeko.ifm;
 				PRODUCT_NAME = IFM;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "IFM 2023";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "IFM/IFM-Bridging-Header.h";
 				SWIFT_PACKAGE_NAME = IFM;
@@ -419,8 +426,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 6;
 				DEFINES_MODULE = YES;
@@ -441,6 +450,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.aerodeko.ifm;
 				PRODUCT_NAME = IFM;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "IFM 2023";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "IFM/IFM-Bridging-Header.h";
 				SWIFT_PACKAGE_NAME = IFM;
