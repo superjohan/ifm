@@ -283,7 +283,8 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	NSError *activationError = nil;
 	[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&activationError];
 	[[AVAudioSession sharedInstance] setActive:YES error:&activationError];
-	
+	[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+
 	NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
 	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — https://www.intergalactic.fm/ — Developed by Aero Deko and IFM dev corps", version];
 	
