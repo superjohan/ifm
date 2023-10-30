@@ -45,6 +45,8 @@
 		908BDDAF11CCC8B600210717 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 908BDDAE11CCC8B600210717 /* Default@2x.png */; };
 		909C2C4217A27A9400261E20 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 909C2C4117A27A9400261E20 /* Default-568h@2x.png */; };
 		90A403792AF024F00060E026 /* IFMSceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A403782AF024F00060E026 /* IFMSceneDelegate.m */; };
+		90A4037D2AF025500060E026 /* IFMCarPlaySceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A4037C2AF025500060E026 /* IFMCarPlaySceneDelegate.m */; };
+		90A4037F2AF02BCA0060E026 /* CarPlay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A4037E2AF02BCA0060E026 /* CarPlay.framework */; };
 		90D0D56A115C9A27007C9F6F /* newbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D569115C9A27007C9F6F /* newbackground.png */; };
 		90D0D56C115C9AF6007C9F6F /* newlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D56B115C9AF6007C9F6F /* newlogo.png */; };
 		90D0D58D115CA03F007C9F6F /* newch1playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D589115CA03F007C9F6F /* newch1playing.png */; };
@@ -107,6 +109,9 @@
 		90A403712AF01F560060E026 /* Entitlements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		90A403772AF024F00060E026 /* IFMSceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IFMSceneDelegate.h; sourceTree = "<group>"; };
 		90A403782AF024F00060E026 /* IFMSceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IFMSceneDelegate.m; sourceTree = "<group>"; };
+		90A4037B2AF025500060E026 /* IFMCarPlaySceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IFMCarPlaySceneDelegate.h; sourceTree = "<group>"; };
+		90A4037C2AF025500060E026 /* IFMCarPlaySceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IFMCarPlaySceneDelegate.m; sourceTree = "<group>"; };
+		90A4037E2AF02BCA0060E026 /* CarPlay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CarPlay.framework; path = System/Library/Frameworks/CarPlay.framework; sourceTree = SDKROOT; };
 		90D0D569115C9A27007C9F6F /* newbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newbackground.png; sourceTree = "<group>"; };
 		90D0D56B115C9AF6007C9F6F /* newlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newlogo.png; sourceTree = "<group>"; };
 		90D0D589115CA03F007C9F6F /* newch1playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newch1playing.png; sourceTree = "<group>"; };
@@ -136,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				90496EAC185F70BC0029E0FE /* AVFoundation.framework in Frameworks */,
+				90A4037F2AF02BCA0060E026 /* CarPlay.framework in Frameworks */,
 				902BB63115A0CD9A00DB1C33 /* libz.dylib in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -188,6 +194,7 @@
 				DB2AB66C15A985A2005A1E98 /* Utils */,
 				289233A00DB2D0730083E9F9 /* Main View */,
 				080E96DDFE201D6D7F000001 /* Application Delegate */,
+				90A4037A2AF0251A0060E026 /* CarPlay */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources-iPhone */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -249,6 +256,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				90A4037E2AF02BCA0060E026 /* CarPlay.framework */,
 				90496EAB185F70BC0029E0FE /* AVFoundation.framework */,
 				902BB63015A0CD9A00DB1C33 /* libz.dylib */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
@@ -260,6 +268,15 @@
 				903B8A94114E28F70076A1C2 /* QuartzCore.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		90A4037A2AF0251A0060E026 /* CarPlay */ = {
+			isa = PBXGroup;
+			children = (
+				90A4037B2AF025500060E026 /* IFMCarPlaySceneDelegate.h */,
+				90A4037C2AF025500060E026 /* IFMCarPlaySceneDelegate.m */,
+			);
+			path = CarPlay;
 			sourceTree = "<group>";
 		};
 		90FB693F1CF4D4A500706581 /* Stations */ = {
@@ -396,6 +413,7 @@
 				90FB69451CF4D5EE00706581 /* IFMStationsUpdater.m in Sources */,
 				DB2AB66A15A9859C005A1E98 /* NSArray+IFMAdditions.m in Sources */,
 				90FB69421CF4D4B400706581 /* IFMStations.m in Sources */,
+				90A4037D2AF025500060E026 /* IFMCarPlaySceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
