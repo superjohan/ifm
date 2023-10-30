@@ -24,7 +24,7 @@
 		_name = dictionary[@"name"];
 		_url = [NSURL URLWithString:dictionary[@"url"]];
 		_nowPlayingUrl = [NSURL URLWithString:dictionary[@"nowplaying"]];
-		_artwork = [UIImage imageNamed:@"logo.png"];
+		_artwork = [UIImage imageNamed:@"nowplayinglogo.png"];
 	}
 	
 	return self;

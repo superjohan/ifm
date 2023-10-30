@@ -16,6 +16,7 @@
 		280E754F0DD40C5E005A515E /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280E754C0DD40C5E005A515E /* MainWindow.xib */; };
 		288765590DF743DE002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765580DF743DE002DB57D /* CoreGraphics.framework */; };
 		289233AE0DB2D0DB0083E9F9 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289233A90DB2D0DB0083E9F9 /* MainViewController.m */; };
+		6A4067332AEFB8480040E286 /* nowplayinglogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A4067322AEFB8480040E286 /* nowplayinglogo.png */; };
 		902BB63115A0CD9A00DB1C33 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 902BB63015A0CD9A00DB1C33 /* libz.dylib */; };
 		903B8A95114E28F80076A1C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903B8A94114E28F70076A1C2 /* QuartzCore.framework */; };
 		90496EAC185F70BC0029E0FE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90496EAB185F70BC0029E0FE /* AVFoundation.framework */; };
@@ -75,6 +76,7 @@
 		289233A90DB2D0DB0083E9F9 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Classes/MainViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* IFM_Player_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFM_Player_Prefix.pch; sourceTree = "<group>"; };
+		6A4067322AEFB8480040E286 /* nowplayinglogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nowplayinglogo.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* IFM_Player-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "IFM_Player-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		902BB63015A0CD9A00DB1C33 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		903B8A94114E28F70076A1C2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -208,6 +210,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources-iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				6A4067322AEFB8480040E286 /* nowplayinglogo.png */,
 				90FB694C1CF4E1EF00706581 /* stations.json */,
 				908BDDAE11CCC8B600210717 /* Default@2x.png */,
 				906174AB11CB5E8A00CDF89B /* channel1@2x.png */,
@@ -359,6 +362,7 @@
 				90884BE011297E0500707F33 /* arrow.png in Resources */,
 				90884BE211297E6400707F33 /* leftarrow.png in Resources */,
 				90884C611129A0F200707F33 /* info.png in Resources */,
+				6A4067332AEFB8480040E286 /* nowplayinglogo.png in Resources */,
 				906633DE1129A76F007A1DD0 /* Icon.png in Resources */,
 				9066342D1129AE38007A1DD0 /* Default.png in Resources */,
 				90EDC422112AA08000D1395C /* stop.png in Resources */,
