@@ -165,7 +165,8 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	[self.player play];
 	
 	self.currentStation = station;
-	
+	[self _updateNowPlaying];
+
 	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:channel];
 	spinner.hidden = NO;
 	[spinner startAnimating];
@@ -337,8 +338,6 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 			}
 			case UIEventSubtypeRemoteControlNextTrack:
 			{
-				[self _stopStreamer];
-				
 				NSInteger index = [self.stations uiIndexForStation:self.currentStation];
 				
 				if (index < (self.stations.numberOfStations - 1))
@@ -358,8 +357,6 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 			}
 			case UIEventSubtypeRemoteControlPreviousTrack:
 			{
-				[self _stopStreamer];
-				
 				NSInteger index = [self.stations uiIndexForStation:self.currentStation];
 
 				if (index == 0)
