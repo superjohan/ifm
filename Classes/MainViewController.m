@@ -33,6 +33,7 @@
 @property (nonatomic) IFMStations *stations;
 @property (nonatomic) IFMNowPlaying *nowPlayingUpdater;
 @property (nonatomic) IFMStation *currentStation;
+@property (nonatomic) IFMStation *lastStation;
 @property (nonatomic) NSArray<UIButton *> *playButtons;
 @property (nonatomic) NSArray<UIButton *> *stopButtons;
 @property (nonatomic) NSArray<UIActivityIndicatorView *> *spinners;
@@ -311,10 +312,12 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 		{
 			case UIEventSubtypeRemoteControlPlay:
 			{
+				[self _playChannel:[self.stations uiIndexForStation:self.lastStation]];
 				break;
 			}
 			case UIEventSubtypeRemoteControlPause:
 			{
+				self.lastStation = self.currentStation;
 				[self _stopStreamer];
 				break;
 			}
@@ -327,11 +330,12 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 			{
 				if (self.player.rate > 0.0001)
 				{
+					self.lastStation = self.currentStation;
 					[self _stopStreamer];
 				}
 				else if (self.player.rate < 0.0001 && self.currentStation != nil)
 				{
-					[self _playChannel:[self.stations uiIndexForStation:self.currentStation]];
+					[self _playChannel:[self.stations uiIndexForStation:self.lastStation]];
 				}
 				
 				break;
