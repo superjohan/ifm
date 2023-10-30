@@ -340,7 +340,7 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 				
 				NSInteger index = [self.stations uiIndexForStation:self.currentStation];
 				
-				if (index < self.stations.numberOfStations)
+				if (index < (self.stations.numberOfStations - 1))
 				{
 					index += 1;
 				}
@@ -363,7 +363,7 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 				if (index == 0)
 				{
-					index = self.stations.numberOfStations;
+					index = (self.stations.numberOfStations - 1);
 				}
 				else
 				{
