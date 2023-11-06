@@ -327,6 +327,7 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 			}
 			case UIEventSubtypeRemoteControlStop:
 			{
+				self.lastStation = self.currentStation;
 				[self _stopStreamer];
 				break;
 			}
