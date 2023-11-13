@@ -327,6 +327,7 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 			}
 			case UIEventSubtypeRemoteControlStop:
 			{
+				self.lastStation = self.currentStation;
 				[self _stopStreamer];
 				break;
 			}
@@ -337,7 +338,7 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 					self.lastStation = self.currentStation;
 					[self _stopStreamer];
 				}
-				else if (self.player.rate < 0.0001 && self.currentStation != nil)
+				else if (self.player.rate < 0.0001 && self.lastStation != nil)
 				{
 					[self _playChannel:[self.stations uiIndexForStation:self.lastStation]];
 				}
