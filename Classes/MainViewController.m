@@ -92,20 +92,18 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 			
 			[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 			
-			if (nowPlaying) {
-				MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:self.currentStation.artwork.size requestHandler:^UIImage * _Nonnull(CGSize size) {
-					return self.currentStation.artwork;
-				}];
-				
-				NSDictionary *nowPlayingInfo = @{
-					MPMediaItemPropertyTitle: [NSString stringWithFormat:@"Intergalactic FM - %@", self.currentStation.name],
-					MPMediaItemPropertyArtist: nowPlaying,
-					MPNowPlayingInfoPropertyIsLiveStream: @(YES),
-					MPMediaItemPropertyArtwork: artwork
-				};
-				
-				[[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:nowPlayingInfo];
-			}
+			MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:self.currentStation.artwork.size requestHandler:^UIImage * _Nonnull(CGSize size) {
+				return self.currentStation.artwork;
+			}];
+
+			NSDictionary *nowPlayingInfo = @{
+				MPMediaItemPropertyTitle: [NSString stringWithFormat:@"Intergalactic FM - %@", self.currentStation.name],
+				MPMediaItemPropertyArtist: nowPlaying ? nowPlaying : @"",
+				MPNowPlayingInfoPropertyIsLiveStream: @(YES),
+				MPMediaItemPropertyArtwork: artwork
+			};
+			
+			[[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:nowPlayingInfo];
 		}];
 	}
 }
