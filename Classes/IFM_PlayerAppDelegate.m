@@ -8,12 +8,14 @@
 
 #import "IFM_PlayerAppDelegate.h"
 #import "MainViewController.h"
+#import "IFM-Swift.h"
 
 @implementation IFM_PlayerAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{    
-	self.mainViewController = [[MainViewController alloc] initWithNibName:@"MainView" bundle:nil];
+{
+	IFMPlayer *player = [[IFMPlayer alloc] init];
+	self.mainViewController = [[MainViewController alloc] initWithNibName:@"MainView" bundle:nil player:player];
 	self.window.rootViewController = self.mainViewController;
     [self.window makeKeyAndVisible];
 	
