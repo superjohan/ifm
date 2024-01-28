@@ -163,8 +163,6 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	
 	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 	
-	[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-
 	NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
 	NSString *introText = [NSString stringWithFormat:@"Intergalactic FM for iPhone version %@ — https://www.intergalactic.fm/ — Developed by Aero Deko and IFM dev corps", version];
 	
@@ -184,14 +182,6 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	// If the player is already doing something, then update the UI state again with the status so the now playing label is correct
 	if (status.state == IFMPlayerStatePlaying || status.state == IFMPlayerStateWaiting) {
 		[self updateWithStatus:status];
-	}
-}
-
-- (void)remoteControlReceivedWithEvent:(UIEvent *)event
-{
-	if (event.type == UIEventTypeRemoteControl)
-	{
-		[self.player handleRemoteControlEventWithSubtype:event.subtype];
 	}
 }
 

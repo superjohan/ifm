@@ -29,6 +29,10 @@ class IFMPlayer : NSObject {
         
         try? AVAudioSession.sharedInstance().setCategory(.playback)
         try? AVAudioSession.sharedInstance().setActive(true)
+        
+        super.init()
+        
+        registerRemoteControlEvents()
     }
     
     // MARK: - Public
@@ -66,57 +70,6 @@ class IFMPlayer : NSObject {
         self.nowPlayingText = nil
         
         updateState(.stopped, channelIndex: -1)
-    }
-    
-    @objc func handleRemoteControlEvent(subtype: UIEvent.EventSubtype) {
-        switch subtype {
-        case .remoteControlPlay:
-            guard let lastStation = self.lastStation else { return }
-            play(channelIndex: self.stations.uiIndex(for: lastStation))
-            
-        case .remoteControlPause:
-            self.lastStation = self.currentStation
-            stop()
-            
-        case .remoteControlTogglePlayPause:
-            if (self.player?.rate ?? 0) > 0.0001 {
-                self.lastStation = self.currentStation
-                stop()
-            } else if (self.player?.rate ?? 0) < 0.0001, let lastStation = self.lastStation {
-                play(channelIndex: self.stations.uiIndex(for: lastStation))
-            }
-            
-        case .remoteControlNextTrack:
-            guard let currentStation = self.currentStation else { return }
-            var index = self.stations.uiIndex(for: currentStation)
-            
-            if index < (self.stations.numberOfStations - 1) {
-                index += 1
-            } else {
-                index = 0
-            }
-            
-            self.currentStation = self.stations.station(for: index)
-            
-            play(channelIndex: index)
-            
-        case .remoteControlPreviousTrack:
-            guard let currentStation = self.currentStation else { return }
-            var index = self.stations.uiIndex(for: currentStation)
-            
-            if index == 0 {
-                index = self.stations.numberOfStations - 1
-            } else {
-                index -= 1
-            }
-            
-            self.currentStation = self.stations.station(for: index)
-            
-            play(channelIndex: index)
-            
-        default:
-            break
-        }
     }
     
     @objc func addListener(_ listener: IFMPlayerStatusListener) {
@@ -162,6 +115,70 @@ class IFMPlayer : NSObject {
         }
     }
     
+    private func registerRemoteControlEvents() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+
+        commandCenter.playCommand.addTarget { _ in
+            guard let lastStation = self.lastStation else { return .noActionableNowPlayingItem }
+
+            self.play(channelIndex: self.stations.uiIndex(for: lastStation))
+            
+            return .success
+        }
+        
+        commandCenter.pauseCommand.addTarget { _ in
+            self.lastStation = self.currentStation
+            self.stop()
+
+            return .success
+        }
+        
+        commandCenter.togglePlayPauseCommand.addTarget { _ in
+            if (self.player?.rate ?? 0) > 0.0001 {
+                self.lastStation = self.currentStation
+                self.stop()
+            } else if (self.player?.rate ?? 0) < 0.0001, let lastStation = self.lastStation {
+                self.play(channelIndex: self.stations.uiIndex(for: lastStation))
+            }
+            
+            return .success
+        }
+        
+        commandCenter.nextTrackCommand.addTarget { _ in
+            guard let currentStation = self.currentStation else { return .noActionableNowPlayingItem }
+            var index = self.stations.uiIndex(for: currentStation)
+            
+            if index < (self.stations.numberOfStations - 1) {
+                index += 1
+            } else {
+                index = 0
+            }
+            
+            self.currentStation = self.stations.station(for: index)
+            
+            self.play(channelIndex: index)
+            
+            return .success
+        }
+        
+        commandCenter.previousTrackCommand.addTarget { _ in
+            guard let currentStation = self.currentStation else { return .noActionableNowPlayingItem }
+            var index = self.stations.uiIndex(for: currentStation)
+            
+            if index == 0 {
+                index = self.stations.numberOfStations - 1
+            } else {
+                index -= 1
+            }
+            
+            self.currentStation = self.stations.station(for: index)
+            
+            self.play(channelIndex: index)
+            
+            return .success
+        }
+    }
+
     // MARK: - NSKeyValueObserving
     
     override func observeValue(
