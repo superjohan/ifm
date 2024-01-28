@@ -38,89 +38,6 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 @implementation MainViewController
 
-#pragma mark - Private
-
-- (void)_stopStreamer
-{
-	[self.player stop];
-	// FIXME: should come from the listener
-	[self _resetEverything];
-}
-
-- (void)_setChannelToWaiting:(NSInteger)channel
-{
-	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:channel];
-	UIButton *playButton = [self.playButtons objectAtIndexOrNil:channel];
-	UIButton *stopButton = [self.stopButtons objectAtIndexOrNil:channel];
-	
-	[spinner startAnimating];
-	spinner.hidden = NO;
-	playButton.enabled = NO;
-	stopButton.hidden = YES;
-	stopButton.enabled = NO;
-}
-
-- (void)_setChannelToPlaying:(NSInteger)channel
-{
-	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:channel];
-	UIButton *stopButton = [self.stopButtons objectAtIndexOrNil:channel];
-
-	spinner.hidden = YES;
-	stopButton.hidden = NO;
-	stopButton.enabled = YES;
-}
-
-- (void)_updateNowPlayingLabel:(NSString *)track
-{
-	// hack for ignoring updates when the player has stopped, since there's no
-	// mechanism for canceling the request for now playing info
-	IFMPlayerStatus *status = self.player.status;
-	if (status.state == IFMPlayerStateStopped || status.state == IFMPlayerStateError)
-	{
-		return;
-	}
-	
-	if ([track isEqualToString:self.nowPlayingLabel.text] == NO)
-	{
-		self.nowPlayingLabel.text = track;
-		[self resetAnimation];
-	}
-}
-
-- (void)_setPlayButtonsEnabled:(BOOL)enabled
-{
-	for (NSInteger channel = 0; channel < IFMChannelsMax; channel++)
-	{
-		[[self.playButtons objectAtIndexOrNil:channel] setEnabled:enabled];
-	}
-}
-
-- (void)_displayPlaylistError
-{
-	UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Unable to load playlist", nil)
-																   message:NSLocalizedString(@"The Internet connection may be down, or the servers aren't responding.", nil)
-															preferredStyle:UIAlertControllerStyleAlert];
-	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Dismiss", nil)
-											  style:UIAlertActionStyleDefault
-											handler:^(UIAlertAction * action) {}]];
-	[self presentViewController:alert animated:YES completion:nil];
-	[self _setPlayButtonsEnabled:YES];
-	[self _resetEverything];
-}
-
-- (void)_resetEverything
-{
-	for (NSInteger channel = 0; channel < IFMChannelsMax; channel++)
-	{
-		[[self.spinners objectAtIndexOrNil:channel] setHidden:YES];
-		[[self.playButtons objectAtIndexOrNil:channel] setEnabled:YES];
-		[[self.stopButtons objectAtIndexOrNil:channel] setEnabled:NO];
-		[[self.stopButtons objectAtIndexOrNil:channel] setHidden:YES];
-	}
-	
-	self.nowPlayingLabel.text = @"";
-}
-
 #pragma mark - IBActions
 
 - (IBAction)showInfo
@@ -145,7 +62,7 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (IBAction)stopButtonPressed:(id)sender
 {
-	[self _stopStreamer];
+	[self.player stop];
 }
 
 #pragma mark - Public
@@ -179,27 +96,34 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 #pragma mark - IFMPlayerStatusListener
 
 - (void)updateWithStatus:(IFMPlayerStatus *)status {
-	switch (status.state) {
-		case IFMPlayerStateStopped:
-			[self _resetEverything];
-			break;
-
-		case IFMPlayerStateWaiting:
-			[self _setChannelToWaiting:status.stationIndex];
-			break;
-
-		case IFMPlayerStatePlaying:
-			[self _setPlayButtonsEnabled:YES];
-			[self _setChannelToPlaying:status.stationIndex];
-			[self _updateNowPlayingLabel:status.nowPlaying];
-			break;
-
-		case IFMPlayerStateError:
-			[self _displayPlaylistError];
-			break;
-
-		default:
-			break;
+	if (status.state == IFMPlayerStateError)
+	{
+		UIAlertController *alert = [UIAlertController
+									alertControllerWithTitle:NSLocalizedString(@"Unable to load playlist", nil)
+									message:NSLocalizedString(@"The Internet connection may be down, or the servers aren't responding.", nil)
+									preferredStyle:UIAlertControllerStyleAlert];
+		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Dismiss", nil)
+												  style:UIAlertActionStyleDefault
+												handler:^(UIAlertAction * action) {}]];
+		[self presentViewController:alert animated:YES completion:nil];
+	}
+	
+	for (NSInteger channel = 0; channel < IFMChannelsMax; channel++)
+	{
+		BOOL isWaiting = status.state == IFMPlayerStateWaiting && status.stationIndex == channel;
+		BOOL isPlaying = status.state == IFMPlayerStatePlaying && status.stationIndex == channel;
+		
+		[[self.spinners objectAtIndexOrNil:channel] setHidden:!isWaiting];
+		[[self.playButtons objectAtIndexOrNil:channel] setEnabled:!isWaiting];
+		
+		[[self.stopButtons objectAtIndexOrNil:channel] setEnabled:isPlaying];
+		[[self.stopButtons objectAtIndexOrNil:channel] setHidden:!isPlaying];
+	}
+	
+	if (![status.nowPlaying isEqualToString:self.nowPlayingLabel.text] )
+	{
+		self.nowPlayingLabel.text = status.nowPlaying;
+		[self resetAnimation];
 	}
 }
 
@@ -234,7 +158,8 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	[spinners addObject:self.channel3Spinner];
 	self.spinners = spinners;
 	
-	[self _resetEverything];
+	IFMPlayerStatus *status = self.player.status;
+	[self updateWithStatus:status];
 	
 	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 	
@@ -256,8 +181,7 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	[self.view addSubview:self.nowPlayingLabel];
 	[self resetAnimation];
 	
-	// If the player is already doing something, then update the UI state with its status
-	IFMPlayerStatus *status = self.player.status;
+	// If the player is already doing something, then update the UI state again with the status so the now playing label is correct
 	if (status.state == IFMPlayerStatePlaying || status.state == IFMPlayerStateWaiting) {
 		[self updateWithStatus:status];
 	}
