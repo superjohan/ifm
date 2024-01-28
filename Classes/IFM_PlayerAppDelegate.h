@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IFM-Swift.h"
 
 @class MainViewController;
 

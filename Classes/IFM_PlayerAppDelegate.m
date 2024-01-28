@@ -7,8 +7,6 @@
 //
 
 #import "IFM_PlayerAppDelegate.h"
-#import "MainViewController.h"
-#import "IFM-Swift.h"
 
 @implementation IFM_PlayerAppDelegate
 

@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController2" customModule="IFM" customModuleProvider="target">
             <connections>
-                <outlet property="channel1Button" destination="38" id="77"/>
-                <outlet property="channel1Spinner" destination="42" id="55"/>
-                <outlet property="channel1StopButton" destination="78" id="86"/>
-                <outlet property="channel2Button" destination="39" id="76"/>
-                <outlet property="channel2Spinner" destination="43" id="56"/>
-                <outlet property="channel2StopButton" destination="79" id="87"/>
-                <outlet property="channel3Button" destination="40" id="53"/>
-                <outlet property="channel3Spinner" destination="44" id="57"/>
-                <outlet property="channel3StopButton" destination="80" id="88"/>
-                <outlet property="infoButton" destination="73" id="YBv-DE-Fjz"/>
-                <outlet property="view" destination="34" id="35"/>
+                <outlet property="channel1Button" destination="38" id="wbh-iJ-kbt"/>
+                <outlet property="channel1Spinner" destination="42" id="eKm-e1-Egb"/>
+                <outlet property="channel1StopButton" destination="78" id="rLu-e1-EAz"/>
+                <outlet property="channel2Button" destination="39" id="oYa-gq-28w"/>
+                <outlet property="channel2Spinner" destination="43" id="jka-WI-bYm"/>
+                <outlet property="channel2StopButton" destination="79" id="fQo-Yt-Rkb"/>
+                <outlet property="channel3Button" destination="40" id="SZj-pS-3Ab"/>
+                <outlet property="channel3Spinner" destination="44" id="N7w-Pe-qVv"/>
+                <outlet property="channel3StopButton" destination="80" id="EXX-qE-HDz"/>
+                <outlet property="infoButton" destination="73" id="UFd-79-FKc"/>
+                <outlet property="view" destination="34" id="KTU-ZW-JzT"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -44,7 +44,7 @@
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
-                        <action selector="channel1ButtonPressed:" destination="-1" eventType="touchUpInside" id="47"/>
+                        <action selector="channel1ButtonPressed" destination="-1" eventType="touchUpInside" id="NJY-9o-gI4"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="39">
@@ -60,7 +60,7 @@
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
-                        <action selector="channel2ButtonPressed:" destination="-1" eventType="touchUpInside" id="48"/>
+                        <action selector="channel2ButtonPressed" destination="-1" eventType="touchUpInside" id="b6H-Ew-bOA"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="40">
@@ -76,7 +76,7 @@
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
-                        <action selector="channel3ButtonPressed:" destination="-1" eventType="touchUpInside" id="49"/>
+                        <action selector="channel3ButtonPressed" destination="-1" eventType="touchUpInside" id="WjS-DW-FUi"/>
                     </connections>
                 </button>
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="42">
@@ -103,7 +103,7 @@
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
-                        <action selector="stopButtonPressed:" destination="-1" eventType="touchUpInside" id="82"/>
+                        <action selector="stopButtonPressed" destination="-1" eventType="touchUpInside" id="btg-df-EhI"/>
                     </connections>
                 </button>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="79">
@@ -118,7 +118,7 @@
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
-                        <action selector="stopButtonPressed:" destination="-1" eventType="touchUpInside" id="83"/>
+                        <action selector="stopButtonPressed" destination="-1" eventType="touchUpInside" id="I9U-nI-IuF"/>
                     </connections>
                 </button>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80">
@@ -133,7 +133,7 @@
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
-                        <action selector="stopButtonPressed:" destination="-1" eventType="touchUpInside" id="84"/>
+                        <action selector="stopButtonPressed" destination="-1" eventType="touchUpInside" id="rVH-pa-6m6"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="73">
@@ -148,7 +148,7 @@
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
-                        <action selector="showInfo" destination="-1" eventType="touchUpInside" id="74"/>
+                        <action selector="showInfo" destination="-1" eventType="touchUpInside" id="bH7-PR-RHX"/>
                     </connections>
                 </button>
             </subviews>
