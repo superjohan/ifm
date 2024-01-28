@@ -44,6 +44,7 @@ class IFMPlayer : NSObject {
         let player = AVPlayer(url: station.url)
         player.automaticallyWaitsToMinimizeStalling = true
         player.currentItem?.addObserver(self, forKeyPath: "status", options: [.old, .new], context: nil)
+        player.currentItem?.addObserver(self, forKeyPath: "error", options: [.old, .new], context: nil)
         player.addObserver(self, forKeyPath: "status", options: [.old, .new], context: nil)
         player.addObserver(self, forKeyPath: "rate", options: [.old, .new], context: nil)
         player.addObserver(self, forKeyPath: "reasonForWaitingToPlay", options: [.old, .new], context: nil)
@@ -58,6 +59,7 @@ class IFMPlayer : NSObject {
     
     @objc func stop() {
         self.player?.currentItem?.removeObserver(self, forKeyPath: "status")
+        self.player?.currentItem?.removeObserver(self, forKeyPath: "error")
         self.player?.removeObserver(self, forKeyPath: "status")
         self.player?.removeObserver(self, forKeyPath: "rate")
         self.player?.removeObserver(self, forKeyPath: "reasonForWaitingToPlay")
@@ -217,7 +219,7 @@ class IFMPlayer : NSObject {
                 }
             }
         } else if let playerItem = object as? AVPlayerItem {
-            if playerItem.status == .failed {
+            if playerItem.status == .failed || keyPath == "error" {
                 stop()
                 updateState(.error, channelIndex: -1)
             }
