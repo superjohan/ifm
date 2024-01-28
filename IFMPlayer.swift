@@ -238,17 +238,10 @@ enum IFMPlayerState {
     case error
 }
 
-// TODO: wouldn't it be nice if this was a struct (see above)
-class IFMPlayerStatus {
+struct IFMPlayerStatus {
     let state: IFMPlayerState
     let nowPlaying: String?
     let stationIndex: Int
-    
-    init(state: IFMPlayerState, nowPlaying: String?, stationIndex: Int) {
-        self.state = state
-        self.nowPlaying = nowPlaying
-        self.stationIndex = stationIndex
-    }
 }
 
 // TODO: damn it'd be nice to use Combine or somesuch instead of this junk (see above)
