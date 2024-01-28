@@ -7,15 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface IFMStation : NSObject
 
-@property (nonatomic, readonly) NSString *name;
-@property (nonatomic, readonly) NSURL *url;
-@property (nonatomic, readonly) NSURL *nowPlayingUrl;
-@property (nonatomic, readonly) UIImage *artwork;
+@property (nonatomic, readonly) NSString * _Nonnull name;
+@property (nonatomic, readonly) NSURL * _Nonnull url;
+@property (nonatomic, readonly) NSURL * _Nonnull nowPlayingUrl;
+@property (nonatomic, readonly) UIImage * _Nonnull artwork;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary NS_DESIGNATED_INITIALIZER;
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype _Nonnull )initWithDictionary:(NSDictionary *_Nonnull)dictionary NS_DESIGNATED_INITIALIZER;
+- (instancetype _Nonnull )init NS_UNAVAILABLE;
 
 @end
