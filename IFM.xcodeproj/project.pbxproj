@@ -114,7 +114,7 @@
 		90D0D58B115CA03F007C9F6F /* newch3playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newch3playing.png; sourceTree = "<group>"; };
 		90D6F5101287FCAE0060ED15 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		90E025962B66440D00910575 /* IFM-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IFM-Bridging-Header.h"; sourceTree = "<group>"; };
-		90E025972B66440D00910575 /* IFMPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFMPlayer.swift; sourceTree = "<group>"; };
+		90E025972B66440D00910575 /* IFMPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFMPlayer.swift; sourceTree = "<group>"; usesTabs = 0; };
 		90EDC421112AA08000D1395C /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = "<group>"; };
 		90FB69401CF4D4B400706581 /* IFMStations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMStations.h; sourceTree = "<group>"; };
 		90FB69411CF4D4B400706581 /* IFMStations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMStations.m; sourceTree = "<group>"; };
