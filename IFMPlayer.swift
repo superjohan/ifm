@@ -99,6 +99,11 @@ class IFMPlayer : NSObject {
         guard let currentStation = self.currentStation, !self.nowPlayingUpdater.updating else { return }
         
         self.nowPlayingUpdater.update(with: currentStation) { nowPlaying in
+            // Was the player stopped while waiting for now playing info?
+            if self.player == nil {
+                return
+            }
+            
             self.nowPlayingText = nowPlaying
             
             self.updateState(self.status.state, channelIndex: self.stations.uiIndex(for: currentStation))

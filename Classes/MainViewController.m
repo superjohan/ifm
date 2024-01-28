@@ -116,8 +116,8 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 		[[self.spinners objectAtIndexOrNil:channel] setHidden:!isWaiting];
 		[[self.playButtons objectAtIndexOrNil:channel] setEnabled:!isWaiting];
 		
-		[[self.stopButtons objectAtIndexOrNil:channel] setEnabled:isPlaying];
-		[[self.stopButtons objectAtIndexOrNil:channel] setHidden:!isPlaying];
+		[[self.stopButtons objectAtIndexOrNil:channel] setEnabled:isPlaying || isWaiting];
+		[[self.stopButtons objectAtIndexOrNil:channel] setHidden:!isPlaying && !isWaiting];
 	}
 	
 	if (![status.nowPlaying isEqualToString:self.nowPlayingLabel.text] )
