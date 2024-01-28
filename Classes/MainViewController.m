@@ -14,8 +14,9 @@
 #import "IFMStations.h"
 #import "IFMStation.h"
 #import "IFMNowPlaying.h"
+#import "IFM-Swift.h"
 
-@interface MainViewController ()
+@interface MainViewController () <IFMPlayerStatusListener>
 @property (nonatomic) IBOutlet UIButton *channel1Button;
 @property (nonatomic) IBOutlet UIButton *channel2Button;
 @property (nonatomic) IBOutlet UIButton *channel3Button;
@@ -27,16 +28,10 @@
 @property (nonatomic) IBOutlet UIActivityIndicatorView *channel3Spinner;
 @property (nonatomic) IBOutlet UIButton *infoButton;
 @property (nonatomic) UILabel *nowPlayingLabel;
-@property (nonatomic) NSString *nowPlayingString;
-@property (nonatomic) NSTimer *nowPlayingTimer;
-@property (nonatomic) AVPlayer *player;
-@property (nonatomic) IFMStations *stations;
-@property (nonatomic) IFMNowPlaying *nowPlayingUpdater;
-@property (nonatomic) IFMStation *currentStation;
-@property (nonatomic) IFMStation *lastStation;
 @property (nonatomic) NSArray<UIButton *> *playButtons;
 @property (nonatomic) NSArray<UIButton *> *stopButtons;
 @property (nonatomic) NSArray<UIActivityIndicatorView *> *spinners;
+@property (nonatomic) IFMPlayer *player;
 @end
 
 static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
@@ -47,14 +42,8 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (void)_stopStreamer
 {
-	[self.player.currentItem removeObserver:self forKeyPath:@"status"];
-	[self.player removeObserver:self forKeyPath:@"status"];
-	[self.player removeObserver:self forKeyPath:@"rate"];
-	[self.player removeObserver:self forKeyPath:@"reasonForWaitingToPlay"];
-	[self.player pause];
-
-	self.player = nil;
-	
+	[self.player stop];
+	// FIXME: should come from the listener
 	[self _resetEverything];
 }
 
@@ -81,41 +70,17 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	stopButton.enabled = YES;
 }
 
-- (void)_updateNowPlaying
-{
-	if (self.currentStation != nil && self.nowPlayingUpdater.updating == NO)
-	{
-		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		
-		[self.nowPlayingUpdater updateNowPlayingWithStation:self.currentStation completion:^(NSString *nowPlaying) {
-			[self _updateNowPlayingLabel:nowPlaying];
-			
-			[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-			
-			MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:self.currentStation.artwork.size requestHandler:^UIImage * _Nonnull(CGSize size) {
-				return self.currentStation.artwork;
-			}];
-
-			NSDictionary *nowPlayingInfo = @{
-				MPMediaItemPropertyTitle: [NSString stringWithFormat:@"Intergalactic FM - %@", self.currentStation.name],
-				MPMediaItemPropertyArtist: nowPlaying ? nowPlaying : @"",
-				MPNowPlayingInfoPropertyIsLiveStream: @(YES),
-				MPMediaItemPropertyArtwork: artwork
-			};
-			
-			[[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:nowPlayingInfo];
-		}];
-	}
-}
-
 - (void)_updateNowPlayingLabel:(NSString *)track
 {
 	// hack for ignoring updates when the player has stopped, since there's no
 	// mechanism for canceling the request
+
+	/* FIXME: check player state instead?
 	if (self.player == nil)
 	{
 		return;
 	}
+	*/
 	
 	if ([track isEqualToString:self.nowPlayingLabel.text] == NO)
 	{
@@ -147,40 +112,14 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 											handler:^(UIAlertAction * action) {}]];
 	[self presentViewController:alert animated:YES completion:nil];
 	[self _setPlayButtonsEnabled:YES];
-
-	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:[self.stations uiIndexForStation:self.currentStation]];
-	spinner.hidden = YES;
+	[self _resetEverything];
 }
 
 - (void)_playChannel:(NSInteger)channel
 {
-	[self _stopStreamer];
-	[self _setPlayButtonsEnabled:YES];
-	
-	IFMStation *station = [self.stations stationForIndex:channel];
-	self.player = [[AVPlayer alloc] initWithURL:station.url];
-	self.player.automaticallyWaitsToMinimizeStalling = YES;
-	[self.player.currentItem addObserver:self
-							  forKeyPath:@"status"
-								 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-								 context:nil];
-	[self.player addObserver:self
-				  forKeyPath:@"status"
-					 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-					 context:nil];
-	[self.player addObserver:self
-				  forKeyPath:@"rate"
-					 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-					 context:nil];
-	[self.player addObserver:self
-				  forKeyPath:@"reasonForWaitingToPlay"
-					 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
-					 context:nil];
-	[self.player play];
-	
-	self.currentStation = station;
-	[self _updateNowPlaying];
+	[self.player playWithChannelIndex:channel];
 
+	// FIXME: should come from the listener
 	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:channel];
 	spinner.hidden = NO;
 	[spinner startAnimating];
@@ -188,11 +127,6 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (void)_resetEverything
 {
-	self.currentStation = nil;
-	
-	[self.nowPlayingTimer invalidate];
-	self.nowPlayingTimer = nil;
-	
 	for (NSInteger channel = 0; channel < IFMChannelsMax; channel++)
 	{
 		[[self.spinners objectAtIndexOrNil:channel] setHidden:YES];
@@ -248,6 +182,12 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	} completion:nil];
 }
 
+#pragma mark - IFMPlayerStatusListener
+
+- (void)updateWithStatus:(IFMPlayerStatus *)status {
+	
+}
+
 #pragma mark - UIViewController overrides
 
 - (BOOL)canBecomeFirstResponder
@@ -276,19 +216,11 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	[spinners addObject:self.channel2Spinner];
 	[spinners addObject:self.channel3Spinner];
 	self.spinners = spinners;
-
-	self.stations = [[IFMStations alloc] init];
-	[self.stations updateStations];
-	
-	self.nowPlayingUpdater = [[IFMNowPlaying alloc] init];
 	
 	[self _resetEverything];
 	
 	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 	
-	NSError *activationError = nil;
-	[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&activationError];
-	[[AVAudioSession sharedInstance] setActive:YES error:&activationError];
 	[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
 
 	NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
@@ -312,141 +244,7 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 {
 	if (event.type == UIEventTypeRemoteControl)
 	{
-		switch (event.subtype)
-		{
-			case UIEventSubtypeRemoteControlPlay:
-			{
-				[self _playChannel:[self.stations uiIndexForStation:self.lastStation]];
-				break;
-			}
-			case UIEventSubtypeRemoteControlPause:
-			{
-				self.lastStation = self.currentStation;
-				[self _stopStreamer];
-				break;
-			}
-			case UIEventSubtypeRemoteControlStop:
-			{
-				self.lastStation = self.currentStation;
-				[self _stopStreamer];
-				break;
-			}
-			case UIEventSubtypeRemoteControlTogglePlayPause:
-			{
-				if (self.player.rate > 0.0001)
-				{
-					self.lastStation = self.currentStation;
-					[self _stopStreamer];
-				}
-				else if (self.player.rate < 0.0001 && self.lastStation != nil)
-				{
-					[self _playChannel:[self.stations uiIndexForStation:self.lastStation]];
-				}
-				
-				break;
-			}
-			case UIEventSubtypeRemoteControlNextTrack:
-			{
-				NSInteger index = [self.stations uiIndexForStation:self.currentStation];
-				
-				if (index < (self.stations.numberOfStations - 1))
-				{
-					index += 1;
-				}
-				else
-				{
-					index = 0;
-				}
-				
-				self.currentStation = [self.stations stationForIndex:index];
-				
-				[self _playChannel:index];
-				
-				break;
-			}
-			case UIEventSubtypeRemoteControlPreviousTrack:
-			{
-				NSInteger index = [self.stations uiIndexForStation:self.currentStation];
-
-				if (index == 0)
-				{
-					index = (self.stations.numberOfStations - 1);
-				}
-				else
-				{
-					index -= 1;
-				}
-				
-				self.currentStation = [self.stations stationForIndex:index];
-				
-				[self _playChannel:index];
-
-				break;
-			}
-			default:
-			{
-				break;
-			}
-		}
-	}
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-					  ofObject:(id)object
-						change:(NSDictionary<NSKeyValueChangeKey,id> *)change
-					   context:(void *)context
-{
-	if ([object isKindOfClass:[AVPlayer class]])
-	{
-		AVPlayer *player = (AVPlayer *)object;
-		
-		if ([keyPath isEqualToString:@"rate"])
-		{
-			// based on empirical research, if the rate goes to 0, it means the
-			// internet connection has dropped entirely. stalling keeps it at 1
-			if (player.rate < 0.00001)
-			{
-				[self _stopStreamer];
-			}
-		}
-		else if ([keyPath isEqualToString:@"reasonForWaitingToPlay"])
-		{
-			if (player.reasonForWaitingToPlay)
-			{
-				[self _setChannelToWaiting:[self.stations uiIndexForStation:self.currentStation]];
-			}
-			else
-			{
-				self.nowPlayingTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(_updateNowPlaying) userInfo:nil repeats:YES];
-
-				[self _updateNowPlaying];
-				[self _setChannelToPlaying:[self.stations uiIndexForStation:self.currentStation]];
-			}
-		}
-		else if ([keyPath isEqualToString:@"status"])
-		{
-			if (player.status == AVPlayerStatusFailed)
-			{
-				[self _stopStreamer];
-				[self _displayPlaylistError];
-			}
-		}
-	}
-	else if ([object isKindOfClass:[AVPlayerItem class]])
-	{
-		if ([(AVPlayerItem *)object status] == AVPlayerItemStatusFailed)
-		{
-			[self _stopStreamer];
-			[self _displayPlaylistError];
-		}
-	}
-	else
-	{
-		// Not interested.
-		[super observeValueForKeyPath:keyPath
-							 ofObject:object
-							   change:change
-							  context:context];
+		[self.player handleRemoteControlEventWithSubtype:event.subtype];
 	}
 }
 

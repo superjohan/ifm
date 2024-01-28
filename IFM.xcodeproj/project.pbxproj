@@ -50,6 +50,7 @@
 		90D0D58D115CA03F007C9F6F /* newch1playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D589115CA03F007C9F6F /* newch1playing.png */; };
 		90D0D58E115CA03F007C9F6F /* newch2playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58A115CA03F007C9F6F /* newch2playing.png */; };
 		90D0D58F115CA03F007C9F6F /* newch3playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D58B115CA03F007C9F6F /* newch3playing.png */; };
+		90E025982B66440D00910575 /* IFMPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E025972B66440D00910575 /* IFMPlayer.swift */; };
 		90EDC422112AA08000D1395C /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EDC421112AA08000D1395C /* stop.png */; };
 		90FB69421CF4D4B400706581 /* IFMStations.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB69411CF4D4B400706581 /* IFMStations.m */; };
 		90FB69451CF4D5EE00706581 /* IFMStationsUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB69441CF4D5EE00706581 /* IFMStationsUpdater.m */; };
@@ -113,6 +114,7 @@
 		90D0D58B115CA03F007C9F6F /* newch3playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newch3playing.png; sourceTree = "<group>"; };
 		90D6F5101287FCAE0060ED15 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		90E025962B66440D00910575 /* IFM-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IFM-Bridging-Header.h"; sourceTree = "<group>"; };
+		90E025972B66440D00910575 /* IFMPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFMPlayer.swift; sourceTree = "<group>"; };
 		90EDC421112AA08000D1395C /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = "<group>"; };
 		90FB69401CF4D4B400706581 /* IFMStations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMStations.h; sourceTree = "<group>"; };
 		90FB69411CF4D4B400706581 /* IFMStations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMStations.m; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				90FB694A1CF4D98F00706581 /* IFMStation.m */,
 				904F5E091D00B5F6003A238D /* IFMNowPlaying.h */,
 				904F5E0A1D00B5F6003A238D /* IFMNowPlaying.m */,
+				90E025972B66440D00910575 /* IFMPlayer.swift */,
 			);
 			name = Stations;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 				1D3623260D0F684500981E51 /* IFM_PlayerAppDelegate.m in Sources */,
 				289233AE0DB2D0DB0083E9F9 /* MainViewController.m in Sources */,
 				90FB69481CF4D97000706581 /* IFMStationsResponseParser.m in Sources */,
+				90E025982B66440D00910575 /* IFMPlayer.swift in Sources */,
 				904F5E0B1D00B5F6003A238D /* IFMNowPlaying.m in Sources */,
 				90FB69451CF4D5EE00706581 /* IFMStationsUpdater.m in Sources */,
 				DB2AB66A15A9859C005A1E98 /* NSArray+IFMAdditions.m in Sources */,
