@@ -11,7 +11,7 @@ import MediaPlayer
 
 @objc
 class IFMPlayer : NSObject {
-    @objc private(set) var status: IFMPlayerStatus
+    private(set) var status: IFMPlayerStatus
     
     private let stations = IFMStations()
     private let nowPlayingUpdater = IFMNowPlaying()
@@ -74,11 +74,11 @@ class IFMPlayer : NSObject {
         updateState(.stopped, channelIndex: -1)
     }
     
-    @objc func addListener(_ listener: IFMPlayerStatusListener) {
+    func addListener(_ listener: IFMPlayerStatusListener) {
         self.listeners.add(listener)
     }
     
-    @objc func removeListener(_ listener: IFMPlayerStatusListener) {
+    func removeListener(_ listener: IFMPlayerStatusListener) {
         self.listeners.remove(listener)
     }
     
@@ -231,7 +231,7 @@ class IFMPlayer : NSObject {
 }
 
 // TODO: convert MainViewController to Swift so we can use associated types here
-@objc enum IFMPlayerState: Int {
+enum IFMPlayerState {
     case stopped
     case waiting
     case playing
@@ -239,10 +239,10 @@ class IFMPlayer : NSObject {
 }
 
 // TODO: wouldn't it be nice if this was a struct (see above)
-@objc class IFMPlayerStatus : NSObject {
-    @objc let state: IFMPlayerState
-    @objc let nowPlaying: String?
-    @objc let stationIndex: Int
+class IFMPlayerStatus {
+    let state: IFMPlayerState
+    let nowPlaying: String?
+    let stationIndex: Int
     
     init(state: IFMPlayerState, nowPlaying: String?, stationIndex: Int) {
         self.state = state
@@ -252,6 +252,6 @@ class IFMPlayer : NSObject {
 }
 
 // TODO: damn it'd be nice to use Combine or somesuch instead of this junk (see above)
-@objc protocol IFMPlayerStatusListener {
+protocol IFMPlayerStatusListener {
     func update(status: IFMPlayerStatus)
 }
