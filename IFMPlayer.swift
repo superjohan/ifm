@@ -214,6 +214,7 @@ class IFMPlayer : NSObject {
     case error
 }
 
+// TODO: wouldn't it be nice if this was a struct (see above)
 @objc class IFMPlayerStatus : NSObject {
     @objc let state: IFMPlayerState
     @objc let nowPlaying: String?
@@ -226,6 +227,7 @@ class IFMPlayer : NSObject {
     }
 }
 
+// TODO: damn it'd be nice to use Combine or somesuch instead of this junk (see above)
 @objc protocol IFMPlayerStatusListener {
     func update(status: IFMPlayerStatus)
 }
