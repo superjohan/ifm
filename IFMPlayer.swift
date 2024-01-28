@@ -11,8 +11,8 @@ import MediaPlayer
 
 @objc
 class IFMPlayer : NSObject {
-	private(set) var state = State.Stopped
-	
+	@objc private(set) var status: IFMPlayerStatus
+
 	private let stations = IFMStations()
 	private let nowPlayingUpdater = IFMNowPlaying()
 	private let listeners = NSMutableSet() // yeah, yeah, i'd actually use Combine instead
@@ -22,10 +22,11 @@ class IFMPlayer : NSObject {
 	private var nowPlayingText: String? = nil
 	private var currentStation: IFMStation? = nil
 	private var lastStation: IFMStation? = nil
-	
+
 	override init() {
+		self.status = IFMPlayerStatus(state: .stopped, nowPlaying: nil, stationIndex: -1)
 		self.stations.update()
-			
+		
 		try? AVAudioSession.sharedInstance().setCategory(.playback)
 		try? AVAudioSession.sharedInstance().setActive(true)
 	}
@@ -35,8 +36,6 @@ class IFMPlayer : NSObject {
 	@objc func play(channelIndex: Int) {
 		stop()
 
-		// [self _setPlayButtonsEnabled:YES]
-		
 		guard let station = self.stations.station(for: channelIndex) else { return }
 		let player = AVPlayer(url: station.url)
 		player.automaticallyWaitsToMinimizeStalling = true
@@ -50,7 +49,7 @@ class IFMPlayer : NSObject {
 		self.currentStation = station
 		
 		updateNowPlaying()
-		// mark channel as waiting
+		updateState(.waiting, channelIndex: self.stations.uiIndex(for: station))
 	}
 	
 	@objc func stop() {
@@ -64,6 +63,9 @@ class IFMPlayer : NSObject {
 		
 		self.nowPlayingTimer?.invalidate()
 		self.nowPlayingTimer = nil
+		self.nowPlayingText = nil
+
+		updateState(.stopped, channelIndex: -1)
 	}
 	
 	@objc func handleRemoteControlEvent(subtype: UIEvent.EventSubtype) {
@@ -117,30 +119,36 @@ class IFMPlayer : NSObject {
 		}
 	}
 	
-	@objc func add(listener: IFMPlayerStatusListener) {
+	@objc func addListener(_ listener: IFMPlayerStatusListener) {
 		self.listeners.add(listener)
 	}
 	
-	@objc func remove(listener: IFMPlayerStatusListener) {
+	@objc func removeListener(_ listener: IFMPlayerStatusListener) {
 		self.listeners.remove(listener)
 	}
 	
 	// MARK: - Private
 	
-	private func updateState(_ state: State, channelIndex: Int) {
-		self.state = state
+	// channelIndex is only used for .waiting and .playing, it can be anything for other states
+	private func updateState(_ state: IFMPlayerState, channelIndex: Int) {
+		self.status = IFMPlayerStatus(
+			state: state,
+			nowPlaying: self.nowPlayingText,
+			stationIndex: channelIndex
+		)
+		
+		for listener in self.listeners {
+			(listener as? IFMPlayerStatusListener)?.update(status: self.status)
+		}
 	}
 	
 	private func updateNowPlaying() {
-		guard let currentStation = self.currentStation, !self.nowPlayingUpdater.updating else {
-			return
-		}
+		guard let currentStation = self.currentStation, !self.nowPlayingUpdater.updating else { return }
 
 		self.nowPlayingUpdater.update(with: currentStation) { nowPlaying in
 			self.nowPlayingText = nowPlaying
 
-			// [self _updateNowPlayingLabel:nowPlaying] ->
-			// self.updateState(State.Playing, channelIndex: self.stations.uiIndex(for: currentStation)) // FIXME: state
+			self.updateState(self.status.state, channelIndex: self.stations.uiIndex(for: currentStation))
 			
 			MPNowPlayingInfoCenter.default().nowPlayingInfo = [
 				MPMediaItemPropertyTitle: "Intergalactic FM - \(currentStation.name)",
@@ -168,9 +176,9 @@ class IFMPlayer : NSObject {
 					stop()
 				}
 			} else if keyPath == "reasonForWaitingToPlay" {
-				if player.reasonForWaitingToPlay != nil {
-					//[self _setChannelToWaiting:[self.stations uiIndexForStation:self.currentStation]]
-				} else {
+				if player.reasonForWaitingToPlay != nil, let station = self.currentStation {
+					updateState(.waiting, channelIndex: self.stations.uiIndex(for: station))
+				} else if let station = self.currentStation {
 					self.nowPlayingTimer = Timer.scheduledTimer(
 						withTimeInterval: 15,
 						repeats: true,
@@ -178,35 +186,44 @@ class IFMPlayer : NSObject {
 					)
 					
 					updateNowPlaying()
-					
-					//[self _setChannelToPlaying:[self.stations uiIndexForStation:self.currentStation]]
+					updateState(.playing, channelIndex: self.stations.uiIndex(for: station))
 				}
 			} else if keyPath == "status" {
 				if player.status == .failed {
 					stop()
-					//[self _displayPlaylistError]
+					updateState(.error, channelIndex: -1)
 				}
 			}
 		} else if let playerItem = object as? AVPlayerItem {
 			if playerItem.status == .failed {
 				stop()
-				//[self _displayPlaylistError]
+				updateState(.error, channelIndex: -1)
 			}
 		} else {
 			// Not interested.
 			super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
 		}
 	}
+}
 
-	@objc enum State: Int {
-		case Stopped
-		case Waiting
-		case Playing
-	}
+// TODO: convert MainViewController to Swift so we can use associated types here
+@objc enum IFMPlayerState: Int {
+	case stopped
+	case waiting
+	case playing
+	case error
 }
 
 @objc class IFMPlayerStatus : NSObject {
+	@objc let state: IFMPlayerState
+	@objc let nowPlaying: String?
+	@objc let stationIndex: Int
 	
+	init(state: IFMPlayerState, nowPlaying: String?, stationIndex: Int) {
+		self.state = state
+		self.nowPlaying = nowPlaying
+		self.stationIndex = stationIndex
+	}
 }
 
 @objc protocol IFMPlayerStatusListener {

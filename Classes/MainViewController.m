@@ -73,25 +73,18 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 - (void)_updateNowPlayingLabel:(NSString *)track
 {
 	// hack for ignoring updates when the player has stopped, since there's no
-	// mechanism for canceling the request
-
-	/* FIXME: check player state instead?
-	if (self.player == nil)
+	// mechanism for canceling the request for now playing info
+	IFMPlayerStatus *status = self.player.status;
+	if (status.state == IFMPlayerStateStopped || status.state == IFMPlayerStateError)
 	{
 		return;
 	}
-	*/
 	
 	if ([track isEqualToString:self.nowPlayingLabel.text] == NO)
 	{
 		self.nowPlayingLabel.text = track;
 		[self resetAnimation];
 	}
-}
-
-- (void)_startPlayingWithM3U:(NSString *)m3u
-{
-	[self _setPlayButtonsEnabled:YES];
 }
 
 - (void)_setPlayButtonsEnabled:(BOOL)enabled
@@ -113,16 +106,6 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	[self presentViewController:alert animated:YES completion:nil];
 	[self _setPlayButtonsEnabled:YES];
 	[self _resetEverything];
-}
-
-- (void)_playChannel:(NSInteger)channel
-{
-	[self.player playWithChannelIndex:channel];
-
-	// FIXME: should come from the listener
-	UIActivityIndicatorView *spinner = [self.spinners objectAtIndexOrNil:channel];
-	spinner.hidden = NO;
-	[spinner startAnimating];
 }
 
 - (void)_resetEverything
@@ -147,17 +130,17 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 
 - (IBAction)channel1ButtonPressed:(id)sender
 {
-	[self _playChannel:0];
+	[self.player playWithChannelIndex:0];
 }
 
 - (IBAction)channel2ButtonPressed:(id)sender
 {
-	[self _playChannel:1];
+	[self.player playWithChannelIndex:1];
 }
 
 - (IBAction)channel3ButtonPressed:(id)sender
 {
-	[self _playChannel:2];
+	[self.player playWithChannelIndex:2];
 }
 
 - (IBAction)stopButtonPressed:(id)sender
@@ -166,6 +149,17 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 }
 
 #pragma mark - Public
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil
+						 bundle:(NSBundle *)nibBundleOrNil
+						 player:(IFMPlayer *)player
+{
+	if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+		self.player = player;
+	}
+	
+	return self;
+}
 
 - (void)resetAnimation
 {
@@ -185,7 +179,28 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 #pragma mark - IFMPlayerStatusListener
 
 - (void)updateWithStatus:(IFMPlayerStatus *)status {
-	
+	switch (status.state) {
+		case IFMPlayerStateStopped:
+			[self _resetEverything];
+			break;
+
+		case IFMPlayerStateWaiting:
+			[self _setChannelToWaiting:status.stationIndex];
+			break;
+
+		case IFMPlayerStatePlaying:
+			[self _setPlayButtonsEnabled:YES];
+			[self _setChannelToPlaying:status.stationIndex];
+			[self _updateNowPlayingLabel:status.nowPlaying];
+			break;
+
+		case IFMPlayerStateError:
+			[self _displayPlaylistError];
+			break;
+
+		default:
+			break;
+	}
 }
 
 #pragma mark - UIViewController overrides
@@ -198,6 +213,8 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+
+	[self.player addListener:self];
 
 	NSMutableArray *playButtons = [[NSMutableArray alloc] init];
 	[playButtons addObject:self.channel1Button];
@@ -238,6 +255,12 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	self.nowPlayingLabel.frame = CGRectMake(0, y + yOffset, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.nowPlayingLabel.bounds));
 	[self.view addSubview:self.nowPlayingLabel];
 	[self resetAnimation];
+	
+	// If the player is already doing something, then update the UI state with its status
+	IFMPlayerStatus *status = self.player.status;
+	if (status.state == IFMPlayerStatePlaying || status.state == IFMPlayerStateWaiting) {
+		[self updateWithStatus:status];
+	}
 }
 
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event
@@ -246,6 +269,10 @@ static const NSInteger IFMChannelsMax = 3; // this should come from the feed!
 	{
 		[self.player handleRemoteControlEventWithSubtype:event.subtype];
 	}
+}
+
+- (void)dealloc {
+	[self.player removeListener:self];
 }
 
 @end

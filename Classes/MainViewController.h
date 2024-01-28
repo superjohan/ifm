@@ -7,9 +7,11 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import "IFM-Swift.h"
 
 @interface MainViewController : UIViewController
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil player:(IFMPlayer *)player;
 - (void)resetAnimation;
 
 @end
