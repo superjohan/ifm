@@ -110,8 +110,6 @@ class MainViewController : UIViewController, IFMPlayerStatusListener {
     
     // MARK: - UIViewController
     
-    override var canBecomeFirstResponder: Bool { true }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
