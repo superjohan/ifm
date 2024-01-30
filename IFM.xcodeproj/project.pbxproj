@@ -14,7 +14,6 @@
 		280E754E0DD40C5E005A515E /* MainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280E754B0DD40C5E005A515E /* MainView.xib */; };
 		280E754F0DD40C5E005A515E /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280E754C0DD40C5E005A515E /* MainWindow.xib */; };
 		288765590DF743DE002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765580DF743DE002DB57D /* CoreGraphics.framework */; };
-		289233AE0DB2D0DB0083E9F9 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289233A90DB2D0DB0083E9F9 /* MainViewController.m */; };
 		6A4067332AEFB8480040E286 /* nowplayinglogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A4067322AEFB8480040E286 /* nowplayinglogo.png */; };
 		902BB63115A0CD9A00DB1C33 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 902BB63015A0CD9A00DB1C33 /* libz.dylib */; };
 		903B8A95114E28F80076A1C2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903B8A94114E28F70076A1C2 /* QuartzCore.framework */; };
@@ -45,6 +44,7 @@
 		90884C611129A0F200707F33 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 90884C601129A0F200707F33 /* info.png */; };
 		908BDDAF11CCC8B600210717 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 908BDDAE11CCC8B600210717 /* Default@2x.png */; };
 		909C2C4217A27A9400261E20 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 909C2C4117A27A9400261E20 /* Default-568h@2x.png */; };
+		90ACA3482B66B3F5005AE65D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90ACA3472B66B3F5005AE65D /* MainViewController.swift */; };
 		90D0D56A115C9A27007C9F6F /* newbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D569115C9A27007C9F6F /* newbackground.png */; };
 		90D0D56C115C9AF6007C9F6F /* newlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D56B115C9AF6007C9F6F /* newlogo.png */; };
 		90D0D58D115CA03F007C9F6F /* newch1playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 90D0D589115CA03F007C9F6F /* newch1playing.png */; };
@@ -71,8 +71,6 @@
 		280E754B0DD40C5E005A515E /* MainView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainView.xib; sourceTree = "<group>"; };
 		280E754C0DD40C5E005A515E /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		288765580DF743DE002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		289233A80DB2D0DB0083E9F9 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Classes/MainViewController.h; sourceTree = "<group>"; };
-		289233A90DB2D0DB0083E9F9 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Classes/MainViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* IFM_Player_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFM_Player_Prefix.pch; sourceTree = "<group>"; };
 		6A4067322AEFB8480040E286 /* nowplayinglogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nowplayinglogo.png; sourceTree = "<group>"; };
@@ -107,6 +105,7 @@
 		90884C601129A0F200707F33 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
 		908BDDAE11CCC8B600210717 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		909C2C4117A27A9400261E20 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		90ACA3472B66B3F5005AE65D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		90D0D569115C9A27007C9F6F /* newbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newbackground.png; sourceTree = "<group>"; };
 		90D0D56B115C9AF6007C9F6F /* newlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newlogo.png; sourceTree = "<group>"; };
 		90D0D589115CA03F007C9F6F /* newch1playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newch1playing.png; sourceTree = "<group>"; };
@@ -173,8 +172,7 @@
 		289233A00DB2D0730083E9F9 /* Main View */ = {
 			isa = PBXGroup;
 			children = (
-				289233A80DB2D0DB0083E9F9 /* MainViewController.h */,
-				289233A90DB2D0DB0083E9F9 /* MainViewController.m */,
+				90ACA3472B66B3F5005AE65D /* MainViewController.swift */,
 			);
 			name = "Main View";
 			sourceTree = "<group>";
@@ -398,9 +396,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				90ACA3482B66B3F5005AE65D /* MainViewController.swift in Sources */,
 				90FB694B1CF4D98F00706581 /* IFMStation.m in Sources */,
 				1D3623260D0F684500981E51 /* IFM_PlayerAppDelegate.m in Sources */,
-				289233AE0DB2D0DB0083E9F9 /* MainViewController.m in Sources */,
 				90FB69481CF4D97000706581 /* IFMStationsResponseParser.m in Sources */,
 				90E025982B66440D00910575 /* IFMPlayer.swift in Sources */,
 				904F5E0B1D00B5F6003A238D /* IFMNowPlaying.m in Sources */,
@@ -434,7 +432,7 @@
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -473,7 +471,7 @@
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -553,7 +551,7 @@
 				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "IFM_Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
