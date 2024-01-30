@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Combine
 
-class MainViewController : UIViewController, IFMPlayerStatusListener {
+class MainViewController : UIViewController {
     @IBOutlet var channel1Button: UIButton!
     @IBOutlet var channel2Button: UIButton!
     @IBOutlet var channel3Button: UIButton!
@@ -24,6 +25,7 @@ class MainViewController : UIViewController, IFMPlayerStatusListener {
     private var playButtons = [UIButton]()
     private var stopButtons = [UIButton]()
     private var spinners = [UIActivityIndicatorView]()
+    private var cancellables = Set<AnyCancellable>()
     
     private let channelsMax = 3
     
@@ -113,7 +115,9 @@ class MainViewController : UIViewController, IFMPlayerStatusListener {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.player.addListener(self)
+        self.player.stateObservable
+            .sink { self.update(state: $0) }
+            .store(in: &self.cancellables)
         
         self.playButtons.append(self.channel1Button)
         self.playButtons.append(self.channel2Button)

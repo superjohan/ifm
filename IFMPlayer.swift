@@ -8,6 +8,7 @@
 import Foundation
 import AVFoundation
 import MediaPlayer
+import Combine
 
 @objc
 class IFMPlayer : NSObject {
@@ -15,13 +16,17 @@ class IFMPlayer : NSObject {
     
     private let stations = IFMStations()
     private let nowPlayingUpdater = IFMNowPlaying()
-    private let listeners = NSMutableSet() // yeah, yeah, i'd actually use Combine instead
+    private let statePublisher = PassthroughSubject<IFMPlayerState, Never>()
     
     private var player: AVPlayer? = nil
     private var nowPlayingTimer: Timer? = nil
     private var nowPlayingText: String? = nil
     private var currentStation: IFMStation? = nil
     private var lastStation: IFMStation? = nil
+    
+    var stateObservable: AnyPublisher<IFMPlayerState, Never> {
+        self.statePublisher.eraseToAnyPublisher()
+    }
     
     override init() {
         self.state = .stopped
@@ -74,23 +79,13 @@ class IFMPlayer : NSObject {
         updateState(.stopped)
     }
     
-    func addListener(_ listener: IFMPlayerStatusListener) {
-        self.listeners.add(listener)
-    }
-    
-    func removeListener(_ listener: IFMPlayerStatusListener) {
-        self.listeners.remove(listener)
-    }
-    
     // MARK: - Private
     
     // channelIndex is only used for .waiting and .playing, it can be anything for other states
     private func updateState(_ state: IFMPlayerState) {
         self.state = state
         
-        for listener in self.listeners {
-            (listener as? IFMPlayerStatusListener)?.update(state: state)
-        }
+        self.statePublisher.send(state)
     }
     
     private func updateNowPlaying() {
@@ -267,9 +262,4 @@ enum IFMPlayerState: Equatable {
             self
         }
     }
-}
-
-// TODO: damn it'd be nice to use Combine or somesuch instead of this junk (see above)
-protocol IFMPlayerStatusListener {
-    func update(state: IFMPlayerState)
 }
