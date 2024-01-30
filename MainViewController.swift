@@ -80,8 +80,8 @@ class MainViewController : UIViewController, IFMPlayerStatusListener {
     
     // MARK: - IFMPlayerStatusListener
     
-    func update(status: IFMPlayerStatus) {
-        if status.state == .error {
+    func update(state: IFMPlayerState) {
+        if state == .error {
             let alert = UIAlertController(
                 title: "Unable to load playlist",
                 message: "The internet connection may be down, or the servers aren't responding.",
@@ -92,8 +92,8 @@ class MainViewController : UIViewController, IFMPlayerStatusListener {
         }
         
         for channel in 0..<self.channelsMax {
-            let isWaiting = status.state == .waiting && status.stationIndex == channel
-            let isPlaying = status.state == .playing && status.stationIndex == channel
+            let isWaiting = state.isWaiting(channel: channel)
+            let isPlaying = state.isPlaying(channel: channel)
             
             self.spinners[channel].isHidden = !isWaiting
             self.playButtons[channel].isEnabled = !isWaiting
@@ -101,8 +101,8 @@ class MainViewController : UIViewController, IFMPlayerStatusListener {
             self.stopButtons[channel].isHidden = !isPlaying && !isWaiting
         }
         
-        if status.nowPlaying != self.nowPlayingLabel.text {
-            self.nowPlayingLabel.text = status.nowPlaying
+        if state.nowPlayingText != self.nowPlayingLabel.text {
+            self.nowPlayingLabel.text = state.nowPlayingText
 
             resetAnimation()
         }
@@ -127,8 +127,8 @@ class MainViewController : UIViewController, IFMPlayerStatusListener {
         self.spinners.append(self.channel2Spinner)
         self.spinners.append(self.channel3Spinner)
         
-        let status = self.player.status
-        update(status: status)
+        let state = self.player.state
+        update(state: state)
         
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? "- now with exciting bugs"
         let introText = "Intergalactic FM for iPhone \(version) - https://www.intergalactic.fm/ - Developed by Aero Deko and IFM dev corps"
@@ -153,8 +153,11 @@ class MainViewController : UIViewController, IFMPlayerStatusListener {
         resetAnimation()
         
         // If the player is already doing something, then update the UI state again with the status so the now playing label is correct
-        if status.state == .playing || status.state == .waiting {
-            update(status: status)
+        switch state {
+        case .playing, .waiting:
+            update(state: state)
+        default:
+            break
         }
     }
 }
