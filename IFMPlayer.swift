@@ -22,7 +22,6 @@ class IFMPlayer : NSObject {
     private var nowPlayingTimer: Timer? = nil
     private var nowPlayingText: String? = nil
     private var currentStation: IFMStation? = nil
-    private var lastStation: IFMStation? = nil
     
     var stateObservable: AnyPublisher<IFMPlayerState, Never> {
         self.statePublisher.eraseToAnyPublisher()
@@ -61,7 +60,6 @@ class IFMPlayer : NSObject {
         
         self.player = player
         self.currentStation = station
-        self.lastStation = station
 
         updateNowPlaying()
         updateState(.waiting(nowPlaying: self.nowPlayingText, stationIndex: self.stations.uiIndex(for: station)))
@@ -122,9 +120,9 @@ class IFMPlayer : NSObject {
         let commandCenter = MPRemoteCommandCenter.shared()
 
         commandCenter.playCommand.addTarget { _ in
-            guard let lastStation = self.lastStation else { return .noActionableNowPlayingItem }
+            guard let currentStation = self.currentStation else { return .noActionableNowPlayingItem }
 
-            self.play(channelIndex: self.stations.uiIndex(for: lastStation))
+            self.play(channelIndex: self.stations.uiIndex(for: currentStation))
             
             return .success
         }
@@ -138,8 +136,8 @@ class IFMPlayer : NSObject {
         commandCenter.togglePlayPauseCommand.addTarget { _ in
             if (self.player?.rate ?? 0) > 0.0001 {
                 self.stop()
-            } else if (self.player?.rate ?? 0) < 0.0001, let lastStation = self.lastStation {
-                self.play(channelIndex: self.stations.uiIndex(for: lastStation))
+            } else if (self.player?.rate ?? 0) < 0.0001, let currentStation = self.currentStation {
+                self.play(channelIndex: self.stations.uiIndex(for: currentStation))
             }
             
             return .success
