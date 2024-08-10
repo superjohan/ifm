@@ -61,7 +61,8 @@ class IFMPlayer : NSObject {
         
         self.player = player
         self.currentStation = station
-        
+        self.lastStation = station
+
         updateNowPlaying()
         updateState(.waiting(nowPlaying: self.nowPlayingText, stationIndex: self.stations.uiIndex(for: station)))
     }
@@ -129,7 +130,6 @@ class IFMPlayer : NSObject {
         }
         
         commandCenter.pauseCommand.addTarget { _ in
-            self.lastStation = self.currentStation
             self.stop()
 
             return .success
@@ -137,7 +137,6 @@ class IFMPlayer : NSObject {
         
         commandCenter.togglePlayPauseCommand.addTarget { _ in
             if (self.player?.rate ?? 0) > 0.0001 {
-                self.lastStation = self.currentStation
                 self.stop()
             } else if (self.player?.rate ?? 0) < 0.0001, let lastStation = self.lastStation {
                 self.play(channelIndex: self.stations.uiIndex(for: lastStation))
