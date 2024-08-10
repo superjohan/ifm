@@ -152,9 +152,7 @@ class IFMPlayer : NSObject {
             } else {
                 index = 0
             }
-            
-            self.currentStation = self.stations.station(for: index)
-            
+
             self.play(channelIndex: index)
             
             return .success
@@ -169,8 +167,6 @@ class IFMPlayer : NSObject {
             } else {
                 index -= 1
             }
-            
-            self.currentStation = self.stations.station(for: index)
             
             self.play(channelIndex: index)
             
