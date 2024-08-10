@@ -46,7 +46,11 @@ class IFMPlayer : NSObject {
         stop()
         
         guard let station = self.stations.station(for: channelIndex) else { return }
-        let player = AVPlayer(url: station.url)
+        
+        let playerItem = AVPlayerItem(url: station.url)
+        playerItem.preferredForwardBufferDuration = 1
+
+        let player = AVPlayer(playerItem: playerItem)
         player.automaticallyWaitsToMinimizeStalling = true
         player.currentItem?.addObserver(self, forKeyPath: "status", options: [.old, .new], context: nil)
         player.currentItem?.addObserver(self, forKeyPath: "error", options: [.old, .new], context: nil)
