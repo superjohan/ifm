@@ -37,43 +37,43 @@
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D3623240D0F684500981E51 /* IFM_PlayerAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFM_PlayerAppDelegate.h; sourceTree = "<group>"; };
-		1D3623250D0F684500981E51 /* IFM_PlayerAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFM_PlayerAppDelegate.m; sourceTree = "<group>"; };
+		1D3623240D0F684500981E51 /* IFM_PlayerAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFM_PlayerAppDelegate.h; path = IFM/IFM_PlayerAppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* IFM_PlayerAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IFM_PlayerAppDelegate.m; path = IFM/IFM_PlayerAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* IFM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IFM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		280E754B0DD40C5E005A515E /* MainView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainView.xib; sourceTree = "<group>"; };
-		280E754C0DD40C5E005A515E /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		280E754B0DD40C5E005A515E /* MainView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainView.xib; path = IFM/MainView.xib; sourceTree = "<group>"; };
+		280E754C0DD40C5E005A515E /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainWindow.xib; path = IFM/MainWindow.xib; sourceTree = "<group>"; };
 		288765580DF743DE002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		32CA4F630368D1EE00C91783 /* IFM_Player_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFM_Player_Prefix.pch; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* IFM_Player-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "IFM_Player-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = IFM/main.m; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* IFM_Player_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFM_Player_Prefix.pch; path = IFM/IFM_Player_Prefix.pch; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* IFM_Player-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "IFM_Player-Info.plist"; path = "IFM/IFM_Player-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		902BB63015A0CD9A00DB1C33 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		903B8A94114E28F70076A1C2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		90496EAB185F70BC0029E0FE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		904F5E091D00B5F6003A238D /* IFMNowPlaying.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMNowPlaying.h; sourceTree = "<group>"; };
-		904F5E0A1D00B5F6003A238D /* IFMNowPlaying.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMNowPlaying.m; sourceTree = "<group>"; };
+		904F5E091D00B5F6003A238D /* IFMNowPlaying.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFMNowPlaying.h; path = IFM/IFMNowPlaying.h; sourceTree = "<group>"; };
+		904F5E0A1D00B5F6003A238D /* IFMNowPlaying.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IFMNowPlaying.m; path = IFM/IFMNowPlaying.m; sourceTree = "<group>"; };
 		90884ACA11294DD700707F33 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		90884ACC11294DD700707F33 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		90884ACE11294DD700707F33 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		908BDDAE11CCC8B600210717 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		909C2C4117A27A9400261E20 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		90ACA3472B66B3F5005AE65D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
-		90E025962B66440D00910575 /* IFM-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IFM-Bridging-Header.h"; sourceTree = "<group>"; };
-		90E025972B66440D00910575 /* IFMPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFMPlayer.swift; sourceTree = "<group>"; usesTabs = 0; };
-		90FB69401CF4D4B400706581 /* IFMStations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMStations.h; sourceTree = "<group>"; };
-		90FB69411CF4D4B400706581 /* IFMStations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMStations.m; sourceTree = "<group>"; };
-		90FB69431CF4D5EE00706581 /* IFMStationsUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMStationsUpdater.h; sourceTree = "<group>"; };
-		90FB69441CF4D5EE00706581 /* IFMStationsUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMStationsUpdater.m; sourceTree = "<group>"; };
-		90FB69461CF4D97000706581 /* IFMStationsResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMStationsResponseParser.h; sourceTree = "<group>"; };
-		90FB69471CF4D97000706581 /* IFMStationsResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMStationsResponseParser.m; sourceTree = "<group>"; };
-		90FB69491CF4D98F00706581 /* IFMStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMStation.h; sourceTree = "<group>"; };
-		90FB694A1CF4D98F00706581 /* IFMStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMStation.m; sourceTree = "<group>"; };
-		90FB694C1CF4E1EF00706581 /* stations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stations.json; sourceTree = "<group>"; };
+		908BDDAE11CCC8B600210717 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "IFM/Default@2x.png"; sourceTree = "<group>"; };
+		909C2C4117A27A9400261E20 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "IFM/Default-568h@2x.png"; sourceTree = "<group>"; };
+		90ACA3472B66B3F5005AE65D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = IFM/MainViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
+		90E025962B66440D00910575 /* IFM-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "IFM-Bridging-Header.h"; path = "IFM/IFM-Bridging-Header.h"; sourceTree = "<group>"; };
+		90E025972B66440D00910575 /* IFMPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IFMPlayer.swift; path = IFM/IFMPlayer.swift; sourceTree = "<group>"; usesTabs = 0; };
+		90FB69401CF4D4B400706581 /* IFMStations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFMStations.h; path = IFM/IFMStations.h; sourceTree = "<group>"; };
+		90FB69411CF4D4B400706581 /* IFMStations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IFMStations.m; path = IFM/IFMStations.m; sourceTree = "<group>"; };
+		90FB69431CF4D5EE00706581 /* IFMStationsUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFMStationsUpdater.h; path = IFM/IFMStationsUpdater.h; sourceTree = "<group>"; };
+		90FB69441CF4D5EE00706581 /* IFMStationsUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IFMStationsUpdater.m; path = IFM/IFMStationsUpdater.m; sourceTree = "<group>"; };
+		90FB69461CF4D97000706581 /* IFMStationsResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFMStationsResponseParser.h; path = IFM/IFMStationsResponseParser.h; sourceTree = "<group>"; };
+		90FB69471CF4D97000706581 /* IFMStationsResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IFMStationsResponseParser.m; path = IFM/IFMStationsResponseParser.m; sourceTree = "<group>"; };
+		90FB69491CF4D98F00706581 /* IFMStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFMStation.h; path = IFM/IFMStation.h; sourceTree = "<group>"; };
+		90FB694A1CF4D98F00706581 /* IFMStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IFMStation.m; path = IFM/IFMStation.m; sourceTree = "<group>"; };
+		90FB694C1CF4E1EF00706581 /* stations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = stations.json; path = IFM/stations.json; sourceTree = "<group>"; };
 		90FF10BE1CF072F100772A38 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = IFM/Images.xcassets; sourceTree = "<group>"; };
-		D4D14D2F25AE1845002866D5 /* Michroma-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Michroma-Regular.ttf"; sourceTree = "<group>"; };
-		DB2AB66715A9859C005A1E98 /* IFMLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMLog.h; sourceTree = "<group>"; };
-		DB2AB66815A9859C005A1E98 /* NSArray+IFMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+IFMAdditions.h"; sourceTree = "<group>"; };
-		DB2AB66915A9859C005A1E98 /* NSArray+IFMAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+IFMAdditions.m"; sourceTree = "<group>"; };
+		D4D14D2F25AE1845002866D5 /* Michroma-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Michroma-Regular.ttf"; path = "IFM/Michroma-Regular.ttf"; sourceTree = "<group>"; };
+		DB2AB66715A9859C005A1E98 /* IFMLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFMLog.h; path = IFM/IFMLog.h; sourceTree = "<group>"; };
+		DB2AB66815A9859C005A1E98 /* NSArray+IFMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+IFMAdditions.h"; path = "IFM/NSArray+IFMAdditions.h"; sourceTree = "<group>"; };
+		DB2AB66915A9859C005A1E98 /* NSArray+IFMAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+IFMAdditions.m"; path = "IFM/NSArray+IFMAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,16 +96,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		080E96DDFE201D6D7F000001 /* Application Delegate */ = {
-			isa = PBXGroup;
-			children = (
-				1D3623240D0F684500981E51 /* IFM_PlayerAppDelegate.h */,
-				1D3623250D0F684500981E51 /* IFM_PlayerAppDelegate.m */,
-			);
-			name = "Application Delegate";
-			path = Classes;
-			sourceTree = "<group>";
-		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,7 +121,6 @@
 				90FB693F1CF4D4A500706581 /* Stations */,
 				DB2AB66C15A985A2005A1E98 /* Utils */,
 				289233A00DB2D0730083E9F9 /* Main View */,
-				080E96DDFE201D6D7F000001 /* Application Delegate */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources-iPhone */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -144,6 +133,8 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				1D3623240D0F684500981E51 /* IFM_PlayerAppDelegate.h */,
+				1D3623250D0F684500981E51 /* IFM_PlayerAppDelegate.m */,
 				90E025962B66440D00910575 /* IFM-Bridging-Header.h */,
 				32CA4F630368D1EE00C91783 /* IFM_Player_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
@@ -319,9 +310,9 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
+				GCC_PREFIX_HEADER = IFM/IFM_Player_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "IFM_Player-Info.plist";
+				INFOPLIST_FILE = "IFM/IFM_Player-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -336,7 +327,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "IFM-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "IFM/IFM-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_PACKAGE_NAME = IFM;
 				SWIFT_VERSION = 5.0;
@@ -358,9 +349,9 @@
 				DEVELOPMENT_TEAM = T583396HNX;
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
+				GCC_PREFIX_HEADER = IFM/IFM_Player_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "IFM_Player-Info.plist";
+				INFOPLIST_FILE = "IFM/IFM_Player-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -374,7 +365,7 @@
 				PROVISIONING_PROFILE = "4c5262ed-c481-443f-93a8-6d5e9a2018cf";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "IFM-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "IFM/IFM-Bridging-Header.h";
 				SWIFT_PACKAGE_NAME = IFM;
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
@@ -438,9 +429,9 @@
 				DEVELOPMENT_TEAM = T583396HNX;
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = IFM_Player_Prefix.pch;
+				GCC_PREFIX_HEADER = IFM/IFM_Player_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				INFOPLIST_FILE = "IFM_Player-Info.plist";
+				INFOPLIST_FILE = "IFM/IFM_Player-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -455,7 +446,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4c5262ed-c481-443f-93a8-6d5e9a2018cf";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "IFM-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "IFM/IFM-Bridging-Header.h";
 				SWIFT_PACKAGE_NAME = IFM;
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
@@ -484,7 +475,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = dist.plist;
+				CODE_SIGN_ENTITLEMENTS = IFM/dist.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
