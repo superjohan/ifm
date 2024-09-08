@@ -57,6 +57,7 @@
 		90884ACE11294DD700707F33 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		908BDDAE11CCC8B600210717 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "IFM/Default@2x.png"; sourceTree = "<group>"; };
 		909C2C4117A27A9400261E20 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "IFM/Default-568h@2x.png"; sourceTree = "<group>"; };
+		90A403712AF01F560060E026 /* Entitlements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		90ACA3472B66B3F5005AE65D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = IFM/MainViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		90E025962B66440D00910575 /* IFM-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "IFM-Bridging-Header.h"; path = "IFM/IFM-Bridging-Header.h"; sourceTree = "<group>"; };
 		90E025972B66440D00910575 /* IFMPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IFMPlayer.swift; path = IFM/IFMPlayer.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -69,7 +70,6 @@
 		90FB69491CF4D98F00706581 /* IFMStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFMStation.h; path = IFM/IFMStation.h; sourceTree = "<group>"; };
 		90FB694A1CF4D98F00706581 /* IFMStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IFMStation.m; path = IFM/IFMStation.m; sourceTree = "<group>"; };
 		90FB694C1CF4E1EF00706581 /* stations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = stations.json; path = IFM/stations.json; sourceTree = "<group>"; };
-		90A403712AF01F560060E026 /* Entitlements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		90FF10BE1CF072F100772A38 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = IFM/Images.xcassets; sourceTree = "<group>"; };
 		D4D14D2F25AE1845002866D5 /* Michroma-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Michroma-Regular.ttf"; path = "IFM/Michroma-Regular.ttf"; sourceTree = "<group>"; };
 		DB2AB66715A9859C005A1E98 /* IFMLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFMLog.h; path = IFM/IFMLog.h; sourceTree = "<group>"; };
