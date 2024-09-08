@@ -264,6 +264,8 @@ enum IFMPlayerState: Equatable {
 class IFMPlayerHolder {
     private static var player: IFMPlayer?
     
+    private init() {}
+    
     static func ensurePlayer() -> IFMPlayer {
         if let player = Self.player  {
             return player
