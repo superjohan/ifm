@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D3623260D0F684500981E51 /* IFM_PlayerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* IFM_PlayerAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -25,6 +24,7 @@
 		909C2C4217A27A9400261E20 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 909C2C4117A27A9400261E20 /* Default-568h@2x.png */; };
 		90ACA3482B66B3F5005AE65D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90ACA3472B66B3F5005AE65D /* MainViewController.swift */; };
 		90E025982B66440D00910575 /* IFMPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E025972B66440D00910575 /* IFMPlayer.swift */; };
+		90F8B0792C8A2E6800F4BE39 /* IFMWindowSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F8B0782C8A2E6800F4BE39 /* IFMWindowSceneDelegate.swift */; };
 		90FB69421CF4D4B400706581 /* IFMStations.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB69411CF4D4B400706581 /* IFMStations.m */; };
 		90FB69451CF4D5EE00706581 /* IFMStationsUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB69441CF4D5EE00706581 /* IFMStationsUpdater.m */; };
 		90FB69481CF4D97000706581 /* IFMStationsResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FB69471CF4D97000706581 /* IFMStationsResponseParser.m */; };
@@ -37,8 +37,6 @@
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D3623240D0F684500981E51 /* IFM_PlayerAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFM_PlayerAppDelegate.h; path = IFM/IFM_PlayerAppDelegate.h; sourceTree = "<group>"; };
-		1D3623250D0F684500981E51 /* IFM_PlayerAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IFM_PlayerAppDelegate.m; path = IFM/IFM_PlayerAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* IFM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IFM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		280E754B0DD40C5E005A515E /* MainView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainView.xib; path = IFM/MainView.xib; sourceTree = "<group>"; };
@@ -61,6 +59,7 @@
 		90ACA3472B66B3F5005AE65D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = IFM/MainViewController.swift; sourceTree = "<group>"; usesTabs = 0; };
 		90E025962B66440D00910575 /* IFM-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "IFM-Bridging-Header.h"; path = "IFM/IFM-Bridging-Header.h"; sourceTree = "<group>"; };
 		90E025972B66440D00910575 /* IFMPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IFMPlayer.swift; path = IFM/IFMPlayer.swift; sourceTree = "<group>"; usesTabs = 0; };
+		90F8B0782C8A2E6800F4BE39 /* IFMWindowSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IFMWindowSceneDelegate.swift; path = IFM/IFMWindowSceneDelegate.swift; sourceTree = "<group>"; };
 		90FB69401CF4D4B400706581 /* IFMStations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFMStations.h; path = IFM/IFMStations.h; sourceTree = "<group>"; };
 		90FB69411CF4D4B400706581 /* IFMStations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IFMStations.m; path = IFM/IFMStations.m; sourceTree = "<group>"; };
 		90FB69431CF4D5EE00706581 /* IFMStationsUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IFMStationsUpdater.h; path = IFM/IFMStationsUpdater.h; sourceTree = "<group>"; };
@@ -135,8 +134,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				1D3623240D0F684500981E51 /* IFM_PlayerAppDelegate.h */,
-				1D3623250D0F684500981E51 /* IFM_PlayerAppDelegate.m */,
+				90F8B0782C8A2E6800F4BE39 /* IFMWindowSceneDelegate.swift */,
 				90E025962B66440D00910575 /* IFM-Bridging-Header.h */,
 				32CA4F630368D1EE00C91783 /* IFM_Player_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
@@ -278,10 +276,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90F8B0792C8A2E6800F4BE39 /* IFMWindowSceneDelegate.swift in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				90ACA3482B66B3F5005AE65D /* MainViewController.swift in Sources */,
 				90FB694B1CF4D98F00706581 /* IFMStation.m in Sources */,
-				1D3623260D0F684500981E51 /* IFM_PlayerAppDelegate.m in Sources */,
 				90FB69481CF4D97000706581 /* IFMStationsResponseParser.m in Sources */,
 				90E025982B66440D00910575 /* IFMPlayer.swift in Sources */,
 				904F5E0B1D00B5F6003A238D /* IFMNowPlaying.m in Sources */,
