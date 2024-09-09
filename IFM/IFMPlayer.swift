@@ -27,6 +27,18 @@ class IFMPlayer : NSObject {
         self.statePublisher.eraseToAnyPublisher()
     }
     
+    var stationNames: [String] {
+        get {
+            var stations = [String]()
+
+            for stationIndex in 0..<(self.stations.numberOfStations) {
+                stations.append(self.stations.station(for: stationIndex).name)
+            }
+            
+            return stations
+        }
+    }
+    
     override init() {
         self.state = .stopped
         self.stations.update()
@@ -258,5 +270,23 @@ enum IFMPlayerState: Equatable {
         default:
             self
         }
+    }
+}
+
+class IFMPlayerHolder {
+    private static var player: IFMPlayer?
+    
+    private init() {}
+    
+    static func ensurePlayer() -> IFMPlayer {
+        if let player = Self.player  {
+            return player
+        }
+        
+        let player = IFMPlayer()
+        
+        Self.player = player
+        
+        return player
     }
 }
